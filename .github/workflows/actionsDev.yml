@@ -65,6 +65,8 @@ jobs:
         run: |
           echo "${{ env.EXECUTABLES}}"
           for exec in $(echo "${{ env.EXECUTABLES}}" | tr "," " "); do
+            echo $exec
+            ls
             if [ ! -f "$exec" ]; then
               echo "::error file=$exec,title=Binary::Binary not found"
               exit 1
