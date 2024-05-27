@@ -16,7 +16,7 @@ rm_binary:
 	@rm -f zappy_ai
 	@rm -f zappy_gui
 
-server: 
+server:
 	echo "Building server"
 	@make -C server
 

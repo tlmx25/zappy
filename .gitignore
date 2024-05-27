@@ -38,3 +38,5 @@ zappy_gui
 **/.vscode/
 **/.idea/
 **/build/
+
+**/coding-style**
