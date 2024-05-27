@@ -30,3 +30,11 @@
 *.exe
 *.out
 *.app
+
+zappy_server
+zappy_ai
+zappy_gui
+
+**/.vscode/
+**/.idea/
+**/build/
