@@ -23,6 +23,12 @@ SRC += get_client.c
 SRC += create_server.c
 SRC += delete_server.c
 SRC += option.c
+SRC += delete_option.c
+SRC += parse_port.c
+SRC += parse_width_height.c
+SRC += parse_name.c
+SRC += parse_client_nb.c
+SRC += parse_freq.c
 
 
 CFLAGS = -Wall -Wextra -I includes/

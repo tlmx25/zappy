@@ -42,7 +42,8 @@ void delete_client_list(client_list_t *list)
     free(list);
 }
 
-void delete_client_from_list(client_list_t *list, client_t *client, int delete_client)
+void delete_client_from_list(client_list_t *list, client_t *client,
+int delete_client_bool)
 {
     client_t *tmp = list->head;
 
@@ -58,7 +59,7 @@ void delete_client_from_list(client_list_t *list, client_t *client, int delete_c
     if (tmp == list->tail)
         list->tail = tmp->prev;
     list->size--;
-    if (delete_client)
+    if (delete_client_bool)
         delete_client(tmp);
 }
 

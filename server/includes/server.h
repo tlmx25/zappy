@@ -12,6 +12,7 @@
     #include <unistd.h>
     #include <stdlib.h>
     #include <stdio.h>
+    #include "option.h"
     #include "client.h"
     #include "management_socket.h"
 
@@ -28,6 +29,7 @@ typedef struct server_s {
     client_list_t *pending_clients;
     client_list_t *graphic_clients;
     client_list_t *ai_clients;
+    option_t *option;
 } server_t;
 
 /**
