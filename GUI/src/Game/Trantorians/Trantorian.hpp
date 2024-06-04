@@ -11,17 +11,22 @@
     #include <algorithm>
     #include <vector>
     #include <SFML/Graphics.hpp>
+    #include <memory>
+    #include "Tile.hpp"
 
 class Trantorian
 {
     public:
-        Trantorian(int id, std::string teamName, int x, int y);
+        Trantorian(int id, std::string teamName = "", sf::Vector2i pos = sf::Vector2i(0, 0), int direction = 1, int level = 1);
         ~Trantorian() = default;
-        void move(int x, int y);
         void setSprite(sf::Sprite sprite);
         void draw(sf::RenderWindow &window);
         bool updateLife(int timeUnits);
-        void updateInventory(std::string item);
+        void setInventory(int q0, int q1, int q2, int q3, int q4, int q5, int q6);
+        void setPos(sf::Vector2i pos);
+        void setLevel(int level);
+        void collectItem(std::shared_ptr<Tile> &tile, int nb);
+        void dropItem(std::shared_ptr<Tile> &tile, int nb);
 
     // Identification
     private:
@@ -34,11 +39,10 @@ class Trantorian
 
     // Game data
     private:
-        std::vector<std::string> inventory;
+        sf::Vector2i pos;
+        int *inventory;
         int lifeTimeLeft;
         int level;
-        int posX;
-        int posY;
         int direction;
 };
 
