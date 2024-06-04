@@ -61,3 +61,9 @@ class Server:
             return True
         else:
             return False
+
+    def close_socket(self):
+        try:
+            self.s.close()
+        except:
+            raise Exception("Server : Error while closing.")
