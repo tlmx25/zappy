@@ -1,0 +1,29 @@
+name: checking_server_code
+on:
+  push:
+    branches:
+      - 'ai/*'
+
+env:
+  EXECUTABLES:
+    "zappy_ai"
+
+jobs:
+  compilation:
+    name: check_compilation_ai
+    runs-on: ubuntu-latest
+    container: epitechcontent/epitest-docker
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: checking ai binary
+        run: |
+          echo "${{ env.EXECUTABLES}}"
+          for exec in $(echo "${{ env.EXECUTABLES}}" | tr "," " "); do
+            if [ ! -f "$exec" ]; then
+              echo "::error file=$exec,title=Binary::Binary not found"
+              exit 1
+            fi
+          done
