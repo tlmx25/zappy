@@ -40,3 +40,6 @@ zappy_gui
 **/build/
 
 **/coding-style**
+
+#Python
+__pycache__/
