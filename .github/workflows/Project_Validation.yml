@@ -20,7 +20,7 @@ jobs:
     container: epitechcontent/epitest-docker
     timeout-minutes: 4
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: checking binary exist
@@ -39,7 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     container: epitechcontent/epitest-docker:latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - uses: pixta-dev/repository-mirroring-action@v1
