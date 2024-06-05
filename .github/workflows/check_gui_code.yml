@@ -1,4 +1,4 @@
-name: checking_server_code
+name: checking_gui_code
 on:
   push:
     branches:
