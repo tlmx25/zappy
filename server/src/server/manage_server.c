@@ -39,5 +39,7 @@ void manage_server(server_t *server)
     if (FD_ISSET(server->socket, &server->select_config->readfds)) {
         accept_new_client(server);
     }
+    //TODO verifier si on peut lire le vlient recyperer les donner et les envoyer
+    //en gros read -> exec write
 
 }
