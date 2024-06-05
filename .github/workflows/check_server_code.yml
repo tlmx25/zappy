@@ -9,6 +9,18 @@ env:
     "zappy_server"
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build
+        run: make
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: zappy_server
+          path: ./zappy_server
+
   compilation:
     name: check_compilation_server
     runs-on: ubuntu-latest
@@ -16,8 +28,10 @@ jobs:
     timeout-minutes: 4
     steps:
       - uses: actions/checkout@v4
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
         with:
-          fetch-depth: 0
+          name: zappy_server
       - name: checking server binary
         run: |
           echo "${{ env.EXECUTABLES}}"
@@ -27,13 +41,15 @@ jobs:
               exit 1
             fi
           done
+        env :
+          EXECUTABLES: zappy_server
 
   check_coding_style:
     name: check_coding_style_server
     runs-on: ubuntu-latest
     container: ghcr.io/epitech/coding-style-checker:latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: execute coding style checker
