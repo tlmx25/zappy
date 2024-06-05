@@ -2,7 +2,7 @@ name: checking_server_code
 on:
   push:
     branches:
-      - 'ai/*'
+      - 'ai/**'
 
 env:
   EXECUTABLES:
