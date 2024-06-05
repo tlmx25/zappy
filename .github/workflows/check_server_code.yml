@@ -30,7 +30,6 @@ jobs:
 
   check_coding_style:
     name: check_coding_style_server
-    needs: check_compilation_server
     runs-on: ubuntu-latest
     container: ghcr.io/epitech/coding-style-checker:latest
     steps:
