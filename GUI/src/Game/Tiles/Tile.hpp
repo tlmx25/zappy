@@ -12,6 +12,7 @@
     #include <algorithm>
     #include <vector>
     #include <SFML/Graphics.hpp>
+    #include <memory>
 
 class Tile
 {
@@ -34,6 +35,7 @@ class Tile
         int q4;
         int q5;
         int q6;
+        std::map<std::string, std::shared_ptr<sf::Sprite>> items;
 };
 
 #endif

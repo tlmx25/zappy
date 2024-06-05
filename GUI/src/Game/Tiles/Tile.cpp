@@ -18,6 +18,16 @@ Tile::Tile(sf::Vector2i pos, int q0, int q1, int q2, int q3, int q4, int q5, int
     this->q5 = q5;
     this->q6 = q6;
     this->qAll = q0 + q1 + q2 + q3 + q4 + q5 + q6;
+
+    try {
+        // load textures
+        // create sprites
+        // set textures to sprites
+        // link sprites to items
+    } catch (const std::exception &e) {
+        // TODO: faire erreur propre
+        std::cerr << e.what() << std::endl;
+    }
 }
 
 void Tile::addItem(int item)
