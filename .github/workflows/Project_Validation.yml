@@ -1,0 +1,50 @@
+name: check_if_project_is_valid
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - dev
+
+env:
+  MIRROR_URL:
+    git@github.com:EpitechPromo2027/B-YEP-400-REN-4-1-zappy-maxence.largeot.git
+  EXECUTABLES:
+    "zappy_server zappy_gui zappy_ai"
+
+jobs:
+  compilation:
+    name: check_compilation
+    runs-on: ubuntu-latest
+    container: epitechcontent/epitest-docker
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: checking binary exist
+        run: |
+          echo "${{ env.EXECUTABLES}}"
+          for exec in $(echo "${{ env.EXECUTABLES}}" | tr "," " "); do
+            if [ ! -f "$exec" ]; then
+              echo "::error file=$exec,title=Binary::Binary not found"
+              exit 1
+            fi
+          done
+
+  push_to_mirror:
+    if : github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: check_compilation
+    runs-on: ubuntu-latest
+    container: epitechcontent/epitest-docker:latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: pixta-dev/repository-mirroring-action@v1
+        with:
+          target_repo_url:
+            ${{ env.MIRROR_URL }}
+          ssh_private_key:
+            ${{ secrets.GIT_SSH_PRIVATE_KEY }}

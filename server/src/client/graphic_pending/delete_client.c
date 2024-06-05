@@ -47,7 +47,7 @@ void delete_client_from_list(client_list_t *list, client_t *client,
 {
     client_t *tmp = list->head;
 
-    for(; tmp != NULL && tmp != client; tmp = tmp->next);
+    for (; tmp != NULL && tmp != client; tmp = tmp->next);
     if (tmp == NULL)
         return;
     if (tmp->prev != NULL)

@@ -79,8 +79,8 @@ void clear_client_list(client_list_t *list);
  * @param list list to delete the client from
  * @param client client to delete
  */
-void delete_client_from_list(client_list_t *list, client_t *client,
-int delete_client_bool);
+void delete_client_from_list(client_list_t *list, client_t *client
+    , int delete_client_bool);
 
 /**
  * @brief delete a client from a list with a fd
