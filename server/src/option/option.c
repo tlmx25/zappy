@@ -55,10 +55,10 @@ static option_t *check_option(option_t *option)
 {
     int error = 0;
 
-    if (option->port == -1)
-        error = dprintf(2, "port is not specify\n");
     if (option->width == -1)
         error = dprintf(2, "width is not specify\n");
+    if (option->port == -1)
+        error = dprintf(2, "port is not specify\n");
     if (option->height == -1)
         error = dprintf(2, "height is not specify\n");
     if (option->clients_nb == -1)
