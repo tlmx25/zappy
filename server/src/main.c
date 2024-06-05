@@ -6,9 +6,15 @@
 */
 
 #include <stdio.h>
+#include "server.h"
 
-int main(void)
+int main(int ac, char **av)
 {
-    printf("Hello, World!\n");
+    option_t *option = parse_option((const char **)av);
+
+    if (option == NULL)
+        return 84;
+    dump_option(option);
+    delete_option(option);
     return 0;
 }
