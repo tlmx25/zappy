@@ -16,6 +16,7 @@ env:
 jobs:
   build_gui:
     runs-on: ubuntu-latest
+    container: epitechcontent/epitest-docker
     steps:
       - uses: actions/checkout@v4
       - name: compile_gui
