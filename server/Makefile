@@ -11,8 +11,14 @@ CC = gcc
 VPATH += src/
 VPATH += src/network/
 VPATH += src/client/
+VPATH += src/client/AI
+VPATH += src/client/graphic_pending/
 VPATH += src/server/
+VPATH += src/server/utils
+VPATH += src/server/manager
 VPATH += src/option/
+VPATH += src/client/classic/
+VPATH += src/client/graphic/
 
 SRC += main.c
 SRC += management_socket.c
@@ -29,6 +35,13 @@ SRC += parse_width_height.c
 SRC += parse_name.c
 SRC += parse_client_nb.c
 SRC += parse_freq.c
+SRC += server.c
+SRC += manage_server.c
+SRC += manage_server.c
+SRC += manager_pending.c
+SRC += check_team.c
+SRC += create_client_ai.c
+SRC += delete_client_ai.c
 
 
 CFLAGS = -Wall -Wextra -I includes/
