@@ -14,7 +14,43 @@ env:
     "zappy_server zappy_gui zappy_ai"
 
 jobs:
-  compilation:
+  build_gui:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: compile_gui
+        run: make
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: zappy_gui
+          path: ./zappy_gui
+
+  build_ai:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: compile_ai
+        run: make
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: zappy_ai
+          path: ./zappy_ai
+
+  build_server:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: compile_server
+        run: make
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: zappy_server
+          path: ./zappy_server
+
+  check_compilation:
     name: check_compilation
     runs-on: ubuntu-latest
     container: epitechcontent/epitest-docker

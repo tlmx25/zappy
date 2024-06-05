@@ -4,20 +4,30 @@ on:
     branches:
       - 'ai/**'
 
-env:
-  EXECUTABLES:
-    "zappy_ai"
-
 jobs:
-  compilation:
+  build_ai:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: compile_ai
+        run: make
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: zappy_ai
+          path: ./zappy_ai
+
+  check_compilation_ai:
     name: check_compilation_ai
     runs-on: ubuntu-latest
     container: epitechcontent/epitest-docker
     timeout-minutes: 4
     steps:
       - uses: actions/checkout@v4
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
         with:
-          fetch-depth: 0
+          name: zappy_ai
       - name: checking ai binary
         run: |
           echo "${{ env.EXECUTABLES}}"
@@ -27,3 +37,5 @@ jobs:
               exit 1
             fi
           done
+        env:
+          EXECUTABLES: zappy_ai
