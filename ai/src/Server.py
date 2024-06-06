@@ -38,26 +38,24 @@ class Server:
             str_length = len(command)
             for i in range(0, str_length, 1024):
                 mess_part = command[i:i + 1024]
-                self.s.sendall(mess_part)
+                self.s.send(mess_part.encode())
         except Exception:
             raise Exception("Server : Error while sending message.")
         
     def recv(self) -> str:
-        response = ""
+        response = b""
         try:
-            while True:
+            while self.check_read():
                 response_part = self.s.recv(1024)
                 if (response_part):
                     response += response_part
-                else:
-                    break
-            return response
+            return str(response.decode())
         except Exception:
             raise Exception("Server : Error during recieve. Probably dev error.")
         
     def check_read(self) -> bool:
         ready_to_read, _, _ = select.select([self.s], [], [], 1)
-        if ready_to_read:
+        if self.s in ready_to_read:
             return True
         else:
             return False
