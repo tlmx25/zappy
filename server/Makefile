@@ -9,13 +9,31 @@ MAKEFLAGS += -silent
 CC = gcc
 
 VPATH += src/
+VPATH += src/network/
+VPATH += src/client/
+VPATH += src/server/
+VPATH += src/option/
 
 SRC += main.c
+SRC += management_socket.c
+SRC += read_write_socket.c
+SRC += create_client.c
+SRC += delete_client.c
+SRC += get_client.c
+SRC += create_server.c
+SRC += delete_server.c
+SRC += option.c
+SRC += delete_option.c
+SRC += parse_port.c
+SRC += parse_width_height.c
+SRC += parse_name.c
+SRC += parse_client_nb.c
+SRC += parse_freq.c
 
 
 CFLAGS = -Wall -Wextra -I includes/
 
-LDFLAGS :=
+LDFLAGS += -L ./libs/ -lmy
 
 BUILD_DIR = build/
 
@@ -37,6 +55,7 @@ OBJ = $(SRC:%.c=$(BUILD_DIR)%.o)
 all:	$(NAME)
 
 $(NAME):	$(OBJ)
+	make -C libs/my
 	@ echo "$(BLUE)Compilation of $(NAME)...$(NC)"
 	$(CC) -o $(NAME) $(OBJ) $(LDFLAGS)
 	@ echo "$(GREEN)$(NAME) created$(NC)"
@@ -47,10 +66,12 @@ clean: tests_clean
 	rm -f *~
 	rm -f \#*\#
 	rm -f vgcore.*
+	@ make clean -C libs/my
 	@ echo "$(RED)clean successful !"
 
 fclean: clean tests_clean
 	rm -f $(NAME)
+	make fclean -C libs/my
 	@ echo "$(RED)fclean successful !$(NC)"
 
 CFLAGSTEST += -lcriterion --coverage
