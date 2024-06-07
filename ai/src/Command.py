@@ -1,10 +1,10 @@
+from Server import Server
 
 class Command:
 
-    def __init__(self, name, description):
-        self.name = name
-        self.description = description
+    def __init__(self, server: Server):
         self.commandSend = []
+        self.server = server
 
 
     def mooveForward(self):
