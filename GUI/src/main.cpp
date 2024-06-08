@@ -9,6 +9,7 @@
 
 // int main(int ac, char **av)
 // {
+//     srand(static_cast<unsigned>(time(0)));
 //     printf("Hello, World!\n");
 //     return (0);
 
@@ -126,13 +127,6 @@ int main() {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && !(mapView.getCenter().y + mapView.getSize().y / 2.0f >= mapHeightInPixels)) {
             mapView.move(0, 5);
         }
-
-        // Constrain the view within the map boundaries
-        sf::Vector2f center = mapView.getCenter();
-        sf::Vector2f size = mapView.getSize();
-
-        float halfWidth = size.x / 2.0f;
-        float halfHeight = size.y / 2.0f;
 
         float time = clock.getElapsedTime().asSeconds();
 

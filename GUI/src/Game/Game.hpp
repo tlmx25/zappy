@@ -12,19 +12,22 @@
     #include <algorithm>
     #include <vector>
     #include <SFML/Graphics.hpp>
+    #include "Map.hpp"
 
 class Game
 {
     public:
-        Game();
+        Game(int x, int y);
         ~Game();
         void run();
-        void updateRender();
+        void handleEvents();
         void render();
     private:
         // TODO: functions for events, update, render
         sf::RenderWindow window;
         sf::Event event;
+        sf::Clock clock;
+        Map map;
 };
 
 #endif

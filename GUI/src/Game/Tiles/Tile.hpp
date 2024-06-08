@@ -17,7 +17,7 @@
 class Tile
 {
     public:
-        Tile(sf::Vector2i pos = sf::Vector2i(0, 0), int q0 = 0, int q1 = 0, int q2 = 0, int q3 = 0, int q4 = 0, int q5 = 0, int q6 = 0);
+        Tile(sf::Vector2i size = sf::Vector2i(80,80), sf::Vector2i pos = sf::Vector2i(0,0), int q0 = 0, int q1 = 0, int q2 = 0, int q3 = 0, int q4 = 0, int q5 = 0, int q6 = 0);
         ~Tile() = default;
         void addItem(int item);
         void removeItem(int item);
@@ -25,8 +25,13 @@ class Tile
         void setAllItemsQuantity(int q0, int q1, int q2, int q3, int q4, int q5, int q6);
         void setItemQuantity(int item, int quantity);
         sf::Vector2i getPos();
+        void setFillColor(sf::Color color);
+        void setPos(sf::Vector2i pos);
     private:
         sf::Vector2i pos;
+        sf::Vector2i size;
+        sf::RectangleShape shape;
+        int tileSize = 80;
         int qAll;
         int q0;
         int q1;

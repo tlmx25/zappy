@@ -7,8 +7,9 @@
 
 #include "Tile.hpp"
 
-Tile::Tile(sf::Vector2i pos, int q0, int q1, int q2, int q3, int q4, int q5, int q6)
+Tile::Tile(sf::Vector2i size, sf::Vector2i pos, int q0, int q1, int q2, int q3, int q4, int q5, int q6)
 {
+    this->size = size;
     this->pos = pos;
     this->q0 = q0;
     this->q1 = q1;
