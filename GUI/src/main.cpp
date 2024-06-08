@@ -44,10 +44,11 @@ sf::Color generateRandomColorInRange(sf::Color lightColor, sf::Color darkColor) 
 }
 
 int main() {
-    const int mapSize = 1600; // Larger map size
-    const int tileCount = 20; // More tiles to fit the larger map
-    const float tileSize = mapSize / tileCount;
-    const int windowSize = 800;
+
+    const int mapWidth = 30;
+    const int mapHeight = 30;
+    const float tileSize = 80;
+    const int windowSize = 1200;
 
     // Initialize random seed
     srand(static_cast<unsigned>(time(0)));
@@ -59,24 +60,29 @@ int main() {
     sf::RenderWindow window(sf::VideoMode(windowSize, windowSize), "Blinking Tiles with Movable Camera");
     window.setFramerateLimit(60);
 
-    // Create the grid of tiles
-    std::vector<sf::RectangleShape> tiles(tileCount * tileCount);
-    std::vector<sf::Color> currentColors(tileCount * tileCount);
-    std::vector<sf::Color> targetColors(tileCount * tileCount);
-    std::vector<float> phases(tileCount * tileCount);
+    int mapWidthInPixels = mapWidth * tileSize;
+    int mapHeightInPixels = mapHeight * tileSize;
 
-    for (int y = 0; y < tileCount; ++y) {
-        for (int x = 0; x < tileCount; ++x) {
+    sf::Vector2f initialViewCenter((mapWidthInPixels - windowSize) / 2.0f, (mapHeightInPixels - windowSize) / 2.0f);
+    sf::View mapView(sf::FloatRect(initialViewCenter.x, initialViewCenter.y, windowSize, windowSize));
+
+    std::vector<sf::RectangleShape> tiles(mapWidth * mapHeight);
+    std::vector<sf::Color> currentColors(mapWidth * mapHeight);
+    std::vector<sf::Color> targetColors(mapWidth * mapHeight);
+    std::vector<float> phases(mapWidth * mapHeight);
+
+    for (int y = 0; y < mapHeight; ++y) {
+        for (int x = 0; x < mapWidth; ++x) {
             sf::RectangleShape tile(sf::Vector2f(tileSize - 1, tileSize - 1));
             tile.setPosition(x * tileSize, y * tileSize);
 
             sf::Color initialColor = generateRandomColorInRange(lightColor, darkColor);
             tile.setFillColor(initialColor);
 
-            tiles[y * tileCount + x] = tile;
-            currentColors[y * tileCount + x] = initialColor;
-            targetColors[y * tileCount + x] = generateRandomColorInRange(lightColor, darkColor); // Initial target color
-            phases[y * tileCount + x] = static_cast<float>(rand()) / RAND_MAX * 2 * 3.14159f; // Random phase for each tile
+            tiles[y * mapWidth + x] = tile;
+            currentColors[y * mapWidth + x] = initialColor;
+            targetColors[y * mapWidth + x] = generateRandomColorInRange(lightColor, darkColor); // Initial target color
+            phases[y * mapWidth + x] = static_cast<float>(rand()) / RAND_MAX * 2 * 3.14159f; // Random phase for each tile
         }
     }
 
@@ -99,7 +105,6 @@ int main() {
     buttonText.setPosition(button.getPosition().x + 25, button.getPosition().y + 10);
 
     // Create a view for the map
-    sf::View mapView(sf::FloatRect(0, 0, windowSize, windowSize));
 
     while (window.isOpen()) {
         sf::Event event;
@@ -109,16 +114,16 @@ int main() {
         }
 
         // Handle keyboard input for moving the view
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !(mapView.getCenter().x - mapView.getSize().x / 2.0f <= 0)) {
             mapView.move(-5, 0);
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && !(mapView.getCenter().x + mapView.getSize().x / 2.0f >= mapWidthInPixels)) {
             mapView.move(5, 0);
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-            mapView.move(0, -5);
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !(mapView.getCenter().y - mapView.getSize().y / 2.0f <= 0)) {
+                mapView.move(0, -5);
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && !(mapView.getCenter().y + mapView.getSize().y / 2.0f >= mapHeightInPixels)) {
             mapView.move(0, 5);
         }
 
@@ -128,19 +133,6 @@ int main() {
 
         float halfWidth = size.x / 2.0f;
         float halfHeight = size.y / 2.0f;
-
-        if (center.x - halfWidth < 0) {
-            mapView.setCenter(halfWidth, center.y);
-        }
-        if (center.x + halfWidth > mapSize) {
-            mapView.setCenter(mapSize - halfWidth, center.y);
-        }
-        if (center.y - halfHeight < 0) {
-            mapView.setCenter(center.x, halfHeight);
-        }
-        if (center.y + halfHeight > mapSize) {
-            mapView.setCenter(center.x, mapSize - halfHeight);
-        }
 
         float time = clock.getElapsedTime().asSeconds();
 
