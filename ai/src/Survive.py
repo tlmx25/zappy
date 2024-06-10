@@ -23,7 +23,7 @@ resource_density = {
 class Survive:
     def __init__(self, command, server, level):
         self.needFood = False
-        self.action = Action(command)
+        self.action = Action(command, server)
         self.command = command
         self.server = server
         self.level = level
@@ -64,10 +64,9 @@ class Survive:
         needed_resource = self.what_i_need(inventory)
         if needed_resource:
             self.action.deplacement(look_response, inventory, needed_resource)
-        # la réponse de la commande look est une liste de cases de la forme [player, food,,,], la vision change en fonction du niveau d'élévation du joueur
-        # on peut donc déterminer la position des ressources en fonction de l'emplacement dans le tableau
-        # a chaque élévation le joueur voit plus loin et plus large
-        # on peut donc déterminer les ressources à proximité et se déplacer vers elles
+            self.action.take_object(needed_resource, self.server)
+        else:
+            self.command.mooveForward()
 
     def perform_incantation(self, inventory, level):
         current_resources = self.parse_inventory(inventory)

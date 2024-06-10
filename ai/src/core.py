@@ -19,7 +19,3 @@ class Core:
             inventory_response = self.command.inventory()
             self.survive.need_food(inventory_response)
             self.survive.search_resources(inventory_response)
-            # else:
-            #     action_response = perform_incantation(inventory_response, level)
-            #     if action_response == "Elevation underway":
-            #         level += 1

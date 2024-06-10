@@ -8,37 +8,62 @@ class Command:
 
 
     def mooveForward(self):
-        self.commandSend.append("Forward")
+        self.server.send("Forward\n")
+        while not self.server.check_read():
+            pass
 
     def mooveRight(self):
-        self.commandSend.append("Right")
+        self.server.send("Right")
+        while not self.server.check_read():
+            pass
 
     def mooveLeft(self):
-        self.commandSend.append("Left")
+        self.server.send("Left")
+        while not self.server.check_read():
+            pass
 
     def look(self):
-        self.commandSend.append("Look")
+        self.server.send("Look")
+        while not self.server.check_read():
+            pass
 
     def inventory(self):
-        self.commandSend.append("Inventory")
+        self.server.send("Inventory")
+        while not self.server.check_read():
+            pass
+        return self.server.recv()
 
     def broadcast(self, message):
-        self.commandSend.append("Broadcast " + message)
+        self.server.send("Broadcast " + message)
+        while not self.server.check_read():
+            pass
 
     def connectNumber(self, number):
-        self.commandSend.append("Connect_nbr " + number)
+        self.server.send("Connect_nbr " + number)
+        while not self.server.check_read():
+            pass
 
     def fork(self):
-        self.commandSend.append("Fork")
+        self.server.send("Fork")
+        while not self.server.check_read():
+            pass
 
     def eject(self):
-        self.commandSend.append("Eject")
+        self.server.send("Eject")
+        while not self.server.check_read():
+            pass
 
     def takeObject(self, object):
-        self.commandSend.append("Take " + object)
+        self.server.send("Take " + object)
+        while not self.server.check_read():
+            pass
 
     def setObject(self, object):
-        self.commandSend.append("Set " + object)
+        self.server.send("Set " + object)
+        while not self.server.check_read():
+            pass
 
     def incantation(self):
-        self.commandSend.append("Incantation")
+        self.server.send("Incantation")
+        while not self.server.check_read():
+            pass

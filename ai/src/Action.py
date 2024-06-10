@@ -1,6 +1,7 @@
 class Action:
-    def __init__(self, command):
+    def __init__(self, command, server):
         self.command = command
+        self.server = server
         self.commandQueue = []
 
     def deplacement(self, look_response, inventory, needed_resource):
@@ -42,4 +43,8 @@ class Action:
                 self.command.mooveLeft()
                 self.commandQueue.append("Left")
                 count -= 1
+        return self.commandQueue
+
+    def take_object(self, objects):
+        self.command.takeObject(objects)
         return self.commandQueue
