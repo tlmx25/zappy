@@ -66,7 +66,7 @@ static server_t *init_server(int port)
     }
     server->pending_clients = create_client_list();
     server->graphic_clients = create_client_list();
-    server->ai_clients = create_client_list();
+    server->ai_clients = create_client_ai_list();
     if (!server->pending_clients || !server->graphic_clients
         || !server->ai_clients) {
         delete_server(server);

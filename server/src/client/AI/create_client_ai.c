@@ -58,11 +58,16 @@ void add_client_ai_to_list(client_ai_list_t *list, client_ai_t *client)
     }
 }
 
-void create_client_ai_list(client_ai_list_t *list)
+client_ai_list_t *create_client_ai_list()
 {
+    client_ai_list_t *list = malloc(sizeof(client_ai_list_t));
+
+    if (list == NULL)
+        return NULL;
     list->head = NULL;
     list->tail = NULL;
     list->size = 0;
+    return list;
 }
 
 void create_add_client_ai(client_ai_list_t *list, int fd, char *team_name,
