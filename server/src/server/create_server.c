@@ -89,7 +89,7 @@ static server_t *start_server(server_t *server)
 
 server_t *create_server(char **av)
 {
-    option_t *option = parse_option((const char**)av);
+    option_t *option = parse_option((const char **)av);
     server_t *server;
 
     if (option == NULL)
@@ -102,7 +102,7 @@ server_t *create_server(char **av)
     server->option = option;
     server->pending_clients = create_client_list();
     server->graphic_clients = create_client_list();
-    server->ai_clients = create_client_list();
+    server->ai_clients = create_client_ai_list();
     server->select_config = init_select();
     return start_server(server);
 }

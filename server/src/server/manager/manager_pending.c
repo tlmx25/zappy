@@ -17,6 +17,7 @@ static void is_graphic(server_t *server, client_t *client)
 void manage_pending_client(server_t *server, client_t *client)
 {
     char *name = my_clean_string(client->buffer_in, "\n", 0);
+
     if (client->buffer_in == NULL)
         return;
     if (my_strcmp(name, "GRAPHIC") == 0) {
@@ -24,5 +25,4 @@ void manage_pending_client(server_t *server, client_t *client)
         free(name);
         return;
     }
-    //TODO: client ai et converter
 }

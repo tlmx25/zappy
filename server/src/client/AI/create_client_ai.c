@@ -21,6 +21,7 @@ static void init_client_ai(client_ai_t *client)
     client->inventory.phiras = 0;
     client->inventory.thystame = 0;
 }
+
 client_ai_t *create_client_ai(int fd, char *team_name, position_t position)
 {
     static int num_player = 0;
@@ -58,7 +59,7 @@ void add_client_ai_to_list(client_ai_list_t *list, client_ai_t *client)
     }
 }
 
-client_ai_list_t *create_client_ai_list()
+client_ai_list_t *create_client_ai_list(void)
 {
     client_ai_list_t *list = malloc(sizeof(client_ai_list_t));
 

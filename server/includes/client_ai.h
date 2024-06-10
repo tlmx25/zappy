@@ -77,7 +77,7 @@ void add_client_ai_to_list(client_ai_list_t *list, client_ai_t *client);
  * @brief Create a new client list
  * @param list list to create
  */
-client_ai_list_t * create_client_ai_list();
+client_ai_list_t *create_client_ai_list(void);
 
 /**
  * @brief Create and add a client to the list

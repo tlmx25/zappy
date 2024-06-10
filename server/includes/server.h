@@ -39,6 +39,12 @@ typedef struct command_s {
     int nb_args;
 } command_t;
 
+typedef struct command_ai_s {
+    char *command;
+    void (*func)(server_t *server, client_ai_t *client, char const **command);
+    int nb_args;
+} command_ai_t;
+
 /**
  * @brief read message from a socket
  * @param fd fd of the socket
@@ -89,4 +95,31 @@ void manage_server(server_t *server);
  */
 int check_team_name(server_t *server, char *team_name);
 
+/**
+ * @brief read request from list (pending or graphic) and add it to buffer_in
+ * @param server server for info and context
+ * @param list list to read from
+ */
+void read_pending_graphic_list(server_t *server, client_list_t *list);
+
+/**
+ * @brief write request from buffer_out from the list (pending or graphic)
+ * @param server server for info and context
+ * @param list list to write from
+ */
+void write_pending_graphic_list(server_t *server, client_list_t *list);
+
+/**
+ * @brief read ai list and add it to buffer_in
+ * @param server server for info and context
+ * @param list list to read from
+ */
+void read_ai_list(server_t *server, client_ai_list_t *list);
+
+/**
+ * @brief write ai list from buffer_out
+ * @param server server for info and context
+ * @param list list to write from
+ */
+void write_ai_list(server_t *server, client_ai_list_t *list);
 #endif //SERVER_SERVER_H

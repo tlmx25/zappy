@@ -42,6 +42,8 @@ SRC += manager_pending.c
 SRC += check_team.c
 SRC += create_client_ai.c
 SRC += delete_client_ai.c
+SRC += read_write_pending_graphic.c
+SRC += read_write_ai_client.c
 
 
 CFLAGS = -Wall -Wextra -I includes/

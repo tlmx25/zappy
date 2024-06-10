@@ -28,7 +28,7 @@ void delete_client_from_ai_list(client_ai_list_t *list, client_ai_t *client,
 {
     client_ai_t *tmp = list->head;
 
-    for(; tmp != NULL && tmp != client; tmp = tmp->next);
+    for (; tmp != NULL && tmp != client; tmp = tmp->next);
     if (tmp == NULL)
         return;
     if (tmp->prev != NULL)
