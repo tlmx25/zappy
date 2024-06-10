@@ -9,15 +9,16 @@ import socket
 import select
 
 class Server:
-    def __init__(self, _host, _port):
+    def __init__(self, _host = "", _port = 0):
         self.host = _host
         self.port = _port
         self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
-            self.connect_server()
             self.s.setblocking(False)
+            if (self.host != "" and self.port != 0):
+                self.conenct_server()
         except:
-            raise Exception("Server : Error while connecting at init try connect method.")
+            raise Exception("Server : Error in init probably during connection.")
     
     def set_host(self, _host):
         self.host = _host

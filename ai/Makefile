@@ -25,4 +25,10 @@ fclean: clean
 	@echo "Full clean - removing executable"
 	rm -f $(NAME)
 
+test_run:
+	@ cp tests/main.py tests/zappy_ai_test
+	@ chmod +x tests/zappy_ai_test
+	@ chmod +x tests/ai_test.sh
+	@ ./tests/ai_test.sh
+
 re: fclean all
