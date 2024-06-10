@@ -65,7 +65,7 @@ int write_socket(int fd, char *str);
  * @param av information from the command line (option)
  * @return server_t* the server or NULL if error
  */
-server_t *create_server(char **av)
+server_t *create_server(char **av);
 
 /**
  * @brief Delete a server
@@ -122,4 +122,18 @@ void read_ai_list(server_t *server, client_ai_list_t *list);
  * @param list list to write from
  */
 void write_ai_list(server_t *server, client_ai_list_t *list);
+
+/**
+ * @brief add a string to a buffer, add '\n' at the end if not present
+ * @param buffer pointer to the buffer to add request
+ * @param str string to add to the buffer
+ * @param free_str if true, free str after adding it to buffer
+ */
+void add_to_buffer(char **buffer, char *str, bool_t free_str);
+
+/**
+ * @brief execute the command of the client graphic
+ * @param server server for info and context
+ */
+void exec_graphic_list(server_t *server);
 #endif //SERVER_SERVER_H

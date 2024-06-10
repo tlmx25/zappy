@@ -37,13 +37,13 @@ SRC += parse_client_nb.c
 SRC += parse_freq.c
 SRC += server.c
 SRC += manage_server.c
-SRC += manage_server.c
 SRC += manager_pending.c
 SRC += check_team.c
 SRC += create_client_ai.c
 SRC += delete_client_ai.c
 SRC += read_write_pending_graphic.c
 SRC += read_write_ai_client.c
+SRC += exec_graphic.c
 
 
 CFLAGS = -Wall -Wextra -I includes/

@@ -30,7 +30,7 @@ static void accept_new_client(server_t *server)
     server->select_config->max_fd = (server->select_config->max_fd <
     new_socket) ? new_socket : server->select_config->max_fd;
     new_client = create_client(new_socket);
-    add_client_to_list(server->pending_clients, new_client);
+    add_client_to_list(server->graphic_clients, new_client);
     free(address);
 }
 
@@ -48,10 +48,16 @@ static void write_list(server_t *server)
     write_ai_list(server, server->ai_clients);
 }
 
+static void exec_list(server_t *server)
+{
+    exec_graphic_list(server);
+}
+
 void manage_server(server_t *server)
 {
     if (FD_ISSET(server->socket, &server->select_config->readfds))
         accept_new_client(server);
     read_list(server);
+    exec_list(server);
     write_list(server);
 }

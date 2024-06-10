@@ -100,9 +100,6 @@ server_t *create_server(char **av)
         return NULL;
     }
     server->option = option;
-    server->pending_clients = create_client_list();
-    server->graphic_clients = create_client_list();
-    server->ai_clients = create_client_ai_list();
     server->select_config = init_select();
     return start_server(server);
 }
