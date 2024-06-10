@@ -9,9 +9,10 @@ SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -Wextra -g3 -fno-gnu-u
 find_package(SFML 2.5 COMPONENTS graphics audio REQUIRED)
 
 include_directories(src)
+include_directories(src/server)
 
 
-add_executable(${PROJECT_NAME} src/main.cpp)
+add_executable(${PROJECT_NAME} src/main.cpp src/server/server.cpp)
 
 target_link_libraries(${PROJECT_NAME} sfml-graphics sfml-window sfml-system)
 
