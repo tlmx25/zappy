@@ -14,6 +14,7 @@
     #include <stdio.h>
     #include "option.h"
     #include "client.h"
+    #include "client_ai.h"
     #include "management_socket.h"
 
 typedef enum {
@@ -28,7 +29,7 @@ typedef struct server_s {
     select_t *select_config;
     client_list_t *pending_clients;
     client_list_t *graphic_clients;
-    client_list_t *ai_clients;
+    client_ai_list_t *ai_clients;
     option_t *option;
 } server_t;
 

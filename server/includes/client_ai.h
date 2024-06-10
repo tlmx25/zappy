@@ -10,6 +10,7 @@
 #ifndef SERVER_CLIENT_AI_H
     #define SERVER_CLIENT_AI_H
     #include <stddef.h>
+    #define WARN_RESULT __attribute__((warn_unused_result))
 
 typedef struct inventory_s {
     int food;
