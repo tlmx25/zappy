@@ -33,7 +33,7 @@ Then run ou bot using the following command:
 | -n name | name of the team |
 | -h host | name of the machine, localhost by default |
 
-> [!TIPS]
+> [!TIP]
 > Make sure to have a zappy server running to run the bot.
 
 
