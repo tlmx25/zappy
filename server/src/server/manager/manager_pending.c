@@ -8,7 +8,6 @@
 #include "client_ai.h"
 #include "server.h"
 
-
 static void is_graphic(server_t *server, client_t *client)
 {
     delete_client_from_list(server->pending_clients, client, false);
@@ -23,13 +22,14 @@ bool_t WARN_RESULT convert_pending_client_to_ai(server_t *server,
 
     if (new_client == NULL)
         return false;
+    // TODO : UPDATE POSITION WITH EGG
     new_client->fd = client->fd;
     new_client->team_name = my_strdup(name);
-    // TODO : UPDATE POSITION WITH EGG
     if (server->ai_clients->size == 0)
         server->ai_clients->head = new_client;
     else
         add_client_ai_to_list(server->ai_clients, new_client);
+    delete_client_from_list(server->pending_clients, client, false);
     return true;
 }
 
@@ -44,8 +44,11 @@ void manage_pending_client(server_t *server, client_t *client)
         free(name);
         return;
     }
-    if (convert_pending_client_to_ai(server, client, name) == true) {
-        delete_client_from_list(server->pending_clients, client, false);
-        free(name);
+    for (int i = 0; server->option->names[i] != NULL; i++) {
+        if (my_strcmp(server->option->names[i], name) == 0) {
+            convert_pending_client_to_ai(server, client, name);
+            free(name);
+            return;
+        }
     }
 }
