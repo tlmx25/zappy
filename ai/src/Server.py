@@ -9,15 +9,15 @@ import socket
 import select
 
 class Server:
-    def __init__(self, _host, _port):
+    def __init__(self, _host = "", _port = 0):
         self.host = _host
         self.port = _port
         self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
-            self.connect_server()
-            self.s.setblocking(False)
+            if (self.host != "" and self.port != 0):
+                self.connect_server()
         except:
-            raise Exception("Server : Error while connecting at init try connect method.")
+            raise Exception("Server : Error in init probably during connection.")
     
     def set_host(self, _host):
         self.host = _host
@@ -29,6 +29,7 @@ class Server:
         try:
             print("Host : " + self.host + " Port : " + str(self.port))
             self.s.connect((self.host, self.port))
+            self.s.setblocking(False)
             print("Client connected succesfully.")
         except:
             raise Exception("Server : Error while connecting try changing port / host.")
