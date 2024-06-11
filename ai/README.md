@@ -33,7 +33,7 @@ Then run ou bot using the following command:
 | -n name | name of the team |
 | -h host | name of the machine, localhost by default |
 
-> [!TIP]
+> [!IMPORTANT]
 > Make sure to have a zappy server running to run the bot.
 
 
@@ -42,6 +42,36 @@ Then run ou bot using the following command:
 ## Class explanations
 
 ## Functional tests
+
+### Running tests
+
+> [!IMPORTANT]
+> To run functional tests, make sure to start a Zappy server on your PC using port 8581 and host 127.0.0.1 or localhost.
+
+Go to the ai folder and use the following Makefile command:
+
+```
+make test_run
+```
+
+### Implement tests
+
+In case a command is already created, just add the command input to the `inputs` table and the expected output to the `expected_outputs` table in `ai_test.sh`.
+
+The following commands are implemented:
+
+| Command | Param | Exemple |
+|:--------|:------|:--------|
+| host | [1] : host | host localhost |
+| port | [1] : port | port 8581 |
+| connect | [1] : host</br>[2] : port | connect localhost 8581 |
+| send | [1] : host</br>[2] : port</br>[3] -> [...] : message | send localhost 8581 Broadcast test |
+
+If the command doesn't exist follow these instructions:
+
+1. Add command and associated function inside `self.functions`.
+2. Create your associated function taking `self` and `cmd` as parameters.
+3. Write content of your test in it and print expected outputs in error output (`sys.stderr`).
 
 ## Contributors
 
