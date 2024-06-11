@@ -45,7 +45,7 @@ Then run our bot using the following command:
 
 <details>
 
-<Summary>FlagParser class<Summary>
+<summary>FlagParser class</summary>
 
 ### Behavior
 
@@ -54,7 +54,7 @@ This class is primarily used to parse the flags provided during the AI's executi
 </details>
 
 <details>
-    <Summary>Server class<Summary>
+    <summary>Server class</summary>
 </details>
 
 
