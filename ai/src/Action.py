@@ -2,7 +2,6 @@ class Action:
     def __init__(self, command, server):
         self.command = command
         self.server = server
-        self.commandQueue = []
 
     def deplacement(self, look_response, inventory, needed_resource):
         count = 0
@@ -28,23 +27,29 @@ class Action:
 
         while forward != 0:
             self.command.mooveForward()
-            self.commandQueue.append("Forward")
             forward -= 1
 
         position = size // 2
         if count < position:
+            self.command.mooveRight()
             while count != position:
-                self.command.mooveRight()
-                self.commandQueue.append("Right")
+                self.command.mooveForward()
                 count += 1
 
         elif count > position:
+            self.command.mooveLeft()
             while count != position:
-                self.command.mooveLeft()
-                self.commandQueue.append("Left")
+                self.command.mooveForward()
                 count -= 1
-        return self.commandQueue
 
     def take_object(self, objects):
         self.command.takeObject(objects)
-        return self.commandQueue
+
+    def assemble(self):
+        pass
+
+    def found_resource(self):
+        pass
+
+    def elevation(self):
+        pass
