@@ -43,6 +43,21 @@ Then run our bot using the following command:
 
 ## Class explanations
 
+<details>
+
+<Summary>FlagParser class<Summary>
+
+### Behavior
+
+This class is primarily used to parse the flags provided during the AI's execution. It stores the last occurrence of each used flag and detects errors such as invalid flags and incorrect numbers of arguments for exemple.
+
+</details>
+
+<details>
+    <Summary>Server class<Summary>
+</details>
+
+
 ## Functional tests
 
 ### Running tests
