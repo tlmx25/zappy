@@ -14,10 +14,20 @@ end_color="\e[0m"
 
 inputs=(
     "host localhost"
+    "port 8581"
+    "connect test 8581"
+    "connect 127.0.0.1 8581"
+    "send test 8581 Broadcast test"
+    "send 127.0.0.1 8581 Broadcast test"
 )
 
 expected_outputs=(
     "Host successfully set."
+    "Port successfully set."
+    "Connection failed."
+    "Connected to server."
+    "Send failed."
+    "Message sended to server."
 )
 
 # Tester
@@ -30,7 +40,7 @@ run_test() {
         echo -e "\t$vert$gras> Test passed\n$end_color"
         ((test_succ++))
     else
-        echo -e "\t$rouge> Test fail\n$end_color"
+        echo -e "\t$rouge> Test fail -> got $output\n$end_color"
         ((test_fail++))
     fi
     rm $tmp_file

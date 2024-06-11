@@ -14,9 +14,8 @@ class Server:
         self.port = _port
         self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
-            self.s.setblocking(False)
             if (self.host != "" and self.port != 0):
-                self.conenct_server()
+                self.connect_server()
         except:
             raise Exception("Server : Error in init probably during connection.")
     
@@ -30,6 +29,7 @@ class Server:
         try:
             print("Host : " + self.host + " Port : " + str(self.port))
             self.s.connect((self.host, self.port))
+            self.s.setblocking(False)
             print("Client connected succesfully.")
         except:
             raise Exception("Server : Error while connecting try changing port / host.")

@@ -19,8 +19,24 @@ class AiTester :
     def __init__(self):
         self.server = Server.Server()
         self.flag_parser = FlagParser.FlagParser(len(sys.argv), sys.argv)
-        self.functions = {"host" : self.test_host}#, "port" : self.run_cmd, "send" : self.run_cmd, "recv" : self.run_cmd,
+        self.functions = {"host" : self.test_host, "port" : self.test_port, "connect" : self.test_connect, "send" : self.test_send}#, "recv" : self.run_cmd,
                         #"check" : self.run_cmd, "parse" : self.run_cmd, "connect" : self.run_cmd}
+                        
+    def connect(self, host, port):
+        try:
+            self.server.set_host(host)
+            self.server.set_port(port)
+            self.server.connect_server()
+        except Exception:
+            raise Exception("Error while connecting.")
+    
+    def concat_message(self, message):
+        try:
+            if not message:
+                return ""
+            return " ".join(message)
+        except:
+            print("Concat failed.", file=sys.stderr)
         
     def test_run(self):
         entry = input("Command > ")
@@ -45,3 +61,27 @@ class AiTester :
         except Exception:
             print("Error while setting host.", file=sys.stderr)
         
+    def test_port(self, cmd):
+        try:
+            self.server.set_port(int(cmd[1]))
+            if (self.server.port == int(cmd[1])):
+                print("Port successfully set.", file=sys.stderr)
+            else:
+                print("Error while setting port.", file=sys.stderr)
+        except Exception:
+            print("Error while setting port.", file=sys.stderr)
+            
+    def test_connect(self, cmd):
+        try:
+            self.connect(cmd[1], int(cmd[2]))
+            print("Connected to server.", file=sys.stderr)
+        except Exception:
+            print("Connection failed.", file=sys.stderr)
+            
+    def test_send(self, cmd):
+        try:
+            self.connect(cmd[1], int(cmd[2]))
+            self.server.send(self.concat_message(cmd[3:]))
+            print("Message sended to server.", file=sys.stderr)
+        except Exception:
+            print("Send failed.", file=sys.stderr)
