@@ -39,6 +39,12 @@ typedef struct command_s {
     int nb_args;
 } command_t;
 
+typedef struct command_ai_s {
+    char *command;
+    void (*func)(server_t *server, client_ai_t *client, char const **command);
+    int nb_args;
+} command_ai_t;
+
 /**
  * @brief read message from a socket
  * @param fd fd of the socket
@@ -59,7 +65,7 @@ int write_socket(int fd, char *str);
  * @param av information from the command line (option)
  * @return server_t* the server or NULL if error
  */
-server_t *create_server(char **av)
+server_t *create_server(char **av);
 
 /**
  * @brief Delete a server
@@ -89,4 +95,45 @@ void manage_server(server_t *server);
  */
 int check_team_name(server_t *server, char *team_name);
 
+/**
+ * @brief read request from list (pending or graphic) and add it to buffer_in
+ * @param server server for info and context
+ * @param list list to read from
+ */
+void read_pending_graphic_list(server_t *server, client_list_t *list);
+
+/**
+ * @brief write request from buffer_out from the list (pending or graphic)
+ * @param server server for info and context
+ * @param list list to write from
+ */
+void write_pending_graphic_list(server_t *server, client_list_t *list);
+
+/**
+ * @brief read ai list and add it to buffer_in
+ * @param server server for info and context
+ * @param list list to read from
+ */
+void read_ai_list(server_t *server, client_ai_list_t *list);
+
+/**
+ * @brief write ai list from buffer_out
+ * @param server server for info and context
+ * @param list list to write from
+ */
+void write_ai_list(server_t *server, client_ai_list_t *list);
+
+/**
+ * @brief add a string to a buffer, add '\n' at the end if not present
+ * @param buffer pointer to the buffer to add request
+ * @param str string to add to the buffer
+ * @param free_str if true, free str after adding it to buffer
+ */
+void add_to_buffer(char **buffer, char *str, bool_t free_str);
+
+/**
+ * @brief execute the command of the client graphic
+ * @param server server for info and context
+ */
+void exec_graphic_list(server_t *server);
 #endif //SERVER_SERVER_H

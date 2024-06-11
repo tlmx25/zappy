@@ -28,18 +28,36 @@ static void accept_new_client(server_t *server)
     if (new_socket == -1)
         return free(address);
     server->select_config->max_fd = (server->select_config->max_fd <
-                                     new_socket) ? new_socket : server->select_config->max_fd;
+    new_socket) ? new_socket : server->select_config->max_fd;
     new_client = create_client(new_socket);
-    add_client_to_list(server->pending_clients, new_client);
+    add_client_to_list(server->graphic_clients, new_client);
     free(address);
+}
+
+static void read_list(server_t *server)
+{
+    read_pending_graphic_list(server, server->pending_clients);
+    read_pending_graphic_list(server, server->graphic_clients);
+    read_ai_list(server, server->ai_clients);
+}
+
+static void write_list(server_t *server)
+{
+    write_pending_graphic_list(server, server->pending_clients);
+    write_pending_graphic_list(server, server->graphic_clients);
+    write_ai_list(server, server->ai_clients);
+}
+
+static void exec_list(server_t *server)
+{
+    exec_graphic_list(server);
 }
 
 void manage_server(server_t *server)
 {
-    if (FD_ISSET(server->socket, &server->select_config->readfds)) {
+    if (FD_ISSET(server->socket, &server->select_config->readfds))
         accept_new_client(server);
-    }
-    //TODO verifier si on peut lire le vlient recyperer les donner et les envoyer
-    //en gros read -> exec write
-
+    read_list(server);
+    exec_list(server);
+    write_list(server);
 }

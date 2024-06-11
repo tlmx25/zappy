@@ -15,7 +15,7 @@ void delete_server(server_t *server)
     if (server->graphic_clients)
         delete_client_list(server->graphic_clients);
     if (server->ai_clients)
-        delete_client_list(server->ai_clients);
+        delete_client_ai_list(server->ai_clients);
     if (server->pending_clients)
         delete_client_list(server->pending_clients);
     if (server->select_config)

@@ -8,6 +8,7 @@
 #include "client_ai.h"
 #include "server.h"
 
+
 static void is_graphic(server_t *server, client_t *client)
 {
     delete_client_from_list(server->pending_clients, client, false);
