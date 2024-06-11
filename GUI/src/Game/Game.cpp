@@ -58,6 +58,7 @@ void Game::render()
     window.clear();
     window.setView(map.view);
     map.renderTiles(window);
-    window.setView(window.getDefaultView());
+    // To draw UI elements correctly
+    // window.setView(window.getDefaultView());
     window.display();
 }

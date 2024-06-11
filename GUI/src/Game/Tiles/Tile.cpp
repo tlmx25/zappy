@@ -19,16 +19,17 @@ Tile::Tile(sf::Vector2i size, sf::Vector2i pos, int q0, int q1, int q2, int q3, 
     this->q5 = q5;
     this->q6 = q6;
     this->qAll = q0 + q1 + q2 + q3 + q4 + q5 + q6;
+    this->shape = sf::RectangleShape(sf::Vector2f(size.x, size.y));
 
-    try {
-        // load textures
-        // create sprites
-        // set textures to sprites
-        // link sprites to items
-    } catch (const std::exception &e) {
-        // TODO: faire erreur propre
-        std::cerr << e.what() << std::endl;
-    }
+    // try {
+    //     // load textures
+    //     // create sprites
+    //     // set textures to sprites
+    //     // link sprites to items
+    // } catch (const std::exception &e) {
+    //     // TODO: faire erreur propre
+    //     std::cerr << e.what() << std::endl;
+    // }
 }
 
 void Tile::addItem(int item)
@@ -163,4 +164,5 @@ void Tile::setFillColor(sf::Color color)
 void Tile::setPos(sf::Vector2i pos)
 {
     this->pos = pos;
+    this->shape.setPosition(pos.x, pos.y);
 }
