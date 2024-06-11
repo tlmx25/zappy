@@ -15,14 +15,14 @@ static void is_graphic(server_t *server, client_t *client)
     add_client_to_list(server->graphic_clients, client);
 }
 
-bool_t * WARN_RESULT convert_pending_client_to_ai(server_t *server,
+bool_t WARN_RESULT convert_pending_client_to_ai(server_t *server,
     client_t *client, char *name)
 {
     client_ai_t *new_client = create_client_ai(client->fd, client->buffer_in,
-        (position_t){0, 0});
+        (position_t){0, 0, NONE});
 
     if (new_client == NULL)
-        return NULL;
+        return false;
     new_client->fd = client->fd;
     new_client->team_name = my_strdup(name);
     // TODO : UPDATE POSITION WITH EGG
@@ -36,7 +36,6 @@ bool_t * WARN_RESULT convert_pending_client_to_ai(server_t *server,
 void manage_pending_client(server_t *server, client_t *client)
 {
     char *name = my_clean_string(client->buffer_in, "\n", 0);
-    client_ai_t *tmp_ai = NULL;
 
     if (client->buffer_in == NULL)
         return;
