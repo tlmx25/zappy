@@ -54,7 +54,13 @@ This class is primarily used to parse the flags provided during the AI's executi
 </details>
 
 <details>
-    <summary>Server class</summary>
+
+<summary>Server class</summary>
+
+### Behavior
+
+The main goal of this class is to manage socket beetween zappy server and our ai. Thanks to this class, ai can connect to a server, send data, receive data and check if there is data to get using select function. 
+
 </details>
 
 
