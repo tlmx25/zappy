@@ -12,7 +12,7 @@ int main(int ac, char **av)
 {
     srand(static_cast<unsigned>(time(0)));
     // printf("Hello, World!\n");
-    Game game(5, 5);
+    Game game(30, 30);
     game.run();
     return (0);
 
