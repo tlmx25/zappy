@@ -25,6 +25,7 @@ class Tile
         void setAllItemsQuantity(int q0, int q1, int q2, int q3, int q4, int q5, int q6);
         void setItemQuantity(int item, int quantity);
         sf::Vector2i getPos();
+        sf::RectangleShape getShape();
         void setFillColor(sf::Color color);
         void setPos(sf::Vector2i pos);
     private:

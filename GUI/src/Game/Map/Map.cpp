@@ -28,3 +28,41 @@ Map::Map(int width, int height, int windowSize) : width(width), height(height), 
         }
     }
 }
+
+sf::Color Map::generateRandomColor()
+{
+    float t = static_cast<float>(rand()) / RAND_MAX; // Random float between 0 and 1
+    return interpolateColor(darkColor, lightColor, t);
+}
+
+void Map::renderTiles(sf::RenderWindow &window)
+{
+    for (auto &tile : tiles) {
+        window.draw(tile.getShape());
+    }
+}
+
+void Map::updateColors(float time)
+{
+    if (time - lastColorChange > colorChangeSpeed) {
+        for (size_t i = 0; i < targetColors.size(); ++i) {
+            targetColors[i] = generateRandomColor();
+        }
+        lastColorChange = time;
+    }
+
+    for (size_t i = 0; i < tiles.size(); ++i) {
+        float t = (std::sin(time + phases[i]) + 1) / 2;
+        sf ::Color newColor = interpolateColor(currentColors[i], targetColors[i], t);
+        tiles[i].setFillColor(newColor);
+    }
+}
+
+sf::Color Map::interpolateColor(sf::Color start, sf::Color end, float t)
+{
+    return sf::Color(
+        static_cast<sf::Uint8>(start.r + t * (end.r - start.r)),
+        static_cast<sf::Uint8>(start.g + t * (end.g - start.g)),
+        static_cast<sf::Uint8>(start.b + t * (end.b - start.b))
+    );
+}

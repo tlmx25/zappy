@@ -149,3 +149,18 @@ void Tile::setItemQuantity(int item, int quantity)
             break;
     }
 }
+
+sf::RectangleShape Tile::getShape()
+{
+    return (this->shape);
+}
+
+void Tile::setFillColor(sf::Color color)
+{
+    this->shape.setFillColor(color);
+}
+
+void Tile::setPos(sf::Vector2i pos)
+{
+    this->pos = pos;
+}

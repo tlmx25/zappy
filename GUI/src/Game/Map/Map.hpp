@@ -12,6 +12,7 @@
     #include <algorithm>
     #include <vector>
     #include <SFML/Graphics.hpp>
+    #include <cmath>
     #include "Tile.hpp"
 
 // TODO: Objects sprites handled here: create, load etc in constructor
@@ -33,6 +34,8 @@ class Map
         int height;
         int tileSize = 80;
         int windowSize = 1200;
+        float colorChangeSpeed = 1.0f;
+        float lastColorChange = 0.0f;
         sf::Color lightColor = sf::Color(36, 76, 156);
         sf::Color darkColor = sf::Color(1, 39, 117);
         std::vector<Tile> tiles = std::vector<Tile>(width * height);
