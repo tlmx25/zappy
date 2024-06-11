@@ -11,6 +11,8 @@
 2. [AI Architecture](#ai-architecture)
 3. [Class explanations](#class-explanations)
 4. [Functional tests](#functional-tests)
+    - [Running tests](#running-tests)
+    - [Implement tests](#implement-tests)
 5. [Contributors](#contributors)
 
 ## How to use
@@ -21,7 +23,7 @@ To run our bot, simply go to the root and create executables using make command.
 make
 ```
 
-Then run ou bot using the following command:
+Then run our bot using the following command:
 
 ```sh
 ./zappy_ai -p port -n name -h host
