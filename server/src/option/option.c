@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include "option.h"
 #include "my.h"
+#include "server.h"
 
 static const option_tab_t option_tab[] = {
     {"-p", &parse_port},
@@ -17,6 +18,8 @@ static const option_tab_t option_tab[] = {
     {"-n", &parse_name},
     {"-c", &parse_clients_nb},
     {"-f", &parse_freq},
+    {"-d", &parse_debug},
+    {"--debug", &parse_debug},
     {NULL, NULL}
 };
 
@@ -96,6 +99,7 @@ option_t *parse_option(const char **av)
 
 void dump_option(option_t *option)
 {
+    printf("debug option: %i\n", debug_active());
     printf("port: %d\n", option->port);
     printf("width: %d\n", option->width);
     printf("height: %d\n", option->height);

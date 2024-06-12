@@ -84,6 +84,7 @@ static server_t *start_server(server_t *server)
     }
     server->select_config->max_fd = server->socket;
     server->is_running = true;
+    debug_print("Server started\n");
     return server;
 }
 
@@ -92,6 +93,8 @@ server_t *create_server(char **av)
     option_t *option = parse_option((const char **)av);
     server_t *server;
 
+    if (debug_active())
+        dump_option(option);
     if (option == NULL)
         return NULL;
     server = init_server(option->port);
