@@ -124,4 +124,19 @@ void delete_client_ai_list(client_ai_list_t *list);
  * @param num num of the client to delete
  */
 void delete_client_ai_by_num(client_ai_list_t *list, int num);
+
+/**
+ * @brief send a message to all clients
+ * @param list list of clients
+ * @param msg message to send
+ */
+void send_to_all_ai(client_ai_list_t *list, char *msg);
+
+/**
+ * @brief send a message to all clients except one
+ * @param list list of clients
+ * @param msg message to send
+ * @param client client to not send the message to
+ */
+void send_to_other_ai(client_ai_list_t *list, char *msg, client_ai_t *client);
 #endif //SERVER_CLIENT_AI_H

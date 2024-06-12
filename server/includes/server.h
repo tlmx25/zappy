@@ -40,7 +40,6 @@ typedef struct command_s {
 typedef struct command_ai_s {
     char *command;
     void (*func)(server_t *server, client_ai_t *client, char const **command);
-    int nb_args;
 } command_ai_t;
 
 /**
