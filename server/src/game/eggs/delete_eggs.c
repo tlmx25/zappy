@@ -66,6 +66,8 @@ void delete_egg_by_team_position(egg_list_t *list, char *team_name,
         next = tmp->next;
         if (my_strcmp(tmp->team_name, team_name) == 0 &&
             tmp->pos.x == pos.x && tmp->pos.y == pos.y) {
+            debug_print("delete egg team [%s] pos [%d, %d]\n", team_name,
+                pos.x, pos.y);
             delete_egg_from_list(list, tmp, 1);
             return;
         }

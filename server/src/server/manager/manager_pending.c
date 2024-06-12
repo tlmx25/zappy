@@ -18,6 +18,14 @@ static void is_graphic(server_t *server, client_t *client)
     add_client_to_list(server->graphic_clients, client);
 }
 
+static void debug_pending_to_ai(client_t *client, client_ai_t *new_client)
+{
+    debug_print("Client %d is a AI client, team [%s], is player id is [%i]",
+    client->fd, new_client->team_name, new_client->num_player);
+    printf(" and his position is [%i, %i]\n", new_client->position.x,
+    new_client->position.y);
+}
+
 bool convert_pending_client_to_ai(server_t *server,
     client_t *client, char *name)
 {
@@ -34,8 +42,7 @@ bool convert_pending_client_to_ai(server_t *server,
     }
     new_client->fd = client->fd;
     add_client_ai_to_list(server->ai_clients, new_client);
-    debug_print("Client %d is a AI client, team [%s], is player id is [%i]\n",
-    client->fd, name, new_client->num_player);
+    debug_pending_to_ai(client, new_client);
     client_is_converted(server->pending_clients, client);
     return true;
 }
