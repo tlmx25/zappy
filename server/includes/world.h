@@ -29,6 +29,18 @@ typedef struct world_s {
 
 typedef struct server_s server_t;
 
+/**
+ * @brief Init the map of the game with the width and height of the server
+ * @param server the server
+ * @return bool true if the map is correctly initialized, false otherwise
+ */
 bool init_game(server_t *server);
+
+/**
+ * @brief Delete the world
+ * @param world the world to delete
+ * @return bool true if the world is correctly deleted, false otherwise
+ */
+bool delete_world(world_t *world);
 
 #endif //ZAPPY_WORLD_H

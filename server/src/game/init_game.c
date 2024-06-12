@@ -122,12 +122,12 @@ bool init_game(server_t *server)
     return true;
 }
 
-bool delet_world(server_t *server)
+bool delete_world(world_t *world)
 {
-    for (int i = 0; server->world->teams[i].name != NULL; i++)
-        free(server->world->teams[i].name);
-    free(server->world->teams);
-    free(server->world->tiles);
-    free(server->world);
+    for (int i = 0; world->teams[i].name != NULL; i++)
+        free(world->teams[i].name);
+    free(world->teams);
+    free(world->tiles);
+    free(world);
     return true;
 }
