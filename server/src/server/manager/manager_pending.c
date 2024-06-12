@@ -10,11 +10,14 @@
 
 static void is_graphic(server_t *server, client_t *client)
 {
+    debug_print("Client %d is a graphic client\n", client->fd);
     delete_client_from_list(server->pending_clients, client, false);
+    free(client->buffer_in);
+    client->buffer_in = NULL;
     add_client_to_list(server->graphic_clients, client);
 }
 
-bool_t WARN_RESULT convert_pending_client_to_ai(server_t *server,
+bool_t convert_pending_client_to_ai(server_t *server,
     client_t *client, char *name)
 {
     client_ai_t *new_client = create_client_ai(client->fd, client->buffer_in,
@@ -33,6 +36,15 @@ bool_t WARN_RESULT convert_pending_client_to_ai(server_t *server,
     return true;
 }
 
+static void error_pending_client(client_t *client, char *name)
+{
+    add_to_buffer(&client->buffer_out, "ko\n", false);
+    debug_print("Client %d is not a valid client : [%s]\n", client->fd, name);
+    free(name);
+    free(client->buffer_in);
+    client->buffer_in = NULL;
+}
+
 void manage_pending_client(server_t *server, client_t *client)
 {
     char *name = my_clean_string(client->buffer_in, "\n", 0);
@@ -44,11 +56,12 @@ void manage_pending_client(server_t *server, client_t *client)
         free(name);
         return;
     }
-    for (int i = 0; server->option->names[i] != NULL; i++) {
-        if (my_strcmp(server->option->names[i], name) == 0) {
-            convert_pending_client_to_ai(server, client, name);
-            free(name);
-            return;
-        }
+    if (check_team_name(server, name)) {
+        debug_print("Client %d is a AI client for team [%s]\n", client->fd,
+        name);
+        convert_pending_client_to_ai(server, client, name);
+        free(name);
+        return;
     }
+    error_pending_client(client, name);
 }

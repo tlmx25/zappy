@@ -16,6 +16,7 @@ typedef struct client_s {
     char *team_name;
     char *buffer_in;
     char *buffer_out;
+    int to_disconnect;
     struct client_s *next;
     struct client_s *prev;
 } client_t;

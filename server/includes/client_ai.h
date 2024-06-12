@@ -44,6 +44,7 @@ typedef struct client_ai_s {
     char *buff_out;
     struct client_ai_s *next;
     struct client_ai_s *prev;
+    int to_disconnect;
     position_t position;
     size_t level;
     size_t TTL;

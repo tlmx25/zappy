@@ -16,6 +16,7 @@
     #include "client.h"
     #include "client_ai.h"
     #include "management_socket.h"
+    #define UNUSED __attribute__((unused))
 
 typedef enum {
     false,
@@ -136,4 +137,37 @@ void add_to_buffer(char **buffer, char *str, bool_t free_str);
  * @param server server for info and context
  */
 void exec_graphic_list(server_t *server);
+
+/**
+ * @brief manage request of pending client client
+ * @param server server
+ * @param client client to manage request
+ */
+void manage_pending_client(server_t *server, client_t *client);
+
+/**
+ * @brief exec action from pending client
+ * @param server
+ */
+void exec_pending(server_t *server);
+
+/**
+ * @brief activate debug mode
+ * @param activate 1 to activate, 0 to deactivate or -1 to get the status
+ * @return int 1 if activated, 0 if deactivated
+ */
+int activate_debug_mode(int activate);
+
+/**
+ * @brief check if debug mode is active
+ * @return int 1 if activated, 0 if deactivated
+ */
+int debug_active(void);
+
+/**
+ * @brief print a debug message
+ * @param format format of the message
+ * @param ... arguments of the message
+ */
+void debug_print(const char *format, ...);
 #endif //SERVER_SERVER_H

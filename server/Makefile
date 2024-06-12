@@ -11,6 +11,7 @@ CC = gcc
 VPATH += src/
 VPATH += src/network/
 VPATH += src/client/
+VPATH += src/utils/
 VPATH += src/client/AI
 VPATH += src/client/graphic_pending/
 VPATH += src/server/
@@ -44,6 +45,10 @@ SRC += delete_client_ai.c
 SRC += read_write_pending_graphic.c
 SRC += read_write_ai_client.c
 SRC += exec_graphic.c
+SRC += exec_pending.c
+SRC += exec_ai.c
+SRC += debug_print.c
+SRC += debug_option.c
 
 
 CFLAGS = -Wall -Wextra -I includes/
