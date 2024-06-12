@@ -58,6 +58,7 @@ static void exec_list(server_t *server)
 {
     exec_pending(server);
     exec_graphic_list(server);
+    exec_ai_list(server);
 }
 
 void manage_server(server_t *server)

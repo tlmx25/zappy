@@ -122,10 +122,11 @@ bool init_game(server_t *server)
     return true;
 }
 
+//TODO: free team name with nbr team
 bool delete_world(world_t *world)
 {
-    for (int i = 0; world->teams[i].name != NULL; i++)
-        free(world->teams[i].name);
+//    for (size_t i = 0;  i < world.nb_team; i++)
+//        free(world->teams[i].name);
     free(world->teams);
     free(world->tiles);
     free(world);

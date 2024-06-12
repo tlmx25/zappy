@@ -13,6 +13,7 @@ static void is_graphic(server_t *server, client_t *client)
     debug_print("Client %d is a graphic client\n", client->fd);
     delete_client_from_list(server->pending_clients, client, false);
     free(client->buffer_in);
+    client->team_name = my_strdup("GRAPHIC");
     client->buffer_in = NULL;
     add_client_to_list(server->graphic_clients, client);
 }
@@ -27,11 +28,10 @@ bool convert_pending_client_to_ai(server_t *server,
     if (new_client == NULL)
         return false;
     new_client->fd = client->fd;
-    if (server->ai_clients->size == 0)
-        server->ai_clients->head = new_client;
-    else
-        add_client_ai_to_list(server->ai_clients, new_client);
-    client->to_disconnect = true;
+    add_client_ai_to_list(server->ai_clients, new_client);
+    debug_print("Client %d is a AI client, team [%s], is player id is [%i]\n",
+    client->fd, name, new_client->num_player);
+    client_is_converted(server->pending_clients, client);
     return true;
 }
 
@@ -56,8 +56,6 @@ void manage_pending_client(server_t *server, client_t *client)
         return;
     }
     if (check_team_name(server, name)) {
-        debug_print("Client %d is a AI client for team [%s]\n", client->fd,
-        name);
         convert_pending_client_to_ai(server, client, name);
         free(name);
         return;

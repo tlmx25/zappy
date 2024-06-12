@@ -55,6 +55,7 @@ SRC += init_game.c
 SRC += create_eggs.c
 SRC += delete_eggs.c
 SRC += get_eggs.c
+SRC += sending.c
 
 CFLAGS = -Wall -Wextra -I includes/
 

@@ -7,15 +7,23 @@
 
 #include "server.h"
 
+static const command_ai_t commands[] = {
+        {NULL, NULL}
+};
+
 static int check_death(server_t *server, client_ai_t *tmp)
 {
     tmp->TTL--;
     if (tmp->TTL == 0) {
         if (tmp->inventory.food != 0) {
             tmp->inventory.food--;
+            debug_print("Client AI %i has %i food left\n",
+            tmp->num_player, tmp->inventory.food);
             tmp->TTL = 126;
         } else {
             add_to_buffer(&tmp->buff_out, "dead\n", false);
+            send_to_all_graphic_arg(server->graphic_clients, "pdi %i\n",
+            tmp->num_player);
             return 1;
         }
     }

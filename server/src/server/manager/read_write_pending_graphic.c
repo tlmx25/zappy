@@ -25,7 +25,8 @@ void read_pending_graphic_list(server_t *server, client_list_t *list)
         if (FD_ISSET(tmp->fd, &server->select_config->readfds))
             error_read(tmp);
         if (tmp->to_disconnect == true) {
-            debug_print("Client GRAPHIC disconnected fd: %i\n", tmp->fd);
+            debug_print("Client %s disconnected fd: %i\n", (tmp->team_name) ?
+            tmp->team_name : "PENDING", tmp->fd);
             delete_client_from_list(list, tmp, true);
         }
         tmp = next;

@@ -40,8 +40,10 @@ void run_server(server_t *server)
 {
     while (server->is_running) {
         set_fds(server);
-        if (exec_select(server->select_config) == ERROR)
+        if (exec_select(server->select_config) == ERROR) {
+            debug_print("Error in select\n");
             return;
+        }
         read_command(server);
         manage_server(server);
     }
