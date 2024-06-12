@@ -20,6 +20,7 @@ static void init_client_ai(client_ai_t *client)
     client->inventory.mendiane = 0;
     client->inventory.phiras = 0;
     client->inventory.thystame = 0;
+    client->to_disconnect = 0;
 }
 
 client_ai_t *create_client_ai(int fd, char *team_name, position_t position)
