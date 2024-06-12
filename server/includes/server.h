@@ -167,4 +167,10 @@ int debug_active(void);
  * @param ... arguments of the message
  */
 void debug_print(const char *format, ...);
+
+/**
+ * @brief manage request of client ai
+ * @param server
+ */
+void exec_ai_list(server_t *server);
 #endif //SERVER_SERVER_H

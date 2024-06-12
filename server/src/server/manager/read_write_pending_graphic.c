@@ -24,6 +24,10 @@ void read_pending_graphic_list(server_t *server, client_list_t *list)
         next = tmp->next;
         if (FD_ISSET(tmp->fd, &server->select_config->readfds))
             error_read(tmp);
+        if (tmp->to_disconnect == true) {
+            debug_print("Client GRAPHIC disconnected fd: %i\n", tmp->fd);
+            delete_client_from_list(list, tmp, true);
+        }
         tmp = next;
     }
 }
@@ -40,10 +44,6 @@ void write_pending_graphic_list(server_t *server, client_list_t *list)
             write_socket(tmp->fd, tmp->buffer_out);
             free(tmp->buffer_out);
             tmp->buffer_out = NULL;
-        }
-        if (tmp->to_disconnect == true) {
-            debug_print("Client GRAPHIC disconnected fd: %i\n", tmp->fd);
-            delete_client_from_list(list, tmp, true);
         }
         tmp = next;
     }
