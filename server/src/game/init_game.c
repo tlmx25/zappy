@@ -58,7 +58,8 @@ static void init_ressources(inventory_t *inventory, server_t *server)
     inventory->sibur = server->option->width * server->option->height * 0.1;
     inventory->mendiane = server->option->width * server->option->height * 0.1;
     inventory->phiras = server->option->width * server->option->height * 0.08;
-    inventory->thystame = server->option->width * server->option->height * 0.05;
+    inventory->thystame = server->option->width *
+        server->option->height * 0.05;
 }
 
 static void distribute_ressources(server_t *server)
