@@ -14,7 +14,7 @@ static void is_graphic(server_t *server, client_t *client)
     add_client_to_list(server->graphic_clients, client);
 }
 
-bool WARN_RESULT convert_pending_client_to_ai(server_t *server,
+bool convert_pending_client_to_ai(server_t *server,
     client_t *client, char *name)
 {
     client_ai_t *new_client = create_client_ai(client->fd, client->buffer_in,
