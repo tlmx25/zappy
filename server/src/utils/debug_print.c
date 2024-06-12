@@ -7,6 +7,7 @@
 
 #include <stdarg.h>
 #include <stdio.h>
+#include <time.h>
 
 int activate_debug_mode(int activate)
 {
@@ -25,9 +26,17 @@ int debug_active(void)
 void debug_print(const char *format, ...)
 {
     va_list args;
+    time_t current_time;
+    struct tm * local_time_info;
 
     if (debug_active() == 1) {
-        printf("\033[34m[DEBUG]\033[0m ");
+        time(&current_time);
+        local_time_info = localtime(&current_time);
+
+        printf("\033[34m[DEBUG %02d:%02d:%02d]\033[0m ",
+            local_time_info->tm_hour,
+            local_time_info->tm_min,
+            local_time_info->tm_sec);
         va_start(args, format);
         vprintf(format, args);
         va_end(args);
