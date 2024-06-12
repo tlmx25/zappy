@@ -10,20 +10,9 @@
 #include "server.h"
 #include "world.h"
 
-static void reparition_ressources(server_t *server, inventory_t *inventory, int i)
+static void second_repartion_ressources(server_t *server,
+    inventory_t *inventory, int i)
 {
-    if (inventory->food > 0) {
-        server->world->tiles[i].object->food++;
-        inventory->food--;
-    }
-    if (inventory->linemate > 0) {
-        server->world->tiles[i].object->linemate++;
-        inventory->linemate--;
-    }
-    if (inventory->deraumere > 0) {
-        server->world->tiles[i].object->deraumere++;
-        inventory->deraumere--;
-    }
     if (inventory->sibur > 0) {
         server->world->tiles[i].object->sibur++;
         inventory->sibur--;
@@ -42,24 +31,43 @@ static void reparition_ressources(server_t *server, inventory_t *inventory, int 
     }
 }
 
+static void repartion_ressources(server_t *server, inventory_t *inventory,
+    int i)
+{
+    if (inventory->food > 0) {
+        server->world->tiles[i].object->food++;
+        inventory->food--;
+    }
+    if (inventory->linemate > 0) {
+        server->world->tiles[i].object->linemate++;
+        inventory->linemate--;
+    }
+    if (inventory->deraumere > 0) {
+        server->world->tiles[i].object->deraumere++;
+        inventory->deraumere--;
+    }
+    second_repartion_ressources(server, inventory, i);
+}
+
 static void distribute_ressources(server_t *server)
 {
     inventory_t inventory = {0};
+    int i = 0;
+
     inventory.food = server->option->width * server->option->height * 0.5;
     inventory.linemate = server->option->width * server->option->height * 0.3;
-    inventory.deraumere = server->option->width * server->option->height * 0.15;
+    inventory.deraumere = server->option->width *
+        server->option->height * 0.15;
     inventory.sibur = server->option->width * server->option->height * 0.1;
     inventory.mendiane = server->option->width * server->option->height * 0.1;
     inventory.phiras = server->option->width * server->option->height * 0.08;
     inventory.thystame = server->option->width * server->option->height * 0.05;
-    int i = 0;
-
     srand(time(NULL));
     while (inventory.food > 0 || inventory.linemate > 0 || inventory.deraumere
         > 0 || inventory.sibur > 0 || inventory.mendiane > 0 ||
         inventory.phiras > 0 || inventory.thystame > 0) {
         i = rand() % (server->option->width * server->option->height);
-        reparition_ressources(server, &inventory, i);
+        repartion_ressources(server, &inventory, i);
     }
 }
 
@@ -75,7 +83,7 @@ static bool init_map(server_t *server)
         server->world->tiles[i].coordinate->x = i % server->option->width;
         server->world->tiles[i].coordinate->y = i / server->option->width;
         server->world->tiles[i].coordinate->direction = NONE;
-        object_ptr = (int*)&server->world->tiles[i].object;
+        object_ptr = (int *)&server->world->tiles[i].object;
         for (size_t j = 0; j < sizeof(inventory_t) / sizeof(int); j++)
             object_ptr[j] = 0;
         server->world->tiles[i].egg = false;

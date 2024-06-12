@@ -56,7 +56,7 @@ static void write_list(server_t *server)
 
 static void exec_list(server_t *server)
 {
-    // exec_pending(server);
+    exec_pending(server);
     exec_graphic_list(server);
 }
 
