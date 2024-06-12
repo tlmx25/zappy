@@ -22,7 +22,7 @@ static void accept_new_client(server_t *server)
         return;
     address = calloc(sizeof(struct sockaddr_in), 1);
     if (address == NULL)
-        return;
+            return;
     new_socket = accept(server->socket, (struct sockaddr *)address,
                         (socklen_t *)&addrlen);
     if (new_socket == -1)
@@ -30,7 +30,7 @@ static void accept_new_client(server_t *server)
     server->select_config->max_fd = (server->select_config->max_fd <
     new_socket) ? new_socket : server->select_config->max_fd;
     new_client = create_client(new_socket);
-    add_client_to_list(server->graphic_clients, new_client);
+    add_client_to_list(server->pending_clients, new_client);
     free(address);
 }
 
