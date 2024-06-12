@@ -42,7 +42,7 @@ void write_ai_list(server_t *server, client_ai_list_t *list)
         next = tmp->next;
         if (!FD_ISSET(tmp->fd, &server->select_config->writefds))
             continue;
-        if (tmp->buff_out != NULL ) {
+        if (tmp->buff_out != NULL) {
             write_socket(tmp->fd, tmp->buff_out);
             free(tmp->buff_out);
             tmp->buff_out = NULL;

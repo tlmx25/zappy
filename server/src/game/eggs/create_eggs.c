@@ -20,7 +20,7 @@ egg_t *create_egg(position_t pos, char *team_name)
     return new;
 }
 
-egg_list_t  *create_egg_list(void)
+egg_list_t *create_egg_list(void)
 {
     egg_list_t *list = malloc(sizeof(egg_list_t));
 

@@ -19,3 +19,14 @@ egg_t *get_egg_by_team_position(egg_list_t *list, char *team_name,
     }
     return NULL;
 }
+
+egg_t *get_egg_by_position(egg_list_t *list, position_t pos)
+{
+    egg_t *tmp = list->head;
+
+    for (; tmp != NULL; tmp = tmp->next) {
+        if (tmp->pos.x == pos.x && tmp->pos.y == pos.y)
+            return tmp;
+    }
+    return NULL;
+}

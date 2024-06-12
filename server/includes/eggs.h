@@ -107,4 +107,11 @@ void delete_egg_by_team_position(egg_list_t *list, char *team_name,
 egg_t *get_egg_by_team_position(egg_list_t *list, char *team_name,
     position_t pos);
 
+/**
+ * @brief Get an egg by position
+ * @param list list of eggs
+ * @param pos position of the egg
+ * @return egg_t * if found or NULL if not found
+ */
+egg_t *get_egg_by_position(egg_list_t *list, position_t pos);
 #endif //SERVER_EGGS_H
