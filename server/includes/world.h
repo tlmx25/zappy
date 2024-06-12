@@ -23,6 +23,7 @@ typedef struct team_s {
 } team_t;
 
 typedef struct world_s {
+    int nbr_teams;
     tile_t *tiles;
     team_t *teams;
 } world_t;
