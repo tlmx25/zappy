@@ -27,4 +27,8 @@ typedef struct world_s {
     team_t *teams;
 } world_t;
 
+typedef struct server_s server_t;
+
+bool init_game(server_t *server);
+
 #endif //ZAPPY_WORLD_H
