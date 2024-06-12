@@ -2,10 +2,9 @@
 ** EPITECH PROJECT, 2024
 ** zappy
 ** File description:
-** init_game.c
+** init_world.c
 */
 
-#include <string.h>
 #include <time.h>
 #include "server.h"
 #include "world.h"
@@ -80,7 +79,7 @@ static void distribute_ressources(server_t *server)
     }
 }
 
-static bool init_map(server_t *server)
+bool init_world(server_t *server)
 {
     int *object_ptr = 0;
     int i = 0;
@@ -97,39 +96,9 @@ static bool init_map(server_t *server)
         object_ptr = (int *)&server->world->tiles[i].object;
         for (size_t j = 0; j < sizeof(inventory_t) / sizeof(int); j++)
             object_ptr[j] = 0;
-        server->world->tiles[i].egg = false;
         server->world->tiles[i].ai = 0;
     }
     distribute_ressources(server);
-    return true;
-}
-
-static bool team_init(server_t *server)
-{
-    for (server->world->nbr_teams = 0;
-        server->option->names[server->world->nbr_teams] != NULL;
-        server->world->nbr_teams++);
-    server->world->teams = malloc(sizeof(team_t) * server->world->nbr_teams);
-    if (server->world->teams == NULL)
-        return (false);
-    for (int i = 0; i < server->world->nbr_teams; i++) {
-        server->world->teams[i].name = strdup(server->option->names[i]);
-        server->world->teams[i].max_clients = server->option->clients_nb;
-        server->world->teams[i].current_clients = 0;
-    }
-    return true;
-}
-
-bool init_game(server_t *server)
-{
-    debug_print("Init game\n");
-    server->world = malloc(sizeof(world_t));
-    if (server->world == NULL)
-        return false;
-    if (init_map(server) == false)
-        return false;
-    if (team_init(server) == false)
-        return false;
     return true;
 }
 
