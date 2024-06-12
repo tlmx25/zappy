@@ -17,7 +17,8 @@ static void is_graphic(server_t *server, client_t *client)
     add_client_to_list(server->graphic_clients, client);
 }
 
-bool_t convert_pending_client_to_ai(server_t *server,
+// TODO : UPDATE POSITION WITH EGG
+bool convert_pending_client_to_ai(server_t *server,
     client_t *client, char *name)
 {
     client_ai_t *new_client = create_client_ai(client->fd, name,
@@ -25,7 +26,6 @@ bool_t convert_pending_client_to_ai(server_t *server,
 
     if (new_client == NULL)
         return false;
-    // TODO : UPDATE POSITION WITH EGG
     new_client->fd = client->fd;
     if (server->ai_clients->size == 0)
         server->ai_clients->head = new_client;

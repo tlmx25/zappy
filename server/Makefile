@@ -10,16 +10,17 @@ CC = gcc
 
 VPATH += src/
 VPATH += src/network/
-VPATH += src/client/
 VPATH += src/utils/
+VPATH += src/option/
+VPATH += src/client/
 VPATH += src/client/AI
 VPATH += src/client/graphic_pending/
 VPATH += src/server/
 VPATH += src/server/utils
 VPATH += src/server/manager
-VPATH += src/option/
 VPATH += src/client/classic/
 VPATH += src/client/graphic/
+VPATH += src/game/
 
 SRC += main.c
 SRC += management_socket.c
@@ -49,7 +50,7 @@ SRC += exec_pending.c
 SRC += exec_ai.c
 SRC += debug_print.c
 SRC += debug_option.c
-
+SRC += init_game.c
 
 CFLAGS = -Wall -Wextra -I includes/
 

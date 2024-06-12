@@ -5,26 +5,22 @@
 ** server
 */
 
-
 #ifndef SERVER_SERVER_H
     #define SERVER_SERVER_H
     #define ERROR 84
+    #define UNUSED __attribute__((unused))
     #include <unistd.h>
     #include <stdlib.h>
     #include <stdio.h>
+    #include <stdbool.h>
     #include "option.h"
     #include "client.h"
     #include "client_ai.h"
     #include "management_socket.h"
-    #define UNUSED __attribute__((unused))
-
-typedef enum {
-    false,
-    true
-} bool_t;
+    #include "world.h"
 
 typedef struct server_s {
-    bool_t is_running;
+    bool is_running;
     int port;
     int socket;
     select_t *select_config;
@@ -32,6 +28,7 @@ typedef struct server_s {
     client_list_t *graphic_clients;
     client_ai_list_t *ai_clients;
     option_t *option;
+    world_t *world;
 } server_t;
 
 typedef struct command_s {
@@ -130,7 +127,7 @@ void write_ai_list(server_t *server, client_ai_list_t *list);
  * @param str string to add to the buffer
  * @param free_str if true, free str after adding it to buffer
  */
-void add_to_buffer(char **buffer, char *str, bool_t free_str);
+void add_to_buffer(char **buffer, char *str, bool free_str);
 
 /**
  * @brief execute the command of the client graphic
