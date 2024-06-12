@@ -16,7 +16,7 @@ client_t *get_client_by_fd(client_list_t *list, int fd)
     return tmp;
 }
 
-void client_is_converted(client_list_t  *list, client_t *client)
+void client_is_converted(client_list_t *list, client_t *client)
 {
     if (client == NULL)
         return;

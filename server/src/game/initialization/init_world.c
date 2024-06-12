@@ -104,7 +104,7 @@ bool init_world(server_t *server)
 bool delete_world(world_t *world)
 {
     debug_print("Delete world\n");
-    for (int i = 0; world->teams[i].name != NULL; i++)
+    for (int i = 0; i < world->nbr_teams; i++)
         free(world->teams[i].name);
     free(world->teams);
     free(world->tiles);
