@@ -22,6 +22,7 @@ VPATH += src/client/classic/
 VPATH += src/client/graphic/
 VPATH += src/game/
 VPATH += src/game/eggs
+VPATH += src/game/initialization
 
 SRC += main.c
 SRC += management_socket.c
@@ -55,6 +56,8 @@ SRC += init_game.c
 SRC += create_eggs.c
 SRC += delete_eggs.c
 SRC += get_eggs.c
+SRC += init_team.c
+SRC += init_world.c
 SRC += sending.c
 
 CFLAGS = -Wall -Wextra -I includes/

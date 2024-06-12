@@ -108,6 +108,14 @@ egg_t *get_egg_by_team_position(egg_list_t *list, char *team_name,
     position_t pos);
 
 /**
+ *
+ * @param list Get an egg by team name
+ * @param team_name team name of the egg
+ * @return egg_t* egg found, NULL if not found
+ */
+egg_t *get_egg_by_team(egg_list_t *list, char *team_name);
+
+/**
  * @brief Get an egg by position
  * @param list list of eggs
  * @param pos position of the egg

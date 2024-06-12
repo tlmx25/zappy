@@ -8,11 +8,14 @@
 #ifndef ZAPPY_WORLD_H
     #define ZAPPY_WORLD_H
     #include "server.h"
+    #include "eggs.h"
+
+typedef struct egg_list_s egg_list_t;
+typedef struct server_s server_t;
 
 typedef struct tile_s {
     position_t coordinate;
     inventory_t object;
-    bool egg;
     size_t ai;
 } tile_t;
 
@@ -23,11 +26,11 @@ typedef struct team_s {
 } team_t;
 
 typedef struct world_s {
+    int nbr_teams;
     tile_t *tiles;
     team_t *teams;
+    egg_list_t *eggs;
 } world_t;
-
-typedef struct server_s server_t;
 
 /**
  * @brief Init the map of the game with the width and height of the server
@@ -35,6 +38,20 @@ typedef struct server_s server_t;
  * @return bool true if the map is correctly initialized, false otherwise
  */
 bool init_game(server_t *server);
+
+/**
+ * @brief Init all informations about the teams
+ * @param server the server
+ * @return bool true if the teams are correctly initialized, false otherwise
+ */
+bool team_init(server_t *server);
+
+/**
+ * @brief Init the world
+ * @param server the server
+ * @return bool true if the world is correctly initialized, false otherwise
+ */
+bool init_world(server_t *server);
 
 /**
  * @brief Delete the world
