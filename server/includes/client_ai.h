@@ -10,6 +10,7 @@
 #ifndef SERVER_CLIENT_AI_H
     #define SERVER_CLIENT_AI_H
     #include <stddef.h>
+    #define WARN_RESULT __attribute__((warn_unused_result))
 
 typedef struct inventory_s {
     int food;
@@ -77,7 +78,7 @@ void add_client_ai_to_list(client_ai_list_t *list, client_ai_t *client);
  * @brief Create a new client list
  * @param list list to create
  */
-void create_client_ai_list(client_ai_list_t *list);
+client_ai_list_t *create_client_ai_list(void);
 
 /**
  * @brief Create and add a client to the list

@@ -66,7 +66,7 @@ static server_t *init_server(int port)
     }
     server->pending_clients = create_client_list();
     server->graphic_clients = create_client_list();
-    server->ai_clients = create_client_list();
+    server->ai_clients = create_client_ai_list();
     if (!server->pending_clients || !server->graphic_clients
         || !server->ai_clients) {
         delete_server(server);
@@ -89,7 +89,7 @@ static server_t *start_server(server_t *server)
 
 server_t *create_server(char **av)
 {
-    option_t *option = parse_option((const char**)av);
+    option_t *option = parse_option((const char **)av);
     server_t *server;
 
     if (option == NULL)
@@ -100,9 +100,6 @@ server_t *create_server(char **av)
         return NULL;
     }
     server->option = option;
-    server->pending_clients = create_client_list();
-    server->graphic_clients = create_client_list();
-    server->ai_clients = create_client_list();
     server->select_config = init_select();
     return start_server(server);
 }

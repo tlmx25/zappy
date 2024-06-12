@@ -21,7 +21,7 @@ server:
 	@make -C server
 
 GUI:
-	cd GUI && ./build.sh ninja
+	cd GUI && ./build.sh
 
 ai:
 	@make -C ai

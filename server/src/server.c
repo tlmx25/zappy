@@ -12,7 +12,7 @@ static void set_fds(server_t *server)
     reset_select(server->select_config);
     add_to_select(server->select_config, server->socket);
     add_to_select(server->select_config, STDIN_FILENO);
-    for (client_t *tmp = server->ai_clients->head; tmp; tmp = tmp->next)
+    for (client_ai_t *tmp = server->ai_clients->head; tmp; tmp = tmp->next)
         add_to_select(server->select_config, tmp->fd);
     for (client_t *tmp = server->graphic_clients->head; tmp; tmp = tmp->next)
         add_to_select(server->select_config, tmp->fd);
@@ -42,6 +42,7 @@ void run_server(server_t *server)
         set_fds(server);
         if (exec_select(server->select_config) == ERROR)
             return;
+        read_command(server);
         manage_server(server);
     }
 }
