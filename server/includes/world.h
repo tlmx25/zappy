@@ -10,8 +10,8 @@
     #include "server.h"
 
 typedef struct tile_s {
-    position_t *coordinate;
-    inventory_t *object;
+    position_t coordinate;
+    inventory_t object;
     bool egg;
     size_t ai;
 } tile_t;

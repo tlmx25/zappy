@@ -14,19 +14,19 @@ static void second_repartion_ressources(server_t *server,
     inventory_t *inventory, int i)
 {
     if (inventory->sibur > 0) {
-        server->world->tiles[i].object->sibur++;
+        server->world->tiles[i].object.sibur++;
         inventory->sibur--;
     }
     if (inventory->mendiane > 0) {
-        server->world->tiles[i].object->mendiane++;
+        server->world->tiles[i].object.mendiane++;
         inventory->mendiane--;
     }
     if (inventory->phiras > 0) {
-        server->world->tiles[i].object->phiras++;
+        server->world->tiles[i].object.phiras++;
         inventory->phiras--;
     }
     if (inventory->thystame > 0) {
-        server->world->tiles[i].object->thystame++;
+        server->world->tiles[i].object.thystame++;
         inventory->thystame--;
     }
 }
@@ -35,15 +35,15 @@ static void repartion_ressources(server_t *server, inventory_t *inventory,
     int i)
 {
     if (inventory->food > 0) {
-        server->world->tiles[i].object->food++;
+        server->world->tiles[i].object.food++;
         inventory->food--;
     }
     if (inventory->linemate > 0) {
-        server->world->tiles[i].object->linemate++;
+        server->world->tiles[i].object.linemate++;
         inventory->linemate--;
     }
     if (inventory->deraumere > 0) {
-        server->world->tiles[i].object->deraumere++;
+        server->world->tiles[i].object.deraumere++;
         inventory->deraumere--;
     }
     second_repartion_ressources(server, inventory, i);
@@ -74,15 +74,16 @@ static void distribute_ressources(server_t *server)
 static bool init_map(server_t *server)
 {
     int *object_ptr = 0;
+    int i = 0;
 
     server->world->tiles = malloc(sizeof(tile_t) * server->option->width *
         server->option->height);
     if (server->world->tiles == NULL)
         return false;
-    for (int i = 0; i < server->option->width * server->option->height; i++) {
-        server->world->tiles[i].coordinate->x = i % server->option->width;
-        server->world->tiles[i].coordinate->y = i / server->option->width;
-        server->world->tiles[i].coordinate->direction = NONE;
+    for (i = 0; i < server->option->width * server->option->height; i++) {
+        server->world->tiles[i].coordinate.x = i % server->option->width;
+        server->world->tiles[i].coordinate.y = i / server->option->width;
+        server->world->tiles[i].coordinate.direction = NONE;
         object_ptr = (int *)&server->world->tiles[i].object;
         for (size_t j = 0; j < sizeof(inventory_t) / sizeof(int); j++)
             object_ptr[j] = 0;
@@ -118,5 +119,15 @@ bool init_game(server_t *server)
         return false;
     if (team_init(server) == false)
         return false;
+    return true;
+}
+
+bool delet_world(server_t *server)
+{
+    for (int i = 0; server->world->teams[i].name != NULL; i++)
+        free(server->world->teams[i].name);
+    free(server->world->teams);
+    free(server->world->tiles);
+    free(server->world);
     return true;
 }
