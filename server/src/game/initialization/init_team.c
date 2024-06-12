@@ -11,6 +11,7 @@
 
 static bool eggs_init(server_t *server)
 {
+    debug_print("Init eggs\n");
     srand(time(NULL));
     server->world->eggs = malloc(sizeof(egg_list_t));
     if (server->world->eggs == NULL)
@@ -30,6 +31,7 @@ static bool eggs_init(server_t *server)
 
 bool team_init(server_t *server)
 {
+    debug_print("Init teams\n");
     for (server->world->nbr_teams = 0;
         server->option->names[server->world->nbr_teams] != NULL;
         server->world->nbr_teams++);

@@ -67,6 +67,7 @@ static void distribute_ressources(server_t *server)
     int i = 0;
     int r_to_spawn = 0;
 
+    debug_print("Distribute ressources on map\n");
     init_ressources(&inventory, server);
     srand(time(NULL));
     while (inventory.food > 0 || inventory.linemate > 0 || inventory.deraumere
@@ -74,7 +75,6 @@ static void distribute_ressources(server_t *server)
         inventory.phiras > 0 || inventory.thystame > 0) {
         i = rand() % (server->option->width * server->option->height);
         r_to_spawn = rand() % 7;
-        debug_print("set ressources %d at %d\n", r_to_spawn, i);
         repartion_ressources(server, &inventory, i, r_to_spawn);
     }
 }
@@ -89,7 +89,6 @@ bool init_world(server_t *server)
     if (server->world->tiles == NULL)
         return false;
     for (i = 0; i < server->option->width * server->option->height; i++) {
-        debug_print("Init tile %d\n", i);
         server->world->tiles[i].coordinate.x = i % server->option->width;
         server->world->tiles[i].coordinate.y = i / server->option->width;
         server->world->tiles[i].coordinate.direction = NONE;
