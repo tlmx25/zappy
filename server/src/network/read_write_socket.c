@@ -38,7 +38,7 @@ int write_socket(int fd, char *str)
     return 0;
 }
 
-void add_to_buffer(char **buffer, char *str, bool_t free_str)
+void add_to_buffer(char **buffer, char *str, bool free_str)
 {
     if (str == NULL)
         return;
