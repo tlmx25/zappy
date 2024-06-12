@@ -12,7 +12,7 @@
 typedef struct tile_s {
     position_t coordinate;
     inventory_t object;
-    bool egg;
+    size_t egg;
     size_t ai;
 } tile_t;
 
