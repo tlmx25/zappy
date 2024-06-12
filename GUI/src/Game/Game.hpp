@@ -23,7 +23,6 @@ class Game
         void handleEvents();
         void render();
     private:
-        // TODO: functions for events, update, render
         sf::RenderWindow window;
         sf::Event event;
         sf::Clock clock;
