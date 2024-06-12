@@ -47,7 +47,7 @@ void write_ai_list(server_t *server, client_ai_list_t *list)
             free(tmp->buff_out);
             tmp->buff_out = NULL;
         }
-        if (tmp->TTL == 0) {
+        if (tmp->TTL <= 0) {
             debug_print("Client AI death fd: %i\n", tmp->fd);
             delete_client_ai_from_list(list, tmp, true);
         }
