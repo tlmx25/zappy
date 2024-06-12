@@ -10,6 +10,9 @@
     #include "server.h"
     #include "eggs.h"
 
+typedef struct egg_list_s egg_list_t;
+typedef struct server_s server_t;
+
 typedef struct tile_s {
     position_t coordinate;
     inventory_t object;
@@ -22,16 +25,12 @@ typedef struct team_s {
     int current_clients;
 } team_t;
 
-typedef struct egg_list_s egg_list_t;
-
 typedef struct world_s {
     int nbr_teams;
     tile_t *tiles;
     team_t *teams;
     egg_list_t *eggs;
 } world_t;
-
-typedef struct server_s server_t;
 
 /**
  * @brief Init the map of the game with the width and height of the server
