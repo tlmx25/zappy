@@ -121,5 +121,5 @@ void send_to_all_graphic_arg(client_list_t *list, char *format, ...);
  * @param list list of clients
  * @param client client to delete
  */
-void client_is_converted(client_list_t  *list, client_t *client);
+void client_is_converted(client_list_t *list, client_t *client);
 #endif //SERVER_CLIENT_H

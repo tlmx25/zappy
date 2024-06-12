@@ -8,12 +8,13 @@
 #include "server.h"
 
 static const command_ai_t commands[] = {
-        {NULL, NULL}
+    {NULL, NULL}
 };
 
 static int check_death(server_t *server, client_ai_t *tmp)
 {
-    tmp->TTL = (tmp->TTL-- <= 0) ? 0 : tmp->TTL;
+    tmp->TTL--;
+    tmp->TTL = (tmp->TTL <= 0) ? 0 : tmp->TTL;
     if (tmp->TTL == 0) {
         if (tmp->inventory.food != 0) {
             tmp->inventory.food--;
