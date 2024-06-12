@@ -14,6 +14,7 @@
     #include <stdio.h>
     #include "option.h"
     #include "client.h"
+    #include "client_ai.h"
     #include "management_socket.h"
 
 typedef enum {
@@ -28,9 +29,21 @@ typedef struct server_s {
     select_t *select_config;
     client_list_t *pending_clients;
     client_list_t *graphic_clients;
-    client_list_t *ai_clients;
+    client_ai_list_t *ai_clients;
     option_t *option;
 } server_t;
+
+typedef struct command_s {
+    char *command;
+    void (*func)(server_t *server, client_t *client, char const **command);
+    int nb_args;
+} command_t;
+
+typedef struct command_ai_s {
+    char *command;
+    void (*func)(server_t *server, client_ai_t *client, char const **command);
+    int nb_args;
+} command_ai_t;
 
 /**
  * @brief read message from a socket
@@ -48,12 +61,11 @@ char *read_socket(int fd);
 int write_socket(int fd, char *str);
 
 /**
- * @brief Create a new server
- *
- * @param port port of the server
- * @return server_t*
+ * @brief Create a new server and parse option
+ * @param av information from the command line (option)
+ * @return server_t* the server or NULL if error
  */
-server_t *create_server(int port);
+server_t *create_server(char **av);
 
 /**
  * @brief Delete a server
@@ -61,4 +73,67 @@ server_t *create_server(int port);
  * @param server server to delete
  */
 void delete_server(server_t *server);
+
+/**
+ * @brief run the server
+ * @param server server to run
+ */
+void run_server(server_t *server);
+
+/**
+ * @brief manage server, read and write on socket of client and
+ * accept new client
+ * @param server server to manage
+ */
+void manage_server(server_t *server);
+
+/**
+ * @brief check if name is in team list
+ * @param server the server containing option
+ * @param team_name the name of the team to check
+ * @return int , 1 if the team exist or 0 if not
+ */
+int check_team_name(server_t *server, char *team_name);
+
+/**
+ * @brief read request from list (pending or graphic) and add it to buffer_in
+ * @param server server for info and context
+ * @param list list to read from
+ */
+void read_pending_graphic_list(server_t *server, client_list_t *list);
+
+/**
+ * @brief write request from buffer_out from the list (pending or graphic)
+ * @param server server for info and context
+ * @param list list to write from
+ */
+void write_pending_graphic_list(server_t *server, client_list_t *list);
+
+/**
+ * @brief read ai list and add it to buffer_in
+ * @param server server for info and context
+ * @param list list to read from
+ */
+void read_ai_list(server_t *server, client_ai_list_t *list);
+
+/**
+ * @brief write ai list from buffer_out
+ * @param server server for info and context
+ * @param list list to write from
+ */
+void write_ai_list(server_t *server, client_ai_list_t *list);
+
+/**
+ * @brief add a string to a buffer, add '\n' at the end if not present
+ * @param buffer pointer to the buffer to add request
+ * @param str string to add to the buffer
+ * @param free_str if true, free str after adding it to buffer
+ */
+void add_to_buffer(char **buffer, char *str, bool_t free_str);
+
+/**
+ * @brief execute the command of the client graphic
+ * @param server server for info and context
+ */
+void exec_graphic_list(server_t *server);
 #endif //SERVER_SERVER_H

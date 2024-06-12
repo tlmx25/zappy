@@ -52,7 +52,7 @@ static int create_socket(int port)
     return sockfd;
 }
 
-server_t *create_server(int port)
+static server_t *init_server(int port)
 {
     server_t *server = malloc(sizeof(server_t));
 
@@ -66,11 +66,40 @@ server_t *create_server(int port)
     }
     server->pending_clients = create_client_list();
     server->graphic_clients = create_client_list();
-    server->ai_clients = create_client_list();
+    server->ai_clients = create_client_ai_list();
     if (!server->pending_clients || !server->graphic_clients
         || !server->ai_clients) {
         delete_server(server);
         return NULL;
     }
     return server;
+}
+
+static server_t *start_server(server_t *server)
+{
+    if (!server->pending_clients || !server->graphic_clients
+        || !server->ai_clients || server->select_config == NULL) {
+        delete_server(server);
+        return NULL;
+    }
+    server->select_config->max_fd = server->socket;
+    server->is_running = true;
+    return server;
+}
+
+server_t *create_server(char **av)
+{
+    option_t *option = parse_option((const char **)av);
+    server_t *server;
+
+    if (option == NULL)
+        return NULL;
+    server = init_server(option->port);
+    if (server == NULL) {
+        delete_option(option);
+        return NULL;
+    }
+    server->option = option;
+    server->select_config = init_select();
+    return start_server(server);
 }
