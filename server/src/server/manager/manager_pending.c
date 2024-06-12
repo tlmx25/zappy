@@ -17,15 +17,20 @@ static void is_graphic(server_t *server, client_t *client)
     add_client_to_list(server->graphic_clients, client);
 }
 
-// TODO : UPDATE POSITION WITH EGG
 bool convert_pending_client_to_ai(server_t *server,
     client_t *client, char *name)
 {
     client_ai_t *new_client = create_client_ai(client->fd, name,
         (position_t){0, 0, NONE});
+    position_t pos = {0, 0, NONE};
 
     if (new_client == NULL)
         return false;
+    if (get_egg_by_team(server->world->eggs, name) != NULL) {
+        pos = get_egg_by_team(server->world->eggs, name)->pos;
+        new_client->position = pos;
+        delete_egg_by_team_position(server->world->eggs, name, pos);
+    }
     new_client->fd = client->fd;
     if (server->ai_clients->size == 0)
         server->ai_clients->head = new_client;
