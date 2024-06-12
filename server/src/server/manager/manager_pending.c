@@ -20,19 +20,18 @@ static void is_graphic(server_t *server, client_t *client)
 bool_t convert_pending_client_to_ai(server_t *server,
     client_t *client, char *name)
 {
-    client_ai_t *new_client = create_client_ai(client->fd, client->buffer_in,
+    client_ai_t *new_client = create_client_ai(client->fd, name,
         (position_t){0, 0, NONE});
 
     if (new_client == NULL)
         return false;
     // TODO : UPDATE POSITION WITH EGG
     new_client->fd = client->fd;
-    new_client->team_name = my_strdup(name);
     if (server->ai_clients->size == 0)
         server->ai_clients->head = new_client;
     else
         add_client_ai_to_list(server->ai_clients, new_client);
-    delete_client_from_list(server->pending_clients, client, false);
+    client->to_disconnect = true;
     return true;
 }
 
