@@ -34,8 +34,8 @@ static void check_command(server_t *server, client_t *client,
             return;
         }
     }
-    debug_print(" [GRAPHIC] command: [%s] for client: [%i] not exist\n", command,
-        client->fd);
+    debug_print(" [GRAPHIC] command: [%s] for client: [%i] not exist\n",\
+        command, client->fd);
     free_tab(tab);
     add_to_buffer(&client->buffer_out, "suc\n", false);
 }
