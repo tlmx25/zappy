@@ -10,17 +10,21 @@
 #ifndef SERVER_TIME_UTILS_H
     #define SERVER_TIME_UTILS_H
     #include <time.h>
+    #include <sys/time.h>
+    #include <unistd.h>
+
+typedef struct timeval timeval_t;
 
 /**
  * @brief get the current time
  * @return time_t the current time
  */
-struct timeval get_current_time();
+timeval_t get_current_time(void);
 
 /**
  * @brief get the seconds elapsed since the start_time
  * @param start_time the start time
  * @return double the seconds elapsed
  */
-double get_seconds_elapsed(struct timeval start);
+double get_seconds_elapsed(timeval_t start);
 #endif //SERVER_TIME_UTILS_H

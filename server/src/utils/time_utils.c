@@ -7,20 +7,24 @@
 
 #include "time_utils.h"
 
-#include <stdio.h>
-#include <sys/time.h>
-#include <unistd.h>
+timeval_t get_current_time(void)
+{
+    timeval_t tv;
 
-struct timeval get_current_time() {
-    struct timeval tv;
     gettimeofday(&tv, NULL);
     return tv;
 }
 
-double get_seconds_elapsed(struct timeval start) {
-    struct timeval now;
-    gettimeofday(&now, NULL);
+double get_seconds_elapsed(timeval_t start)
+{
+    timeval_t now;
+    double tmp1;
+    double tmp2;
+    double elapsed;
 
-    double elapsed = (now.tv_sec - start.tv_sec) + (now.tv_usec - start.tv_usec) / 1e6;
+    gettimeofday(&now, NULL);
+    tmp1 = (now.tv_sec - start.tv_sec);
+    tmp2 = (now.tv_usec - start.tv_usec) / 1e6;
+    elapsed = tmp1 + tmp2;
     return elapsed;
 }
