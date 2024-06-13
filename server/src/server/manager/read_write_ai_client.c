@@ -7,12 +7,38 @@
 
 #include "server.h"
 
+static void cut_buffer(client_ai_t *tmp)
+{
+    char **tmp_tab = my_str_to_word_array(tmp->buff_in, "\n");
+    int size = my_arrsize((char const **)tmp_tab);
+
+    if (tmp_tab == NULL)
+        return;
+    if (size <= 10)
+        return free_tab(tmp_tab);
+    for (int i = 10; i < size; i++) {
+        free(tmp_tab[i]);
+        tmp_tab[i] = NULL;
+    }
+    free(tmp->buff_in);
+    tmp->buff_in = my_array_to_str_separator((char const **)tmp_tab, "\n");
+    free_tab(tmp_tab);
+}
+
 static void error_read(client_ai_t *tmp)
 {
-    tmp->buff_in = read_socket(tmp->fd);
-    if (tmp->buff_in == NULL) {
+    char *tmp_buff = read_socket(tmp->fd);
+
+    if (tmp_buff == NULL) {
         tmp->to_disconnect = true;
+        return;
     }
+    if (my_count_char(tmp->buff_in, '\n') > 10) {
+        free(tmp_buff);
+        cut_buffer(tmp);
+        return;
+    }
+    add_to_buffer(&tmp->buff_out, tmp_buff, true);
 }
 
 void read_ai_list(server_t *server, client_ai_list_t *list)
