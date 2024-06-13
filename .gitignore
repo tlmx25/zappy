@@ -1,5 +1,6 @@
 # Prerequisites
 *.d
+*.log
 
 # Compiled Object files
 *.slo
@@ -40,3 +41,6 @@ zappy_gui
 **/build/
 
 **/coding-style**
+
+#Python
+__pycache__/

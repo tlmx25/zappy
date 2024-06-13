@@ -14,15 +14,64 @@ env:
     "zappy_server zappy_gui zappy_ai"
 
 jobs:
-  compilation:
-    name: check_compilation
+  build_gui:
     runs-on: ubuntu-latest
     container: epitechcontent/epitest-docker
+    steps:
+      - uses: actions/checkout@v4
+      - name: compile_gui
+        run: make
+      - name: List files
+        run: ls -la
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: zappy_gui
+          path: ./zappy_gui
+
+  build_ai:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: compile_ai
+        run: make
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: zappy_ai
+          path: ./zappy_ai
+
+  build_server:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: compile_server
+        run: make
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: zappy_server
+          path: ./zappy_server
+
+  check_compilation:
+    name: check_compilation
+    runs-on: ubuntu-latest
+    needs: [build_gui, build_ai, build_server]
     timeout-minutes: 4
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+      - name: Download artifacts gui
+        uses: actions/download-artifact@v4
         with:
-          fetch-depth: 0
+          name: zappy_gui
+      - name: Download artifacts ai
+        uses: actions/download-artifact@v4
+        with:
+          name: zappy_ai
+      - name: Download artifacts server
+        uses: actions/download-artifact@v4
+        with:
+          name: zappy_server
       - name: checking binary exist
         run: |
           echo "${{ env.EXECUTABLES}}"
@@ -39,7 +88,7 @@ jobs:
     runs-on: ubuntu-latest
     container: epitechcontent/epitest-docker:latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - uses: pixta-dev/repository-mirroring-action@v1
