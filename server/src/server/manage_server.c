@@ -56,9 +56,20 @@ static void write_list(server_t *server)
 
 static void exec_list(server_t *server)
 {
+    static struct timeval last_exec;
+    static bool first = true;
+
+    if (first) {
+        last_exec = get_current_time();
+        first = false;
+    }
     exec_pending(server);
     exec_graphic_list(server);
-    exec_ai_list(server);
+    if (get_seconds_elapsed(last_exec) >= (1.0f  /
+    (double)server->option->freq)) {
+        exec_ai_list(server);
+        last_exec = get_current_time();
+    }
 }
 
 void manage_server(server_t *server)

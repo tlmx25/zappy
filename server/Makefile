@@ -59,6 +59,7 @@ SRC += get_eggs.c
 SRC += init_team.c
 SRC += init_world.c
 SRC += sending.c
+SRC += time_utils.c
 
 CFLAGS = -Wall -Wextra -I includes/
 

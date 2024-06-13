@@ -18,6 +18,7 @@
     #include "client_ai.h"
     #include "management_socket.h"
     #include "world.h"
+    #include "time_utils.h"
 
 typedef struct server_s {
     bool is_running;

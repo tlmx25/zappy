@@ -26,6 +26,19 @@ static void debug_pending_to_ai(client_t *client, client_ai_t *new_client)
     new_client->position.y);
 }
 
+static direction_t get_random_direction(void)
+{
+    int random = rand() % 4;
+
+    if (random == 0)
+        return NORTH;
+    if (random == 1)
+        return EAST;
+    if (random == 2)
+        return SOUTH;
+    return WEST;
+}
+
 bool convert_pending_client_to_ai(server_t *server,
     client_t *client, char *name)
 {
@@ -37,6 +50,7 @@ bool convert_pending_client_to_ai(server_t *server,
         return false;
     if (get_egg_by_team(server->world->eggs, name) != NULL) {
         pos = get_egg_by_team(server->world->eggs, name)->pos;
+        pos.direction = get_random_direction();
         new_client->position = pos;
         delete_egg_by_team_position(server->world->eggs, name, pos);
     }
