@@ -51,7 +51,7 @@ void add_to_buffer(char **buffer, char *str, bool free_str)
     if (*buffer == NULL)
         *buffer = my_strdup(str);
     else
-        *buffer = my_strcat_free(*buffer, str, 1, 1);
+        *buffer = my_strcat_free(*buffer, str, 1, 0);
     if (free_str)
         free(str);
     if (tmp != NULL && free_str)

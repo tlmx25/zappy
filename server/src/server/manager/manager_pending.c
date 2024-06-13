@@ -5,6 +5,7 @@
 ** manager_pending
 */
 
+#include "graphique_cmd.h"
 #include "client_ai.h"
 #include "server.h"
 
@@ -16,6 +17,10 @@ static void is_graphic(server_t *server, client_t *client)
     client->team_name = my_strdup("GRAPHIC");
     client->buffer_in = NULL;
     add_client_to_list(server->graphic_clients, client);
+    cmd_msz(server, client, NULL);
+    cmd_sgt(server, client, NULL);
+    cmd_mct(server, client, NULL);
+    cmd_tna(server, client, NULL);
 }
 
 static void debug_pending_to_ai(client_t *client, client_ai_t *new_client,
