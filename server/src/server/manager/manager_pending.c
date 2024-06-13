@@ -18,12 +18,20 @@ static void is_graphic(server_t *server, client_t *client)
     add_client_to_list(server->graphic_clients, client);
 }
 
-static void debug_pending_to_ai(client_t *client, client_ai_t *new_client)
+static void debug_pending_to_ai(client_t *client, client_ai_t *new_client,
+    server_t *server)
 {
+    int nb_egg = count_eggs_by_team(server->world->eggs,
+        new_client->team_name);
+    char tmp[1024];
+
     debug_print("Client %d is a AI client, team [%s], is player id is [%i]",
     client->fd, new_client->team_name, new_client->num_player);
     printf(" and his position is [%i, %i]\n", new_client->position.x,
     new_client->position.y);
+    snprintf(tmp, 1024, "%i\n%i %i\n", nb_egg,
+    new_client->position.x, new_client->position.y);
+    add_to_buffer(&new_client->buff_out, tmp, false);
 }
 
 static direction_t get_random_direction(void)
@@ -55,7 +63,7 @@ bool convert_pending_client_to_ai(server_t *server,
     }
     new_client->fd = client->fd;
     add_client_ai_to_list(server->ai_clients, new_client);
-    debug_pending_to_ai(client, new_client);
+    debug_pending_to_ai(client, new_client, server);
     client_is_converted(server->pending_clients, client);
     return true;
 }
