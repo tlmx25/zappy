@@ -7,23 +7,21 @@
 
 #include "server.h"
 
-void cmd_msz(server_t *server, client_t *client, char const **command)
+void cmd_msz(server_t *server, client_t *client, char UNUSED const **command)
 {
     char *response = NULL;
 
-    (void)command;
     response = malloc(sizeof(char) * 2048);
     sprintf(response, "msz %d %d\n", server->option->width,
         server->option->height);
     add_to_buffer(&client->buffer_out, response, true);
 }
 
-void cmd_mct(server_t *server, client_t *client, char const **command)
+void cmd_mct(server_t *server, client_t *client, char UNUSED const **command)
 {
     char *response = NULL;
     tile_t *tile = NULL;
 
-    (void)command;
     for (int i = 0; i < server->option->width * server->option->height; i++) {
         tile = &server->world->tiles[i];
         response = malloc(sizeof(char) * 4096);
