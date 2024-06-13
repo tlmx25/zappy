@@ -41,3 +41,15 @@ egg_t *get_egg_by_position(egg_list_t *list, position_t pos)
     }
     return NULL;
 }
+
+int count_eggs_by_team(egg_list_t *list, char *team_name)
+{
+    egg_t *tmp = list->head;
+    int count = 0;
+
+    for (; tmp != NULL; tmp = tmp->next) {
+        if (my_strcmp(tmp->team_name, team_name) == 0)
+            count++;
+    }
+    return count;
+}

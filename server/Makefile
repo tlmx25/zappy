@@ -22,7 +22,9 @@ VPATH += src/client/classic/
 VPATH += src/client/graphic/
 VPATH += src/game/
 VPATH += src/game/eggs
+VPATH += src/game/AI_commands
 VPATH += src/game/initialization
+VPATH += src/game/graphic_cmd/
 
 SRC += main.c
 SRC += management_socket.c
@@ -59,6 +61,15 @@ SRC += get_eggs.c
 SRC += init_team.c
 SRC += init_world.c
 SRC += sending.c
+SRC += map_cmd.c
+SRC += player_cmd.c
+SRC += team_cmd.c
+SRC += time_cmd.c
+SRC += position.c
+SRC += time_utils.c
+SRC += right_left_forward_command.c
+SRC += connect_nbr_command.c
+SRC += inventory_command.c
 
 CFLAGS = -Wall -Wextra -I includes/
 

@@ -48,7 +48,7 @@ typedef struct client_ai_s {
     position_t position;
     size_t level;
     size_t TTL;
-    char *action;
+    int action;
     size_t TTEA;
     inventory_t inventory;
 } client_ai_t;
