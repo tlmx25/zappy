@@ -21,6 +21,8 @@ void cmd_sst(server_t *server, client_t *client, char const **command)
     int freq = atoi(command[1]);
     char *response = NULL;
 
+    if (freq < 0)
+        return add_to_buffer(&client->buffer_out, "sbp\n", false);
     server->option->freq = freq;
     response = malloc(sizeof(char) * 2048);
     sprintf(response, "sst %d\n", freq);
