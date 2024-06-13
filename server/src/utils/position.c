@@ -9,6 +9,7 @@
 
 static void forward_north(server_t *server, position_t *pos)
 {
+    printf("forward north\n");
     if (pos->y == 0)
         pos->y = server->option->height - 1;
     else
@@ -17,6 +18,7 @@ static void forward_north(server_t *server, position_t *pos)
 
 static void forward_east(server_t *server, position_t *pos)
 {
+    printf("forward east\n");
     if (pos->x == server->option->width - 1)
         pos->x = 0;
     else
@@ -25,6 +27,7 @@ static void forward_east(server_t *server, position_t *pos)
 
 static void forward_south(server_t *server, position_t *pos)
 {
+    printf("forward south\n");
     if (pos->y == server->option->height - 1)
         pos->y = 0;
     else
@@ -33,6 +36,7 @@ static void forward_south(server_t *server, position_t *pos)
 
 static void forward_west(server_t *server, position_t *pos)
 {
+    printf("forward west\n");
     if (pos->x == 0)
         pos->x = server->option->width - 1;
     else
@@ -41,17 +45,15 @@ static void forward_west(server_t *server, position_t *pos)
 
 position_t get_next_position(server_t *server, position_t pos)
 {
-    position_t new_pos = {0, 0, pos.direction};
-
     if (pos.direction == NORTH)
-        forward_north(server, &new_pos);
+        forward_north(server, &pos);
     if (pos.direction == EAST)
-        forward_east(server, &new_pos);
+        forward_east(server, &pos);
     if (pos.direction == SOUTH)
-        forward_south(server, &new_pos);
+        forward_south(server, &pos);
     if (pos.direction == WEST)
-        forward_west(server, &new_pos);
-    return new_pos;
+        forward_west(server, &pos);
+    return pos;
 }
 
 direction_t turn_right(direction_t direction)
