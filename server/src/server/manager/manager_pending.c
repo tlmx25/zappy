@@ -10,27 +10,50 @@
 
 static void is_graphic(server_t *server, client_t *client)
 {
+    debug_print("Client %d is a graphic client\n", client->fd);
     delete_client_from_list(server->pending_clients, client, false);
+    free(client->buffer_in);
+    client->team_name = my_strdup("GRAPHIC");
+    client->buffer_in = NULL;
     add_client_to_list(server->graphic_clients, client);
 }
 
-bool_t WARN_RESULT convert_pending_client_to_ai(server_t *server,
+static void debug_pending_to_ai(client_t *client, client_ai_t *new_client)
+{
+    debug_print("Client %d is a AI client, team [%s], is player id is [%i]",
+    client->fd, new_client->team_name, new_client->num_player);
+    printf(" and his position is [%i, %i]\n", new_client->position.x,
+    new_client->position.y);
+}
+
+bool convert_pending_client_to_ai(server_t *server,
     client_t *client, char *name)
 {
-    client_ai_t *new_client = create_client_ai(client->fd, client->buffer_in,
+    client_ai_t *new_client = create_client_ai(client->fd, name,
         (position_t){0, 0, NONE});
+    position_t pos = {0, 0, NONE};
 
     if (new_client == NULL)
         return false;
-    // TODO : UPDATE POSITION WITH EGG
+    if (get_egg_by_team(server->world->eggs, name) != NULL) {
+        pos = get_egg_by_team(server->world->eggs, name)->pos;
+        new_client->position = pos;
+        delete_egg_by_team_position(server->world->eggs, name, pos);
+    }
     new_client->fd = client->fd;
-    new_client->team_name = my_strdup(name);
-    if (server->ai_clients->size == 0)
-        server->ai_clients->head = new_client;
-    else
-        add_client_ai_to_list(server->ai_clients, new_client);
-    delete_client_from_list(server->pending_clients, client, false);
+    add_client_ai_to_list(server->ai_clients, new_client);
+    debug_pending_to_ai(client, new_client);
+    client_is_converted(server->pending_clients, client);
     return true;
+}
+
+static void error_pending_client(client_t *client, char *name)
+{
+    add_to_buffer(&client->buffer_out, "ko\n", false);
+    debug_print("Client %d is not a valid client : [%s]\n", client->fd, name);
+    free(name);
+    free(client->buffer_in);
+    client->buffer_in = NULL;
 }
 
 void manage_pending_client(server_t *server, client_t *client)
@@ -44,11 +67,10 @@ void manage_pending_client(server_t *server, client_t *client)
         free(name);
         return;
     }
-    for (int i = 0; server->option->names[i] != NULL; i++) {
-        if (my_strcmp(server->option->names[i], name) == 0) {
-            convert_pending_client_to_ai(server, client, name);
-            free(name);
-            return;
-        }
+    if (check_team_name(server, name)) {
+        convert_pending_client_to_ai(server, client, name);
+        free(name);
+        return;
     }
+    error_pending_client(client, name);
 }

@@ -11,6 +11,12 @@
 #include <netinet/in.h>
 #include "server.h"
 
+static void add_new_client(server_t *server, client_t *new_client)
+{
+    add_client_to_list(server->pending_clients, new_client);
+    debug_print("New client connected fd: %i\n", new_client->fd);
+}
+
 static void accept_new_client(server_t *server)
 {
     int new_socket = 0;
@@ -30,7 +36,7 @@ static void accept_new_client(server_t *server)
     server->select_config->max_fd = (server->select_config->max_fd <
     new_socket) ? new_socket : server->select_config->max_fd;
     new_client = create_client(new_socket);
-    add_client_to_list(server->pending_clients, new_client);
+    add_new_client(server, new_client);
     free(address);
 }
 
@@ -50,7 +56,9 @@ static void write_list(server_t *server)
 
 static void exec_list(server_t *server)
 {
+    exec_pending(server);
     exec_graphic_list(server);
+    exec_ai_list(server);
 }
 
 void manage_server(server_t *server)

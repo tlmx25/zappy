@@ -5,25 +5,22 @@
 ** server
 */
 
-
 #ifndef SERVER_SERVER_H
     #define SERVER_SERVER_H
     #define ERROR 84
+    #define UNUSED __attribute__((unused))
     #include <unistd.h>
     #include <stdlib.h>
     #include <stdio.h>
+    #include <stdbool.h>
     #include "option.h"
     #include "client.h"
     #include "client_ai.h"
     #include "management_socket.h"
-
-typedef enum {
-    false,
-    true
-} bool_t;
+    #include "world.h"
 
 typedef struct server_s {
-    bool_t is_running;
+    bool is_running;
     int port;
     int socket;
     select_t *select_config;
@@ -31,6 +28,7 @@ typedef struct server_s {
     client_list_t *graphic_clients;
     client_ai_list_t *ai_clients;
     option_t *option;
+    world_t *world;
 } server_t;
 
 typedef struct command_s {
@@ -42,7 +40,6 @@ typedef struct command_s {
 typedef struct command_ai_s {
     char *command;
     void (*func)(server_t *server, client_ai_t *client, char const **command);
-    int nb_args;
 } command_ai_t;
 
 /**
@@ -129,11 +126,50 @@ void write_ai_list(server_t *server, client_ai_list_t *list);
  * @param str string to add to the buffer
  * @param free_str if true, free str after adding it to buffer
  */
-void add_to_buffer(char **buffer, char *str, bool_t free_str);
+void add_to_buffer(char **buffer, char *str, bool free_str);
 
 /**
  * @brief execute the command of the client graphic
  * @param server server for info and context
  */
 void exec_graphic_list(server_t *server);
+
+/**
+ * @brief manage request of pending client client
+ * @param server server
+ * @param client client to manage request
+ */
+void manage_pending_client(server_t *server, client_t *client);
+
+/**
+ * @brief exec action from pending client
+ * @param server
+ */
+void exec_pending(server_t *server);
+
+/**
+ * @brief activate debug mode
+ * @param activate 1 to activate, 0 to deactivate or -1 to get the status
+ * @return int 1 if activated, 0 if deactivated
+ */
+int activate_debug_mode(int activate);
+
+/**
+ * @brief check if debug mode is active
+ * @return int 1 if activated, 0 if deactivated
+ */
+int debug_active(void);
+
+/**
+ * @brief print a debug message
+ * @param format format of the message
+ * @param ... arguments of the message
+ */
+void debug_print(const char *format, ...);
+
+/**
+ * @brief manage request of client ai
+ * @param server
+ */
+void exec_ai_list(server_t *server);
 #endif //SERVER_SERVER_H
