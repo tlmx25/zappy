@@ -15,7 +15,7 @@
  * @param client the client
  * @param command the command msz with no arguments
  */
-void cmd_msz(server_t *server, client_t *client, char const **command);
+void cmd_msz(server_t *server, client_t *client, char UNUSED const **command);
 
 /**
  * @brief send the content of a tile to the client
@@ -31,6 +31,38 @@ void cmd_bct(server_t *server, client_t *client, char const **command);
  * @param client the client
  * @param command the command mct with no arguments
  */
-void cmd_mct(server_t *server, client_t *client, char const **command);
+void cmd_mct(server_t *server, client_t *client, char UNUSED const **command);
+
+/**
+ * @brief send the position of a player to the client
+ * @param server the server
+ * @param client the client
+ * @param command the command ppo with the arguments player_id
+ */
+void cmd_ppo(server_t *server, client_t *client, char const **command);
+
+/**
+ * @brief send the level of a player to the client
+ * @param server the server
+ * @param client the client
+ * @param command the command plv with the arguments player_id
+ */
+void cmd_plv(server_t *server, client_t *client, char const **command);
+
+/**
+ * @brief send the inventory of a player to the client
+ * @param server the server
+ * @param client the client
+ * @param command the command pin with the arguments player_id
+ */
+void cmd_pin(server_t *server, client_t *client, char const **command);
+
+/**
+ * @brief send the name of all the teams to the client
+ * @param server the server
+ * @param client the client
+ * @param command the command tna with no arguments
+ */
+void cmd_tna(server_t *server, client_t *client, char UNUSED const **command);
 
 #endif // GRAPHIQUE_CMD_H

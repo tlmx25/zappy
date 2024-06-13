@@ -61,6 +61,9 @@ SRC += init_team.c
 SRC += init_world.c
 SRC += sending.c
 SRC += map_cmd.c
+SRC += player_cmd.c
+SRC += team_cmd.c
+SRC += time_cmd.c
 
 CFLAGS = -Wall -Wextra -I includes/
 
