@@ -65,4 +65,20 @@ void cmd_pin(server_t *server, client_t *client, char const **command);
  */
 void cmd_tna(server_t *server, client_t *client, char UNUSED const **command);
 
+/**
+ * @brief send the time unit to the client
+ * @param server the server
+ * @param client the client
+ * @param command the command sgt with no arguments
+ */
+void cmd_sgt(server_t *server, client_t *client, char UNUSED const **command);
+
+/**
+ * @brief modify the time unit of the server, and send it to the client
+ * @param server the server
+ * @param client the client
+ * @param command the command sst with the new time unit
+ */
+void cmd_sst(server_t *server, client_t *client, char const **command);
+
 #endif // GRAPHIQUE_CMD_H
