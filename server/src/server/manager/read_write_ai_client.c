@@ -38,7 +38,7 @@ static void error_read(client_ai_t *tmp)
         cut_buffer(tmp);
         return;
     }
-    add_to_buffer(&tmp->buff_out, tmp_buff, true);
+    add_to_buffer(&tmp->buff_in, tmp_buff, true);
 }
 
 void read_ai_list(server_t *server, client_ai_list_t *list)

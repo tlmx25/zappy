@@ -39,12 +39,6 @@ typedef struct command_s {
     int nb_args;
 } command_t;
 
-typedef struct command_ai_s {
-    char *command;
-    size_t TTEA;
-    void (*func)(server_t *server, client_ai_t *client);
-} command_ai_t;
-
 /**
  * @brief read message from a socket
  * @param fd fd of the socket
@@ -181,4 +175,26 @@ void exec_ai_list(server_t *server);
  * @param server server containing the world
  */
 void distribute_ressources(server_t *server);
+
+/**
+ * @brief get the next position of a client depending on the direction
+ * @param server server for info and context
+ * @param pos position of the client
+ * @return new position of the client
+ */
+position_t get_next_position(server_t *server, position_t pos);
+
+/**
+ * @brief get new direction after turning right
+ * @param direction actual direction
+ * @return return new direction
+ */
+direction_t turn_right(direction_t direction);
+
+/**
+ * @brief get new direction after turning left
+ * @param direction actual direction
+ * @return return new direction
+ */
+direction_t turn_left(direction_t direction);
 #endif //SERVER_SERVER_H

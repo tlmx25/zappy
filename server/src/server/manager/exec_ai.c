@@ -5,12 +5,24 @@
 ** exec_ai
 */
 
+#include "commands_ai.h"
 #include "server.h"
 
 static const command_ai_t commands[] = {
-
+    {"Forward", 7, forward_command},
+    {"Right", 7, right_command},
+    {"Left", 7, left_command},
+    {"Connect_nbr", 0, connect_nbr_command},
     {NULL, 0, NULL}
 };
+
+//    {"Look", 7, look_command},
+//    {"Inventory", 1, inventory_command},
+//    {"Broadcast", 7, broadcast_command},
+//    {"Fork", 42, fork_command},
+//    {"Eject", 7, eject_command},
+//    {"Take", 7, take_command},
+//    {"Set", 7, set_command},
 
 static int check_death(server_t *server, client_ai_t *tmp)
 {
@@ -69,7 +81,7 @@ static void check_command(server_t *server, client_ai_t *client)
 {
     char **tab = NULL;
 
-    if (client->action != -1)
+    if (client->action != -1 || client->buff_in == NULL)
         return;
     tab = my_str_to_word_array(client->buff_in, "\n");
     if (tab == NULL || tab[0] == NULL)
