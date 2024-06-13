@@ -19,7 +19,7 @@ void cmd_ppo(server_t *server, client_t *client, char const **command)
             sprintf(response, "ppo %d %d %d %d\n", player_id,
                 server->ai_clients->head->position.x,
                 server->ai_clients->head->position.y,
-                server->ai_clients->head->position.direction);
+                server->ai_clients->head->position.direction + 1);
             add_to_buffer(&client->buffer_out, response, true);
             server->ai_clients->head = tmp;
             return;
