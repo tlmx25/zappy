@@ -42,7 +42,7 @@ static option_t *init_option(void)
     option->width = -1;
     option->height = -1;
     option->clients_nb = -1;
-    option->freq = -1;
+    option->freq = 100;
     option->names = NULL;
     return option;
 }
