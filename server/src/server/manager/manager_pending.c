@@ -34,19 +34,6 @@ static void debug_pending_to_ai(client_t *client, client_ai_t *new_client,
     add_to_buffer(&new_client->buff_out, tmp, false);
 }
 
-static direction_t get_random_direction(void)
-{
-    int random = rand() % 4;
-
-    if (random == 0)
-        return NORTH;
-    if (random == 1)
-        return EAST;
-    if (random == 2)
-        return SOUTH;
-    return WEST;
-}
-
 static client_ai_t *check_eggs(int fd, char *name, client_t *client,
     server_t *server)
 {
@@ -60,7 +47,7 @@ static client_ai_t *check_eggs(int fd, char *name, client_t *client,
         client->buffer_in = NULL;
         return NULL;
     }
-    return create_client_ai(fd,name,(position_t){0,0,0});
+    return create_client_ai(fd, name, (position_t){0, 0, 0});
 }
 
 bool convert_pending_client_to_ai(server_t *server,

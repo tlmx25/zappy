@@ -9,15 +9,15 @@
 #include "server.h"
 
 static const command_ai_t commands[] = {
-    {"Forward", 7, forward_command},
-    {"Right", 7, right_command},
-    {"Left", 7, left_command},
+    {"Forward", 1, forward_command},
+    {"Right", 1, right_command},
+    {"Left", 1, left_command},
     {"Connect_nbr", 0, connect_nbr_command},
+    {"Inventory", 1, inventory_command},
     {NULL, 0, NULL}
 };
 
 //    {"Look", 7, look_command},
-//    {"Inventory", 1, inventory_command},
 //    {"Broadcast", 7, broadcast_command},
 //    {"Fork", 42, fork_command},
 //    {"Eject", 7, eject_command},

@@ -47,4 +47,11 @@ void right_command(server_t *server, client_ai_t *client);
  * @param client client who sent the command
  */
 void connect_nbr_command(server_t *server, client_ai_t *client);
+
+/**
+ * @brief execute Inventory command
+ * @param server server for infos about the game
+ * @param client client who sent the command
+ */
+void inventory_command(server_t *server, client_ai_t *client);
 #endif //SERVER_COMMANDS_AI_H
