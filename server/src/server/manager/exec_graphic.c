@@ -6,8 +6,12 @@
 */
 
 #include "server.h"
+#include "graphique_cmd.h"
 
 static const command_t GRAPHIC_COMMANDS[] = {
+    {"msz", &cmd_msz, 0},
+    {"bct", &cmd_bct, 2},
+    {"mct", &cmd_mct, 0},
     {NULL, NULL, 0},
 };
 
