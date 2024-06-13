@@ -9,6 +9,7 @@
     #define SERVER_SERVER_H
     #define ERROR 84
     #define UNUSED __attribute__((unused))
+    #define FREQ(x) (x / server->option->freq)
     #include <unistd.h>
     #include <stdlib.h>
     #include <stdio.h>
@@ -18,6 +19,7 @@
     #include "client_ai.h"
     #include "management_socket.h"
     #include "world.h"
+    #include "time_utils.h"
 
 typedef struct server_s {
     bool is_running;
@@ -36,11 +38,6 @@ typedef struct command_s {
     void (*func)(server_t *server, client_t *client, char const **command);
     int nb_args;
 } command_t;
-
-typedef struct command_ai_s {
-    char *command;
-    void (*func)(server_t *server, client_ai_t *client, char const **command);
-} command_ai_t;
 
 /**
  * @brief read message from a socket
@@ -172,4 +169,32 @@ void debug_print(const char *format, ...);
  * @param server
  */
 void exec_ai_list(server_t *server);
+
+/**
+ * @brief distribute ressources to the world
+ * @param server server containing the world
+ */
+void distribute_ressources(server_t *server);
+
+/**
+ * @brief get the next position of a client depending on the direction
+ * @param server server for info and context
+ * @param pos position of the client
+ * @return new position of the client
+ */
+position_t get_next_position(server_t *server, position_t pos);
+
+/**
+ * @brief get new direction after turning right
+ * @param direction actual direction
+ * @return return new direction
+ */
+direction_t turn_right(direction_t direction);
+
+/**
+ * @brief get new direction after turning left
+ * @param direction actual direction
+ * @return return new direction
+ */
+direction_t turn_left(direction_t direction);
 #endif //SERVER_SERVER_H

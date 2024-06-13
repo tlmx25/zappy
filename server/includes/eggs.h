@@ -122,4 +122,12 @@ egg_t *get_egg_by_team(egg_list_t *list, char *team_name);
  * @return egg_t * if found or NULL if not found
  */
 egg_t *get_egg_by_position(egg_list_t *list, position_t pos);
+
+/**
+ * @brief Count the number of eggs by team name
+ * @param list list of eggs
+ * @param team_name team name of the eggs
+ * @return int number of eggs
+ */
+int count_eggs_by_team(egg_list_t *list, char *team_name);
 #endif //SERVER_EGGS_H
