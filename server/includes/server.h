@@ -9,6 +9,7 @@
     #define SERVER_SERVER_H
     #define ERROR 84
     #define UNUSED __attribute__((unused))
+    #define FREQ(x) (x / server->option->freq)
     #include <unistd.h>
     #include <stdlib.h>
     #include <stdio.h>
@@ -40,7 +41,8 @@ typedef struct command_s {
 
 typedef struct command_ai_s {
     char *command;
-    void (*func)(server_t *server, client_ai_t *client, char const **command);
+    size_t TTEA;
+    void (*func)(server_t *server, client_ai_t *client);
 } command_ai_t;
 
 /**
@@ -173,4 +175,10 @@ void debug_print(const char *format, ...);
  * @param server
  */
 void exec_ai_list(server_t *server);
+
+/**
+ * @brief distribute ressources to the world
+ * @param server server containing the world
+ */
+void distribute_ressources(server_t *server);
 #endif //SERVER_SERVER_H

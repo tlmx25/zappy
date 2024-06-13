@@ -11,7 +11,7 @@
 
 static void init_client_ai(client_ai_t *client)
 {
-    client->action = NULL;
+    client->action = -1;
     client->TTEA = 0;
     client->inventory.food = 9;
     client->inventory.linemate = 0;

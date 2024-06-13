@@ -50,7 +50,6 @@ bool convert_pending_client_to_ai(server_t *server,
         return false;
     if (get_egg_by_team(server->world->eggs, name) != NULL) {
         pos = get_egg_by_team(server->world->eggs, name)->pos;
-        pos.direction = get_random_direction();
         new_client->position = pos;
         delete_egg_by_team_position(server->world->eggs, name, pos);
     }

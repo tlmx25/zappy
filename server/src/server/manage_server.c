@@ -65,8 +65,7 @@ static void exec_list(server_t *server)
     }
     exec_pending(server);
     exec_graphic_list(server);
-    if (get_seconds_elapsed(last_exec) >= (1.0f /
-    (double)server->option->freq)) {
+    if (get_seconds_elapsed(last_exec) >= 1.0f) {
         exec_ai_list(server);
         last_exec = get_current_time();
     }

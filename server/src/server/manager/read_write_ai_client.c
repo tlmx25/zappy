@@ -26,7 +26,8 @@ void read_ai_list(server_t *server, client_ai_list_t *list)
             error_read(tmp);
         }
         if (tmp->to_disconnect == true) {
-            debug_print("Client AI disconnected fd: %i\n", tmp->fd);
+            debug_print("Client AI disconnected num : %i, fd: %i\n",
+            tmp->num_player, tmp->fd);
             delete_client_ai_from_list(list, tmp, true);
         }
         tmp = next;

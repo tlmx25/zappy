@@ -9,12 +9,12 @@
 
 static const command_ai_t commands[] = {
 
-    {NULL, NULL}
+    {NULL, 0, NULL}
 };
 
 static int check_death(server_t *server, client_ai_t *tmp)
 {
-    tmp->TTL--;
+    tmp->TTL -= 1 * server->option->freq;
     tmp->TTL = (tmp->TTL <= 0) ? 0 : tmp->TTL;
     if (tmp->TTL == 0) {
         if (tmp->inventory.food != 0) {
@@ -33,11 +33,74 @@ static int check_death(server_t *server, client_ai_t *tmp)
     return 0;
 }
 
+void exec_command_ai(server_t *server, client_ai_t *client)
+{
+    if (client->action == -1)
+        return;
+    if (client->TTEA > 0)
+        client->TTEA--;
+    if (client->TTEA != 0)
+        return;
+    debug_print("Client AI %i is executing action %s\n", client->num_player,
+    commands[client->action].command);
+    commands[client->action].func(server, client);
+    client->action = -1;
+}
+
+static void reconstruct_buff(client_ai_t *client, char **tab)
+{
+    free(client->buff_in);
+    client->buff_in = NULL;
+    if (tab[1] == NULL) {
+        client->buff_in = NULL;
+        return;
+    }
+    client->buff_in = my_array_to_str_separator((char const **)&tab[1], "\n");
+}
+
+static void invalid_command(client_ai_t *client, char *command)
+{
+    add_to_buffer(&client->buff_out, "ko\n", false);
+    debug_print("Client AI %i has invalid command [%s]\n",
+    client->num_player, command);
+}
+
+static void check_command(server_t *server, client_ai_t *client)
+{
+    char **tab = NULL;
+
+    if (client->action != -1)
+        return;
+    tab = my_str_to_word_array(client->buff_in, "\n");
+    if (tab == NULL || tab[0] == NULL)
+        return;
+    for (int i = 0; commands[i].command != NULL; i++) {
+        if (my_strcmp(commands[i].command, tab[0]) == 0) {
+            client->action = i;
+            client->TTEA = FREQ(commands[i].TTEA);
+            break;
+        }
+    }
+    if (client->action == -1)
+        invalid_command(client, tab[0]);
+    reconstruct_buff(client, tab);
+    free_tab(tab);
+}
+
 void exec_ai_list(server_t *server)
 {
     client_ai_t *tmp = server->ai_clients->head;
+    static int meteor = 0;
 
+    meteor++;
+    if (meteor == FREQ(20)) {
+        meteor = 0;
+        debug_print("Meteor shower\n");
+        distribute_ressources(server);
+    }
     for (; tmp; tmp = tmp->next) {
         check_death(server, tmp);
+        check_command(server, tmp);
+        exec_command_ai(server, tmp);
     }
 }

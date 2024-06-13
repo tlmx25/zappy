@@ -61,7 +61,7 @@ static void init_ressources(inventory_t *inventory, server_t *server)
         server->option->height * 0.05;
 }
 
-static void distribute_ressources(server_t *server)
+void distribute_ressources(server_t *server)
 {
     inventory_t inventory = {0};
     int i = 0;
@@ -108,6 +108,7 @@ bool delete_world(world_t *world)
         free(world->teams[i].name);
     free(world->teams);
     free(world->tiles);
+    delete_eggs_list(world->eggs);
     free(world);
     return true;
 }
