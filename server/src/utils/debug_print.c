@@ -32,7 +32,6 @@ void debug_print(const char *format, ...)
     if (debug_active() == 1) {
         time(&current_time);
         local_time_info = localtime(&current_time);
-
         printf("\033[34m[DEBUG %02d:%02d:%02d]\033[0m ",
             local_time_info->tm_hour,
             local_time_info->tm_min,
