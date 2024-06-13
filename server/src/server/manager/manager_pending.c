@@ -47,20 +47,32 @@ static direction_t get_random_direction(void)
     return WEST;
 }
 
+static client_ai_t *check_eggs(int fd, char *name, client_t  *client, server_t *server)
+{
+    int eggs = count_eggs_by_team(server->world->eggs, name);
+
+    if (eggs == 0) {
+        add_to_buffer(&client->buffer_out, "ko\n", false);
+        debug_print("Client %d try to become ai [%s] but not have eggs\n",
+        client->fd, name);
+        free(client->buffer_in);
+        client->buffer_in = NULL;
+        return NULL;
+    }
+    return create_client_ai(fd, name, (position_t){0,0,0});
+}
+
 bool convert_pending_client_to_ai(server_t *server,
     client_t *client, char *name)
 {
-    client_ai_t *new_client = create_client_ai(client->fd, name,
-        (position_t){0, 0, NONE});
-    position_t pos = {0, 0, NONE};
+    client_ai_t *new_client = check_eggs(client->fd, name, client, server);
+    position_t pos;
 
     if (new_client == NULL)
         return false;
-    if (get_egg_by_team(server->world->eggs, name) != NULL) {
-        pos = get_egg_by_team(server->world->eggs, name)->pos;
-        new_client->position = pos;
-        delete_egg_by_team_position(server->world->eggs, name, pos);
-    }
+    pos = get_egg_by_team(server->world->eggs, name)->pos;
+    new_client->position = pos;
+    delete_egg_by_team_position(server->world->eggs, name, pos);
     new_client->fd = client->fd;
     add_client_ai_to_list(server->ai_clients, new_client);
     debug_pending_to_ai(client, new_client, server);
