@@ -22,10 +22,13 @@ Game::~Game()
 
 void Game::run()
 {
-    while (window.isOpen()) {
-        handleEvents();
-        render();
-    }
+    handleEvents();
+    render();
+}
+
+sf::RenderWindow& Game::GetWindow()
+{
+    return window;
 }
 
 void Game::handleEvents()

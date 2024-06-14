@@ -6,7 +6,6 @@
 */
 
 #include "server.hpp"
-#include "Game.hpp"
 
 static int verif_args(int ac, char **av)
 {
@@ -40,9 +39,6 @@ int main(int ac, char **av) {
         server.OpenSocket();
         server.ConnectSocket();
         server.Run();
-      srand(static_cast<unsigned>(time(0)));
-      Game game(30, 30);
-      game.run();
     }
     catch(const std::exception& e)
     {

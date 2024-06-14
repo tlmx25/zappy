@@ -22,6 +22,7 @@ class Game
         void run();
         void handleEvents();
         void render();
+        sf::RenderWindow& GetWindow();
     private:
         // TODO: functions for events, update, render
         sf::RenderWindow window;

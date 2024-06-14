@@ -15,6 +15,10 @@
     #include <arpa/inet.h>
     #include <unistd.h>
     #include <cstring>
+    #include <string>
+    #include <map>
+    #include <functional>
+    #include "Game.hpp"
         
 namespace Zappy_GUI {
 
@@ -28,13 +32,21 @@ namespace Zappy_GUI {
             void ConnectSocket();
             void CloseSocket();
             void Run();
+            void GUIStart();
             void SendData();
+            std::string ReadClient();
+
+            void LambdaExecute(std::string key, std::string command, Game& game);
+            std::string FirstWord(std::string buffer);
 
         private :
             std::string _port;
             std::string _ip;
             int _socket;
             struct sockaddr_in _server;
+            std::map<std::string, std::function<void()>> _map;
+            fd_set _readfds;
+            fd_set _writefds;
 
         public: // Error socket and IP
 
@@ -78,4 +90,4 @@ namespace Zappy_GUI {
                     std::string _msg;
             };
     };
-}
+};
