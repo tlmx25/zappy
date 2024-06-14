@@ -56,7 +56,7 @@ void cmd_plv(server_t *server, client_t *client, char const **command)
     add_to_buffer(&client->buffer_out, "sbp\n", false);
 }
 
-static char *cmd_pin_create_response(client_ai_t *client, char *response,
+char *cmd_pin_create_response(client_ai_t *client, char *response,
     int player_id)
 {
     sprintf(response, "pin %d %d %d %d %d %d %d %d %d %d\n", player_id,

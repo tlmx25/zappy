@@ -81,4 +81,14 @@ void cmd_sgt(server_t *server, client_t *client, char UNUSED const **command);
  */
 void cmd_sst(server_t *server, client_t *client, char const **command);
 
+/**
+ * @brief
+ * @param client
+ * @param response
+ * @param player_id
+ * @return
+ */
+char *cmd_pin_create_response(client_ai_t *client, char *response,
+    int player_id);
+
 #endif // GRAPHIQUE_CMD_H

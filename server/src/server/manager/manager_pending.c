@@ -55,21 +55,34 @@ static client_ai_t *check_eggs(int fd, char *name, client_t *client,
     return create_client_ai(fd, name, (position_t){0, 0, 0});
 }
 
+static void send_data_graphic(server_t *server, client_ai_t *client, egg_t *egg)
+{
+    char buffer[2048] = {0};
+
+    send_to_all_graphic_arg(server->graphic_clients, "pnw %i %i %i %i %i %s\n",
+    client->num_player, client->position.x, client->position.y,
+    client->position.direction + 1, client->level, client->team_name);
+    cmd_pin_create_response(client, buffer, client->num_player);
+    send_to_all_graphic(server->graphic_clients, buffer);
+    send_to_all_graphic_arg(server->graphic_clients, "ebo %i\n", egg->id);
+    delete_egg_from_list(server->world->eggs, egg, true);
+}
+
 bool convert_pending_client_to_ai(server_t *server,
     client_t *client, char *name)
 {
     client_ai_t *new_client = check_eggs(client->fd, name, client, server);
-    position_t pos;
+    egg_t *egg;
 
     if (new_client == NULL)
         return false;
-    pos = get_egg_by_team(server->world->eggs, name)->pos;
-    new_client->position = pos;
-    delete_egg_by_team_position(server->world->eggs, name, pos);
+    egg = get_egg_by_team(server->world->eggs, name);
+    new_client->position = egg->pos;
     new_client->fd = client->fd;
     add_client_ai_to_list(server->ai_clients, new_client);
     debug_pending_to_ai(client, new_client, server);
     client_is_converted(server->pending_clients, client);
+    send_data_graphic(server, new_client, egg);
     return true;
 }
 
