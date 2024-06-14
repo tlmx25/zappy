@@ -15,7 +15,7 @@ egg_t *create_egg(position_t pos, char *team_name)
     if (new == NULL)
         return NULL;
     new->pos = pos;
-    new->id = 0;
+    new->id = id;
     id++;
     new->team_name = my_strdup(team_name);
     new->next = NULL;
