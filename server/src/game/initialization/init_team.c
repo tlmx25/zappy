@@ -29,6 +29,10 @@ static bool eggs_init(server_t *server)
     return true;
 }
 
+void enw_all(server_t *server, client_t *client)
+{
+}
+
 bool team_init(server_t *server)
 {
     debug_print("Init teams\n");
@@ -37,7 +41,7 @@ bool team_init(server_t *server)
         server->world->nbr_teams++);
     server->world->teams = malloc(sizeof(team_t) * server->world->nbr_teams);
     if (server->world->teams == NULL)
-        return (false);
+        return false;
     for (int i = 0; i < server->world->nbr_teams; i++) {
         server->world->teams[i].name = strdup(server->option->names[i]);
         server->world->teams[i].max_clients = server->option->clients_nb;
