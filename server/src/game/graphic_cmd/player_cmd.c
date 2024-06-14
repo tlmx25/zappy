@@ -28,7 +28,7 @@ void cmd_ppo(server_t *server, client_t *client, char const **command)
         if (tmp->num_player == player_id) {
             response = malloc(sizeof(char) * 2048);
             sprintf(response, "ppo %d %d %d %d\n", player_id,
-                tmp->position.x, tmp->position.y, tmp->position.direction);
+                tmp->position.x, tmp->position.y, tmp->position.direction + 1);
             add_to_buffer(&client->buffer_out, response, true);
             return;
         }
