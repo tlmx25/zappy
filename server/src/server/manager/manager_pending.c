@@ -56,7 +56,8 @@ static client_ai_t *check_eggs(int fd, char *name, client_t *client,
     return create_client_ai(fd, name, (position_t){0, 0, 0});
 }
 
-static void send_data_graphic(server_t *server, client_ai_t *client, egg_t *egg)
+static void send_data_graphic(server_t *server, client_ai_t *client,
+    egg_t *egg)
 {
     char buffer[2048] = {0};
 
