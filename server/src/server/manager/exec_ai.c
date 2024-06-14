@@ -10,13 +10,13 @@
 #include "graphique_cmd.h"
 
 static const command_ai_t commands[] = {
-    {"Forward", 7, forward_command},
-    {"Right", 7, right_command},
-    {"Left", 7, left_command},
-    {"Connect_nbr", 0, connect_nbr_command},
-    {"Inventory", 1, inventory_command},
-    {"Fork", 42, fork_command},
-    {NULL, 0, NULL}
+    {"Forward", 7, forward_command, NULL},
+    {"Right", 7, right_command, NULL},
+    {"Left", 7, left_command, NULL},
+    {"Connect_nbr", 0, connect_nbr_command, NULL},
+    {"Inventory", 1, inventory_command, NULL},
+    {"Fork", 42, fork_command, NULL},
+    {NULL, 0, NULL, NULL}
 };
 
 //    {"Look", 7, look_command},

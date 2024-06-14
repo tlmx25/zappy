@@ -15,6 +15,7 @@ typedef struct command_ai_s {
     char *command;
     size_t TTEA;
     void (*func)(server_t *server, client_ai_t *client);
+    void (*prefunc)(server_t *server, client_ai_t *client);
 } command_ai_t;
 
 /**

@@ -16,4 +16,12 @@ void fork_command(server_t *server, client_ai_t *client)
     add_to_buffer(&client->buff_out, "ok\n", false);
     debug_print("Ai : %i, fork a player at {%i, %i, %c}\n", client->num_player,
     position.x, position.y, get_direction_char(position.direction));
+    send_to_all_graphic_arg(server->graphic_clients, "pfk %i\n",
+    client->num_player);
+}
+
+void prefork_command(server_t *server, client_ai_t *client)
+{
+    send_to_all_graphic_arg(server->graphic_clients, "pfk %i\n",
+    client->num_player);
 }
