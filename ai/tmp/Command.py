@@ -1,7 +1,6 @@
-from Server import Server
+from src import Server as Server
 
 class Command:
-
     def __init__(self, server: Server):
         self.commandSend = []
         self.server = server
