@@ -53,12 +53,11 @@ void send_to_other_ai(client_ai_list_t *list, char *msg, client_ai_t *client)
 }
 
 void send_to_all_graphic_func(server_t *server, char const **cmd,
-    void (*fct)(server_t *server, client_t *client, char const **command) )
+    void (*fct)(server_t *server, client_t *client, char const **command))
 {
     client_t *tmp = server->graphic_clients->head;
 
-    for (;tmp; tmp = tmp->next)
-    {
+    for (; tmp; tmp = tmp->next) {
         fct(server, tmp, cmd);
     }
 }

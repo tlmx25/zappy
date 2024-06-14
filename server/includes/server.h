@@ -206,5 +206,5 @@ direction_t turn_left(direction_t direction);
  * @param fct function pointer to execute for  all clients
  */
 void send_to_all_graphic_func(server_t *server, char const **cmd,
-    void (*fct)(server_t *server, client_t *client, char const **command) );
+    void (*fct)(server_t *server, client_t *client, char const **command));
 #endif //SERVER_SERVER_H
