@@ -15,7 +15,7 @@ static const command_ai_t commands[] = {
     {"Left", 7, left_command, NULL},
     {"Connect_nbr", 0, connect_nbr_command, NULL},
     {"Inventory", 1, inventory_command, NULL},
-    {"Fork", 42, fork_command, NULL},
+    {"Fork", 42, fork_command, prefork_command},
     {NULL, 0, NULL, NULL}
 };
 
@@ -60,12 +60,14 @@ void exec_command_ai(server_t *server, client_ai_t *client)
     client->action = -1;
 }
 
-static void reconstruct_buff(client_ai_t *client, char **tab)
+static void reconstruct_buff(client_ai_t *client, char **tab, server_t *server)
 {
     free(client->buff_in);
     client->buff_in = NULL;
     if (tab[1] == NULL) {
         client->buff_in = NULL;
+        if (commands[client->action].prefunc)
+            commands[client->action].prefunc(server, client);
         return;
     }
     client->buff_in = my_array_to_str_separator((char const **)&tab[1], "\n");
@@ -96,7 +98,7 @@ static void check_command(server_t *server, client_ai_t *client)
     }
     if (client->action == -1)
         invalid_command(client, tab[0]);
-    reconstruct_buff(client, tab);
+    reconstruct_buff(client, tab, server);
     free_tab(tab);
 }
 

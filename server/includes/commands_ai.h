@@ -69,4 +69,11 @@ char get_direction_char(direction_t direction);
  * @param client client who sent the command
  */
 void fork_command(server_t *server, client_ai_t *client);
+
+/**
+ * @brief excute prefork command for prevent graphic
+ * @param server server for info
+ * @param client client who sent command fork
+ */
+void prefork_command(server_t *server, client_ai_t *client);
 #endif //SERVER_COMMANDS_AI_H
