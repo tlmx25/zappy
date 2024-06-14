@@ -14,6 +14,7 @@
 typedef struct egg_s {
     position_t pos;
     char *team_name;
+    int id;
     struct egg_s *next;
     struct egg_s *prev;
 } egg_t;
