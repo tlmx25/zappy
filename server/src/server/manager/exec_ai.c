@@ -7,6 +7,7 @@
 
 #include "commands_ai.h"
 #include "server.h"
+#include "graphique_cmd.h"
 
 static const command_ai_t commands[] = {
     {"Forward", 7, forward_command},
@@ -109,6 +110,7 @@ void exec_ai_list(server_t *server)
         meteor = 0;
         debug_print("Meteor shower\n");
         distribute_ressources(server);
+        send_to_all_graphic_func(server, NULL, cmd_mct);
     }
     for (; tmp; tmp = tmp->next) {
         check_death(server, tmp);
