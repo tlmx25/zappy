@@ -21,6 +21,7 @@ static void is_graphic(server_t *server, client_t *client)
     cmd_sgt(server, client, NULL);
     cmd_mct(server, client, NULL);
     cmd_tna(server, client, NULL);
+    enw_all_egg(server, client);
 }
 
 static void debug_pending_to_ai(client_t *client, client_ai_t *new_client,

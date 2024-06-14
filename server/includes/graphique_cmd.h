@@ -81,6 +81,13 @@ void cmd_sgt(server_t *server, client_t *client, char UNUSED const **command);
  */
 void cmd_sst(server_t *server, client_t *client, char const **command);
 
+/*
+ * @brief send all the egg on the map to the client with enw
+ * @param server the server
+ * @param client the client
+ */
+void enw_all_egg(server_t *server, client_t *client);
+
 /**
  * @brief
  * @param client
@@ -90,5 +97,4 @@ void cmd_sst(server_t *server, client_t *client, char const **command);
  */
 char *cmd_pin_create_response(client_ai_t *client, char *response,
     int player_id);
-
 #endif // GRAPHIQUE_CMD_H
