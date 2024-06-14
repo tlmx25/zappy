@@ -26,7 +26,7 @@ void fork_command(server_t *server, client_ai_t *client)
 
 void prefork_command(server_t *server, client_ai_t *client)
 {
-    debug_print("AI : %i, started fork an egg at {%i, %i, %c}\n",\
+    debug_print("AI : %i, started fork an egg at {%i, %i, %c}\n",
     client->num_player, client->position.x, client->position.y,
     get_direction_char(client->position.direction));
     send_to_all_graphic_arg(server->graphic_clients, "pfk %i\n",
