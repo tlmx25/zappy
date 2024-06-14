@@ -29,8 +29,18 @@ static bool eggs_init(server_t *server)
     return true;
 }
 
-void enw_all(server_t *server, client_t *client)
+void enw_all_egg(server_t *server, client_t *client)
 {
+    char *buffer = NULL;
+    egg_t *tmp = server->world->eggs->head;
+
+    debug_print("ENW ALL EGGS\n");
+    for (; tmp != NULL; tmp = tmp->next) {
+        buffer = malloc(sizeof(char) * 2048);
+        sprintf(buffer, "enw %i %i %i %i\n", tmp->id, -1, tmp->pos.x,
+            tmp->pos.y);
+        add_to_buffer(&client->buffer_out, buffer, true);
+    }
 }
 
 bool team_init(server_t *server)
