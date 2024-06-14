@@ -54,4 +54,18 @@ void connect_nbr_command(server_t *server, client_ai_t *client);
  * @param client client who sent the command
  */
 void inventory_command(server_t *server, client_ai_t *client);
+
+/**
+ * @brief convert direction to char
+ * @param direction direction to convert
+ * @return direction char (N, E, S, W)
+ */
+char get_direction_char(direction_t direction);
+
+/**
+ * @brief execute fork command
+ * @param server server for info about the game
+ * @param client client who sent the command
+ */
+void fork_command(server_t *server, client_ai_t *client);
 #endif //SERVER_COMMANDS_AI_H

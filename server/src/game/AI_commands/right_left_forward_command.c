@@ -7,7 +7,7 @@
 
 #include "commands_ai.h"
 
-static char get_direction_char(direction_t direction)
+char get_direction_char(direction_t direction)
 {
     if (direction == NORTH)
         return 'N';
