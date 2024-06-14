@@ -10,6 +10,7 @@
     #define ERROR 84
     #define UNUSED __attribute__((unused))
     #define FREQ(x) (x / server->option->freq)
+    #define PLNUM(x) (x[0] == '#') ? &x[1] : x
     #include <unistd.h>
     #include <stdlib.h>
     #include <stdio.h>
