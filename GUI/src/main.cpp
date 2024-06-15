@@ -26,24 +26,26 @@ static void print_usage()
 }
 
 int main(int ac, char **av) {
-    if (std::string(av[1]) == "-h" && ac == 2) {
-        print_usage();
-        return 0;
-    }
-    if (verif_args(ac, av) == 84)
-        return 84;
+    Game game(30, 30);
+    game.run();
+    // if (std::string(av[1]) == "-h" && ac == 2) {
+    //     print_usage();
+    //     return 0;
+    // }
+    // if (verif_args(ac, av) == 84)
+    //     return 84;
 
-    try
-    {
-        Zappy_GUI::Server server(av[2], av[4]);
+    // try
+    // {
+    //     Zappy_GUI::Server server(av[2], av[4]);
 
-        server.OpenSocket();
-        server.ConnectSocket();
-        server.Run();
-    }
-    catch(const std::exception& e)
-    {
-        std::cerr << e.what() << std::endl;
-    }
+    //     server.OpenSocket();
+    //     server.ConnectSocket();
+    //     server.Run();
+    // }
+    // catch(const std::exception& e)
+    // {
+    //     std::cerr << e.what() << std::endl;
+    // }
     return 0;
 }

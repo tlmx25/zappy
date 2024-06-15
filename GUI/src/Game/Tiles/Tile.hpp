@@ -32,7 +32,7 @@ class Tile
         sf::Vector2i pos;
         sf::Vector2i size;
         sf::RectangleShape shape;
-        int tileSize = 80;
+        int tileSize = 90;
         int qAll;
         int q0;
         int q1;
@@ -41,7 +41,7 @@ class Tile
         int q4;
         int q5;
         int q6;
-        std::map<std::string, std::shared_ptr<sf::Sprite>> items;
+        // std::map<std::string, std::shared_ptr<sf::Sprite>> items;
 };
 
 #endif

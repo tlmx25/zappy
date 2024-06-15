@@ -18,7 +18,6 @@ Map::Map(int width, int height, int windowSize) : width(width), height(height), 
     view = sf::View(sf::FloatRect(center.x, center.y, windowSize, windowSize));
     for (int y = 0; y < height; ++y) {
         for (int x = 0; x < width; ++x) {
-            printf("new tile\n");
             Tile tile = Tile(sf::Vector2i(tileSize - 1, tileSize - 1), sf::Vector2i(x * tileSize, y * tileSize), 0, 0, 0, 0, 0, 0, 0);
             tile.setPos(sf::Vector2i(x * tileSize, y * tileSize));
             sf::Color initialColor = generateRandomColor();

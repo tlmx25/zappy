@@ -21,7 +21,6 @@ class Trantorian
         ~Trantorian() = default;
         void setSprite(sf::Sprite sprite);
         void draw(sf::RenderWindow &window);
-        bool updateLife(int timeUnits);
         void setInventory(int q0, int q1, int q2, int q3, int q4, int q5, int q6);
         void setPos(sf::Vector2i pos);
         void setLevel(int level);
@@ -41,7 +40,6 @@ class Trantorian
     private:
         sf::Vector2i pos;
         int *inventory;
-        int lifeTimeLeft;
         int level;
         int direction;
 };

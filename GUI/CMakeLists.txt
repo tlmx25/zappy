@@ -13,6 +13,7 @@ include_directories(
         src/Game
         src/Game/Map
         src/Game/Tiles
+        src/Game/Trantorians
         src/server
 )
 
@@ -23,6 +24,7 @@ add_executable(${PROJECT_NAME}
         src/Game/Tiles/Tile.cpp
         src/Game/Game.cpp
         src/server/server.cpp
+        src/Game/Trantorians/Trantorian.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} sfml-graphics sfml-window sfml-system)

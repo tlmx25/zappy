@@ -12,17 +12,8 @@ Trantorian::Trantorian(int id, std::string teamName, sf::Vector2i pos, int direc
     this->id = id;
     this->teamName = teamName;
     this->pos = pos;
-    this->lifeTimeLeft = 1260;
     this->level = level;
     this->direction = direction;
-}
-
-bool Trantorian::updateLife(int timeUnits)
-{
-    this->lifeTimeLeft -= timeUnits;
-    if (this->lifeTimeLeft <= 0)
-        return (false);
-    return (true);
 }
 
 void Trantorian::setSprite(sf::Sprite sprite)
