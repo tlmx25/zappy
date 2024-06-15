@@ -41,6 +41,7 @@ void Map::renderTiles(sf::RenderWindow &window)
 {
     for (auto &tile : tiles) {
         window.draw(tile.getShape());
+        tile.draw(window);
     }
 }
 
@@ -67,4 +68,9 @@ sf::Color Map::interpolateColor(sf::Color start, sf::Color end, float t)
         static_cast<sf::Uint8>(start.g + t * (end.g - start.g)),
         static_cast<sf::Uint8>(start.b + t * (end.b - start.b))
     );
+}
+
+std::vector<Tile>& Map::getTiles()
+{
+    return tiles;
 }

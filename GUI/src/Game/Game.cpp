@@ -12,6 +12,12 @@ Game::Game(int x, int y) : map(x, y, 1200)
     // link port and ip
     window.create(sf::VideoMode(1200, 1200), "Zappy");
     window.setFramerateLimit(60);
+
+    // TODO: to remove, FOR TEST ONLY
+    for (auto& tile : map.getTiles()) {
+        tile.setItemQuantity(1, 1);
+    }
+    printf("---------------finished------------\n");
 }
 
 Game::~Game()

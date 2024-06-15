@@ -50,10 +50,10 @@ void Tile::load_sprites()
             // TODO: handle error if texture loading fails
         }
         sprite.setTexture(texture);
+        sprite.setOrigin(texture.getSize().x / 2, texture.getSize().y / 2);
+        sprite.setPosition(pos.x + size.x / 2, pos.y + size.y / 2);
         items[key] = sprite;
     }
-
-    // TODO: Set les positions fixent pour chaque sprite
 }
 
 void Tile::addItem(int item)
@@ -193,5 +193,18 @@ void Tile::setPos(sf::Vector2i pos)
 
 void Tile::draw(sf::RenderWindow &window)
 {
-    // draw one of each if quantity is > 0
+    if (q0 > 0)
+        window.draw(items["q0"]);
+    if (q1 > 0)
+        window.draw(items["q1"]);
+    if (q2 > 0)
+        window.draw(items["q2"]);
+    if (q3 > 0)
+        window.draw(items["q3"]);
+    if (q4 > 0)
+        window.draw(items["q4"]);
+    if (q5 > 0)
+        window.draw(items["q5"]);
+    if (q6 > 0)
+        window.draw(items["q6"]);  
 }

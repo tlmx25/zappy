@@ -26,6 +26,7 @@ class Map
         sf::Color interpolateColor(sf::Color start, sf::Color end, float t);
         void updateColors(float time);
         void renderTiles(sf::RenderWindow& window);
+        std::vector<Tile>& getTiles();
         sf::View view;
         int mapWidthInPixels;
         int mapHeightInPixels;
