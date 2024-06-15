@@ -15,9 +15,8 @@ Game::Game(int x, int y) : map(x, y, 1200)
 
     // TODO: to remove, FOR TEST ONLY
     for (auto& tile : map.getTiles()) {
-        tile.setItemQuantity(1, 1);
+        tile.setItemQuantity(0, 1);
     }
-    printf("---------------finished------------\n");
 }
 
 Game::~Game()

@@ -43,7 +43,8 @@ class Tile
         int q4;
         int q5;
         int q6;
-        std::map<std::string, sf::Sprite> items;
+        std::map<std::string, std::shared_ptr<sf::Texture>> textures;
+        std::map<std::string, std::shared_ptr<sf::Sprite>> items;
 };
 
 #endif

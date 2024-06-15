@@ -22,11 +22,11 @@ Tile::Tile(sf::Vector2i size, sf::Vector2i pos, int q0, int q1, int q2, int q3, 
     this->shape = sf::RectangleShape(sf::Vector2f(size.x, size.y));
 
     try {
-        items["q0"];
-        items["q1"];
-        items["q2"];
-        items["q3"];
-        items["q4"];
+        items["q0"] = std::make_shared<sf::Sprite>();
+        items["q1"] = std::make_shared<sf::Sprite>();
+        items["q2"] = std::make_shared<sf::Sprite>();
+        items["q3"] = std::make_shared<sf::Sprite>();
+        items["q4"] = std::make_shared<sf::Sprite>();
         // TODO: put them back once all assets are done
         // items["q5"];
         // items["q6"];
@@ -44,15 +44,16 @@ void Tile::load_sprites()
         std::string key = item.first;
         std::string texturePath = "GUI/src/Assets/" + key + ".png";
         sf::Texture texture;
-        sf::Sprite sprite;
-        if (!texture.loadFromFile(texturePath))
-        {
+
+        if (!texture.loadFromFile(texturePath)) {
             // TODO: handle error if texture loading fails
+            std::cerr << "Error loading texture" << std::endl;
+            printf("Error loading texture %s\n", texturePath.c_str());
+            continue;
         }
-        sprite.setTexture(texture);
-        sprite.setOrigin(texture.getSize().x / 2, texture.getSize().y / 2);
-        sprite.setPosition(pos.x + size.x / 2, pos.y + size.y / 2);
-        items[key] = sprite;
+        textures[key] = std::make_shared<sf::Texture>(texture);
+        items[key]->setTexture(*textures[key]);
+        items[key]->setPosition(pos.x + size.x / 2 - items[key]->getGlobalBounds().width / 2, pos.y + size.y / 2 - items[key]->getGlobalBounds().height / 2);
     }
 }
 
@@ -194,17 +195,17 @@ void Tile::setPos(sf::Vector2i pos)
 void Tile::draw(sf::RenderWindow &window)
 {
     if (q0 > 0)
-        window.draw(items["q0"]);
+        window.draw(*items["q0"]);
     if (q1 > 0)
-        window.draw(items["q1"]);
+        window.draw(*items["q1"]);
     if (q2 > 0)
-        window.draw(items["q2"]);
+        window.draw(*items["q2"]);
     if (q3 > 0)
-        window.draw(items["q3"]);
+        window.draw(*items["q3"]);
     if (q4 > 0)
-        window.draw(items["q4"]);
+        window.draw(*items["q4"]);
     if (q5 > 0)
-        window.draw(items["q5"]);
+        window.draw(*items["q5"]);
     if (q6 > 0)
-        window.draw(items["q6"]);  
+        window.draw(*items["q6"]);  
 }
