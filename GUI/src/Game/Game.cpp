@@ -12,39 +12,12 @@ Game::Game(int x, int y) : map(x, y, 1200)
     // link port and ip
     window.create(sf::VideoMode(1200, 1200), "Zappy");
     window.setFramerateLimit(60);
-
-    items["q0"];
-    items["q1"];
-    items["q2"];
-    items["q3"];
-    items["q4"];
-    items["q5"];
-    items["q6"];
-    items["egg"];
-    load_sprites();
 }
 
 Game::~Game()
 {
     if (window.isOpen())
         window.close();
-}
-
-void Game::load_sprites()
-{
-    for (auto& item : items)
-    {
-        std::string key = item.first;
-        std::string texturePath = "GUI/src/Assets/" + key + ".png";
-        sf::Texture texture;
-        sf::Sprite sprite;
-        if (!texture.loadFromFile(texturePath))
-        {
-            // TODO: handle error if texture loading fails
-        }
-        sprite.setTexture(texture);
-        items[key] = sprite;
-    }
 }
 
 void Game::run()

@@ -21,15 +21,39 @@ Tile::Tile(sf::Vector2i size, sf::Vector2i pos, int q0, int q1, int q2, int q3, 
     this->qAll = q0 + q1 + q2 + q3 + q4 + q5 + q6;
     this->shape = sf::RectangleShape(sf::Vector2f(size.x, size.y));
 
-    // try {
-    //     // load textures
-    //     // create sprites
-    //     // set textures to sprites
-    //     // link sprites to items
-    // } catch (const std::exception &e) {
-    //     // TODO: faire erreur propre
-    //     std::cerr << e.what() << std::endl;
-    // }
+    try {
+        items["q0"];
+        items["q1"];
+        items["q2"];
+        items["q3"];
+        items["q4"];
+        // TODO: put them back once all assets are done
+        // items["q5"];
+        // items["q6"];
+        // items["egg"];
+        load_sprites();
+    } catch (const std::exception &e) {
+        // TODO: faire erreur propre
+        std::cerr << e.what() << std::endl;
+    }
+}
+
+void Tile::load_sprites()
+{
+    for (auto& item : items) {
+        std::string key = item.first;
+        std::string texturePath = "GUI/src/Assets/" + key + ".png";
+        sf::Texture texture;
+        sf::Sprite sprite;
+        if (!texture.loadFromFile(texturePath))
+        {
+            // TODO: handle error if texture loading fails
+        }
+        sprite.setTexture(texture);
+        items[key] = sprite;
+    }
+
+    // TODO: Set les positions fixent pour chaque sprite
 }
 
 void Tile::addItem(int item)
@@ -165,4 +189,9 @@ void Tile::setPos(sf::Vector2i pos)
 {
     this->pos = pos;
     this->shape.setPosition(pos.x, pos.y);
+}
+
+void Tile::draw(sf::RenderWindow &window)
+{
+    // draw one of each if quantity is > 0
 }

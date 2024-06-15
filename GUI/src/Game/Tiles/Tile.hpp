@@ -28,6 +28,8 @@ class Tile
         sf::RectangleShape getShape();
         void setFillColor(sf::Color color);
         void setPos(sf::Vector2i pos);
+        void load_sprites();
+        void draw(sf::RenderWindow &window);
     private:
         sf::Vector2i pos;
         sf::Vector2i size;
@@ -41,7 +43,7 @@ class Tile
         int q4;
         int q5;
         int q6;
-        // std::map<std::string, std::shared_ptr<sf::Sprite>> items;
+        std::map<std::string, sf::Sprite> items;
 };
 
 #endif

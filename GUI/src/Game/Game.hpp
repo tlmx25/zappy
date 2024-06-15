@@ -23,14 +23,12 @@ class Game
         void run();
         void handleEvents();
         void render();
-        void load_sprites();
     private:
         sf::RenderWindow window;
         sf::Event event;
         sf::Clock clock;
         Map map;
         std::vector<Trantorian> trantorians;
-        std::map<std::string, sf::Sprite> items;
 };
 
 #endif
