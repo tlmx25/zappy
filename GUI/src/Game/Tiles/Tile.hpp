@@ -17,7 +17,7 @@
 class Tile
 {
     public:
-        Tile(sf::Vector2i size = sf::Vector2i(80,80), sf::Vector2i pos = sf::Vector2i(0,0), int q0 = 0, int q1 = 0, int q2 = 0, int q3 = 0, int q4 = 0, int q5 = 0, int q6 = 0);
+        Tile(sf::Vector2i size = sf::Vector2i(90,90), sf::Vector2i pos = sf::Vector2i(0,0), int q0 = 0, int q1 = 0, int q2 = 0, int q3 = 0, int q4 = 0, int q5 = 0, int q6 = 0);
         ~Tile() = default;
         void addItem(int item);
         void removeItem(int item);

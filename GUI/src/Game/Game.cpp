@@ -25,7 +25,7 @@ Game::Game(int x, int y) : map(x, y, 1200)
     // for (auto& tile : map.getTiles()) {
     //     tile.setItemQuantity(0, 1);
     // }
-    trantorians["test"] = std::make_shared<Trantorian>(0, "test", sf::Vector2i(30, 30), 0, 1, getTeamNumber("test"));
+    trantorians["test"] = std::make_shared<Trantorian>(0, "test", sf::Vector2i(2, 2), 0, 1, getTeamNumber("test"));
 }
 
 Game::~Game()
@@ -95,6 +95,9 @@ void Game::render()
     window.clear();
     window.setView(map.view);
     map.renderTiles(window);
+    for (auto& trantorian : trantorians) {
+        trantorian.second->draw(window);
+    }
     // To draw UI elements correctly?
     // window.setView(window.getDefaultView());
     window.display();

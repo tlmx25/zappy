@@ -33,7 +33,7 @@ class Map
     private:
         int width;
         int height;
-        int tileSize = 80;
+        int tileSize = 90;
         int windowSize = 1200;
         float colorChangeSpeed = 1.0f;
         float lastColorChange = 0.0f;

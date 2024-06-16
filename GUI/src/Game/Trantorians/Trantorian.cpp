@@ -47,11 +47,19 @@ void Trantorian::setSprite()
             break;
     }
     sprite.setTexture(texture);
+    sprite.setTextureRect(sf::IntRect(0, 0, 90, 90));
 }
 
 void Trantorian::draw(sf::RenderWindow &window)
 {
-    window.draw(this->sprite);
+    const int tileSize = 90;
+    sf::Vector2f pixelPos(pos.x * tileSize, pos.y * tileSize);
+    printf("pos.x: %d, pos.y: %d\n", pos.x, pos.y);
+    printf("pixelPos.x: %f, pixelPos.y: %f\n", pixelPos.x, pixelPos.y);
+    
+    // Set the sprite's position to be centered on the tile
+    sprite.setPosition(pixelPos);
+    window.draw(sprite);
 }
 
 void Trantorian::setInventory(int q0, int q1, int q2, int q3, int q4, int q5, int q6)
