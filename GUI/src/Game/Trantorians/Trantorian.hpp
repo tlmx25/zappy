@@ -26,6 +26,7 @@ class Trantorian
         void setLevel(int level);
         void collectItem(std::shared_ptr<Tile> &tile, int nb);
         void dropItem(std::shared_ptr<Tile> &tile, int nb);
+        void animate(float time);
 
     // Identification
     private:
@@ -44,6 +45,13 @@ class Trantorian
         int *inventory;
         int level;
         int direction;
+
+    // Animation
+    private:
+        int currentFrame;   // Current frame index
+        int frameCount;     // Number of frames in the animation
+        float frameDuration; // Duration of each frame in seconds
+        float elapsedTime;  // Time elapsed since last frame change
 };
 
 #endif

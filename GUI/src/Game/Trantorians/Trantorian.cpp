@@ -16,6 +16,13 @@ Trantorian::Trantorian(int id, std::string teamName, sf::Vector2i pos, int direc
     this->direction = direction;
     this->inventory = new int[7];
     this->teamNumber = teamNumber;
+
+    // Initialize animation variables
+    currentFrame = 0;
+    frameCount = 9;       // Total number of frames
+    frameDuration = 0.1f; // Duration of each frame in seconds
+    elapsedTime = 0.0f;   // Start with zero elapsed time
+
     setSprite();
 }
 
@@ -53,13 +60,22 @@ void Trantorian::setSprite()
 void Trantorian::draw(sf::RenderWindow &window)
 {
     const int tileSize = 90;
+    sf::IntRect frameRect(currentFrame * 100, 0, 90, 90);
     sf::Vector2f pixelPos(pos.x * tileSize, pos.y * tileSize);
-    printf("pos.x: %d, pos.y: %d\n", pos.x, pos.y);
-    printf("pixelPos.x: %f, pixelPos.y: %f\n", pixelPos.x, pixelPos.y);
     
     // Set the sprite's position to be centered on the tile
+    sprite.setTextureRect(frameRect);
     sprite.setPosition(pixelPos);
     window.draw(sprite);
+}
+
+void Trantorian::animate(float time)
+{
+    elapsedTime += time;
+    if (elapsedTime >= frameDuration) {
+        currentFrame = (currentFrame + 1) % frameCount;
+        elapsedTime -= frameDuration;
+    }
 }
 
 void Trantorian::setInventory(int q0, int q1, int q2, int q3, int q4, int q5, int q6)
