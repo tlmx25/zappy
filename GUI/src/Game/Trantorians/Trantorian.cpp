@@ -60,21 +60,24 @@ void Trantorian::setSprite()
 void Trantorian::draw(sf::RenderWindow &window)
 {
     const int tileSize = 90;
+
+    sf::IntRect frameRectElevation(currentFrame * 100, 100, 90, 90);
     sf::IntRect frameRect(currentFrame * 100, 0, 90, 90);
     sf::Vector2f pixelPos(pos.x * tileSize, pos.y * tileSize);
     
-    // Set the sprite's position to be centered on the tile
-    sprite.setTextureRect(frameRect);
+    if (elevation)
+        sprite.setTextureRect(frameRectElevation);
+    else
+        sprite.setTextureRect(frameRect);
     sprite.setPosition(pixelPos);
     window.draw(sprite);
 }
 
 void Trantorian::animate(float time)
 {
-    elapsedTime += time;
-    if (elapsedTime >= frameDuration) {
+    if (time - elapsedTime > frameDuration) {
         currentFrame = (currentFrame + 1) % frameCount;
-        elapsedTime -= frameDuration;
+        elapsedTime = time;
     }
 }
 
@@ -119,4 +122,14 @@ void Trantorian::dropItem(std::shared_ptr<Tile> &tile, int nb)
             nb--;
         }
     }
+}
+
+bool Trantorian::isElevating()
+{
+    return elevation;
+}
+
+void Trantorian::setElevating(bool isElevating)
+{
+    elevation = isElevating;
 }

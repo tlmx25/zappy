@@ -49,6 +49,7 @@ void Game::run()
     }
 }
 
+
 void Game::handleEvents()
 {
     while (window.pollEvent(event)) {

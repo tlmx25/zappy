@@ -27,6 +27,8 @@ class Trantorian
         void collectItem(std::shared_ptr<Tile> &tile, int nb);
         void dropItem(std::shared_ptr<Tile> &tile, int nb);
         void animate(float time);
+        bool isElevating();
+        void setElevating(bool isElevating);
 
     // Identification
     private:
@@ -45,6 +47,7 @@ class Trantorian
         int *inventory;
         int level;
         int direction;
+        bool elevation = false;
 
     // Animation
     private:
