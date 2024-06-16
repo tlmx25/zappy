@@ -13,6 +13,14 @@ Game::Game(int x, int y) : map(x, y, 1200)
     window.create(sf::VideoMode(1200, 1200), "Zappy");
     window.setFramerateLimit(60);
 
+    // Load and start music
+    if (!music.openFromFile("GUI/src/Assets/music.ogg")) {
+        std::cerr << "Error loading music file" << std::endl;
+    } else {
+        music.setLoop(true); // Loop the music
+        music.play();
+    }
+
     // TODO: to remove, FOR TEST ONLY
     for (auto& tile : map.getTiles()) {
         tile.setItemQuantity(0, 1);
@@ -23,6 +31,7 @@ Game::~Game()
 {
     if (window.isOpen())
         window.close();
+    music.stop();
 }
 
 void Game::run()
@@ -75,6 +84,15 @@ void Game::handleEvents()
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
         currentZoom = 1.0f;
         map.view.setSize(1200, 1200);
+    }
+
+    // Control music with keyboard
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)) {
+        if (music.getStatus() == sf::Music::Playing) {
+            music.pause(); // Pause the music
+        } else {
+            music.play(); // Play the music
+        }
     }
 }
 

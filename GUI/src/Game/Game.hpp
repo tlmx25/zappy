@@ -12,6 +12,7 @@
     #include <algorithm>
     #include <vector>
     #include <SFML/Graphics.hpp>
+    #include <SFML/Audio.hpp>
     #include "Map.hpp"
     #include "Trantorian.hpp"
 
@@ -30,6 +31,7 @@ class Game
         float currentZoom = 1.0f;
         Map map;
         std::vector<Trantorian> trantorians;
+        sf::Music music;
 };
 
 #endif
