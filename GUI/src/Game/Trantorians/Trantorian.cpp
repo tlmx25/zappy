@@ -7,18 +7,46 @@
 
 #include "Trantorian.hpp"
 
-Trantorian::Trantorian(int id, std::string teamName, sf::Vector2i pos, int direction, int level)
+Trantorian::Trantorian(int id, std::string teamName, sf::Vector2i pos, int direction, int level, int teamNumber)
 {
     this->id = id;
     this->teamName = teamName;
     this->pos = pos;
     this->level = level;
     this->direction = direction;
+    this->inventory = new int[7];
+    this->teamNumber = teamNumber;
+    setSprite();
 }
 
-void Trantorian::setSprite(sf::Sprite sprite)
+void Trantorian::setSprite()
 {
-    this->sprite = sprite;
+    switch (teamNumber) {
+        case 0:
+            if (!texture.loadFromFile("GUI/src/Assets/VIRUS/VIRUS-GREEN.png")) {
+                std::cerr << "Error loading trantorian sprite" << std::endl;
+            }
+            break;
+        case 1:
+            if (!texture.loadFromFile("GUI/src/Assets/VIRUS/VIRUS-RED.png")) {
+                std::cerr << "Error loading trantorian sprite" << std::endl;
+            }
+            break;
+        case 2:
+            if (!texture.loadFromFile("GUI/src/Assets/VIRUS/VIRUS-YELLOW.png")) {
+                std::cerr << "Error loading trantorian sprite" << std::endl;
+            }
+            break;
+        case 3:
+            if (!texture.loadFromFile("GUI/src/Assets/VIRUS/VIRUS-PINK.png")) {
+                std::cerr << "Error loading trantorian sprite" << std::endl;
+            }
+            break;
+        default:
+            // TODO: handle error for invalid teamNumber
+            break;
+    }
+    sprite.setTexture(texture);
 }
 
 void Trantorian::draw(sf::RenderWindow &window)

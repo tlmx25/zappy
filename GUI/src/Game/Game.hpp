@@ -24,14 +24,17 @@ class Game
         void run();
         void handleEvents();
         void render();
+        int getTeamNumber(std::string teamName);
     private:
         sf::RenderWindow window;
         sf::Event event;
         sf::Clock clock;
         float currentZoom = 1.0f;
         Map map;
-        std::vector<Trantorian> trantorians;
+        std::map<std::string, std::shared_ptr<Trantorian>> trantorians;
         sf::Music music;
+        std::map<std::string, int> teamToNumber;
+        int nextTeamNumber = 0;
 };
 
 #endif

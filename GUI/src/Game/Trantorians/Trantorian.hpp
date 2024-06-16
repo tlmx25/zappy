@@ -17,9 +17,9 @@
 class Trantorian
 {
     public:
-        Trantorian(int id, std::string teamName = "", sf::Vector2i pos = sf::Vector2i(0, 0), int direction = 1, int level = 1);
+        Trantorian(int id, std::string teamName = "", sf::Vector2i pos = sf::Vector2i(0, 0), int direction = 1, int level = 1, int teamNumber = 0);
         ~Trantorian() = default;
-        void setSprite(sf::Sprite sprite);
+        void setSprite();
         void draw(sf::RenderWindow &window);
         void setInventory(int q0, int q1, int q2, int q3, int q4, int q5, int q6);
         void setPos(sf::Vector2i pos);
@@ -31,10 +31,12 @@ class Trantorian
     private:
         int id;
         std::string teamName;
+        int teamNumber;
 
     // Graphics
     private:
         sf::Sprite sprite;
+        sf::Texture texture;
 
     // Game data
     private:

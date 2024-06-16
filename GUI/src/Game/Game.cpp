@@ -22,9 +22,10 @@ Game::Game(int x, int y) : map(x, y, 1200)
     }
 
     // TODO: to remove, FOR TEST ONLY
-    for (auto& tile : map.getTiles()) {
-        tile.setItemQuantity(0, 1);
-    }
+    // for (auto& tile : map.getTiles()) {
+    //     tile.setItemQuantity(0, 1);
+    // }
+    trantorians["test"] = std::make_shared<Trantorian>(0, "test", sf::Vector2i(30, 30), 0, 1, getTeamNumber("test"));
 }
 
 Game::~Game()
@@ -36,8 +37,7 @@ Game::~Game()
 
 void Game::run()
 {
-    while (window.isOpen())
-    {
+    while (window.isOpen()) {
         handleEvents();
         render();
     }
@@ -45,47 +45,36 @@ void Game::run()
 
 void Game::handleEvents()
 {
-    while (window.pollEvent(event))
-    {
+    while (window.pollEvent(event)) {
         if (event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
             window.close();
     }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !(map.view.getCenter().x - map.view.getSize().x / 2.0f <= 0))
-    {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !(map.view.getCenter().x - map.view.getSize().x / 2.0f <= 0)) {
         map.view.move(-5, 0);
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && !(map.view.getCenter().x + map.view.getSize().x / 2.0f >= map.mapWidthInPixels))
-    {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && !(map.view.getCenter().x + map.view.getSize().x / 2.0f >= map.mapWidthInPixels)) {
         map.view.move(5, 0);
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !(map.view.getCenter().y - map.view.getSize().y / 2.0f <= 0))
-    {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !(map.view.getCenter().y - map.view.getSize().y / 2.0f <= 0)) {
         map.view.move(0, -5);
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && !(map.view.getCenter().y + map.view.getSize().y / 2.0f >= map.mapHeightInPixels))
-    {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && !(map.view.getCenter().y + map.view.getSize().y / 2.0f >= map.mapHeightInPixels)) {
         map.view.move(0, 5);
     }
-
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && currentZoom > 90.0f / 1200.0f)
-    {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && currentZoom > 90.0f / 1200.0f) {
         map.view.zoom(0.95f); // Zoom in (reduce view size by 5%)
         currentZoom *= 0.95f;
     }
-
     // Zoom out with X key
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::X) && currentZoom < 4.0f)
-    {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::X) && currentZoom < 4.0f) {
         map.view.zoom(1.05f); // Zoom out (increase view size by 5%)
         currentZoom *= 1.05f;
     }
-
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
         currentZoom = 1.0f;
         map.view.setSize(1200, 1200);
     }
-
     // Control music with keyboard
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)) {
         if (music.getStatus() == sf::Music::Playing) {
@@ -93,6 +82,7 @@ void Game::handleEvents()
         } else {
             music.play(); // Play the music
         }
+        sf::sleep(sf::milliseconds(200)); // To avoid multiple key presses
     }
 }
 
@@ -105,7 +95,18 @@ void Game::render()
     window.clear();
     window.setView(map.view);
     map.renderTiles(window);
-    // To draw UI elements correctly
+    // To draw UI elements correctly?
     // window.setView(window.getDefaultView());
     window.display();
+}
+
+int Game::getTeamNumber(std::string teamName)
+{
+    auto it = teamToNumber.find(teamName);
+    if (it == teamToNumber.end()) {
+        int nb = nextTeamNumber++;
+        teamToNumber[teamName] = nb;
+        return nb;
+    }
+    return it->second;
 }
