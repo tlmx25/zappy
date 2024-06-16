@@ -27,6 +27,7 @@ class Game
         sf::RenderWindow window;
         sf::Event event;
         sf::Clock clock;
+        float currentZoom = 1.0f;
         Map map;
         std::vector<Trantorian> trantorians;
 };

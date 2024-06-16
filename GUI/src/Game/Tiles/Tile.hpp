@@ -30,6 +30,7 @@ class Tile
         void setPos(sf::Vector2i pos);
         void load_sprites();
         void draw(sf::RenderWindow &window);
+        // update tile ??
     private:
         sf::Vector2i pos;
         sf::Vector2i size;

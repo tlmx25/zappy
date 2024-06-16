@@ -58,6 +58,24 @@ void Game::handleEvents()
     {
         map.view.move(0, 5);
     }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && currentZoom > 90.0f / 1200.0f)
+    {
+        map.view.zoom(0.95f); // Zoom in (reduce view size by 5%)
+        currentZoom *= 0.95f;
+    }
+
+    // Zoom out with X key
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::X) && currentZoom < 4.0f)
+    {
+        map.view.zoom(1.05f); // Zoom out (increase view size by 5%)
+        currentZoom *= 1.05f;
+    }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+        currentZoom = 1.0f;
+        map.view.setSize(1200, 1200);
+    }
 }
 
 void Game::render()
