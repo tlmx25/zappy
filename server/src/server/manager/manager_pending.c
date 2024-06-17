@@ -6,6 +6,7 @@
 */
 
 #include "graphique_cmd.h"
+#include "commands_ai.h"
 #include "client_ai.h"
 #include "server.h"
 
@@ -33,8 +34,9 @@ static void debug_pending_to_ai(client_t *client, client_ai_t *new_client,
 
     debug_print("Client %d is a AI client, team [%s], is player id is [%i]",
     client->fd, new_client->team_name, new_client->num_player);
-    printf(" and his position is [%i, %i]\n", new_client->position.x,
-    new_client->position.y);
+    printf(" and his position is [%i, %i, %c]\n", new_client->position.x,
+    new_client->position.y, get_direction_char(new_client->position.direction
+    ));
     snprintf(tmp, 1024, "%i\n%i %i\n", nb_egg,
     new_client->position.x, new_client->position.y);
     add_to_buffer(&new_client->buff_out, tmp, false);

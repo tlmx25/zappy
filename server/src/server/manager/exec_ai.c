@@ -16,10 +16,10 @@ static const command_ai_t commands[] = {
     {"Connect_nbr", 0, connect_nbr_command, NULL},
     {"Inventory", 1, inventory_command, NULL},
     {"Fork", 42, fork_command, prefork_command},
+    {"Look", 7, look_command, NULL},
     {NULL, 0, NULL, NULL}
 };
 
-//    {"Look", 7, look_command},
 //    {"Broadcast", 7, broadcast_command},
 //    {"Eject", 7, eject_command},
 //    {"Take", 7, take_command},

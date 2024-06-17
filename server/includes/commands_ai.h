@@ -76,4 +76,11 @@ void fork_command(server_t *server, client_ai_t *client);
  * @param client client who sent command fork
  */
 void prefork_command(server_t *server, client_ai_t *client);
+
+/**
+ * @brief execute the look command
+ * @param server server for info about the game
+ * @param client client who sent the command
+ */
+void look_command(server_t *server, client_ai_t *client);
 #endif //SERVER_COMMANDS_AI_H
