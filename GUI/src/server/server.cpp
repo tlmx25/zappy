@@ -12,30 +12,29 @@ Zappy_GUI::Server::Server(char *Port, char * adresse_ip) {
     _ip = adresse_ip;
 
     _map = {
-            {"msz", []() { std::cout << "Map" << std::endl; }},
-            {"bct", []() { std::cout << "Lambda 2" << std::endl; }},
-            {"tna", []() { std::cout << "Lambda 2" << std::endl; }},
-            {"pnw", []() { std::cout << "Lambda 2" << std::endl; }},
-            {"ppo", []() { std::cout << "Lambda 2" << std::endl; }},
-            {"plv", []() { std::cout << "Lambda 2" << std::endl; }},
-            {"pin", []() { std::cout << "Lambda 2" << std::endl; }},
-            {"pex", []() { std::cout << "Lambda 2" << std::endl; }},
-            {"pbc", []() { std::cout << "Lambda 2" << std::endl; }},
-            {"pic", []() { std::cout << "Lambda 2" << std::endl; }},
-            {"pie", []() { std::cout << "Lambda 2" << std::endl; }},
-            {"pfk", []() { std::cout << "Lambda 2" << std::endl; }},
-            {"pdr", []() { std::cout << "Lambda 2" << std::endl; }},
-            {"pgt", []() { std::cout << "Lambda 2" << std::endl; }},
-            {"pdi", []() { std::cout << "Lambda 2" << std::endl; }},
-            {"enw", []() { std::cout << "Lambda 2" << std::endl; }},
-            {"ebo", []() { std::cout << "Lambda 2" << std::endl; }},
-            {"edi", []() { std::cout << "Lambda 2" << std::endl; }},
-            {"sgt", []() { std::cout << "Lambda 2" << std::endl; }},
-            {"sst", []() { std::cout << "Lambda 2" << std::endl; }},
-            {"seg", []() { std::cout << "Lambda 2" << std::endl; }},
-            {"smg", []() { std::cout << "Lambda 2" << std::endl; }},
-            {"suc", []() { std::cout << "Lambda 2" << std::endl; }},
-            {"sbp", []() { std::cout << "Lambda 3" << std::endl; }}
+            {"bct", bctFonction},
+            {"tna", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
+            {"pnw", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
+            {"ppo", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
+            {"plv", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
+            {"pin", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
+            {"pex", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
+            {"pbc", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
+            {"pic", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
+            {"pie", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
+            {"pfk", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
+            {"pdr", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
+            {"pgt", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
+            {"pdi", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
+            {"enw", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
+            {"ebo", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
+            {"edi", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
+            {"sgt", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
+            {"sst", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
+            {"seg", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
+            {"smg", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
+            {"suc", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
+            {"sbp", [](const std::string&, Game&) { std::cout << "Lambda 3" << std::endl; }}
         };
 }
 
@@ -45,7 +44,7 @@ void Zappy_GUI::Server::LambdaExecute(std::string key, std::string command, Game
     auto it = _map.find(key);
 
     if (it != _map.end()) {
-        it->second();
+        it->second(command, game);
     }
 }
 
@@ -80,12 +79,27 @@ std::string Zappy_GUI::Server::FirstWord(std::string buffer) {
     return firstWord;
 }
 
+void Zappy_GUI::Server::mszFonction(const std::string& command) {
+    std::string temp;
+    std::string x;
+    std::string y;
+
+    std::stringstream(command) >> temp >> x >> y;
+
+    try {
+        _xMap = std::stoi(x);
+        _yMap = std::stoi(y);
+    } catch (std::invalid_argument &e) {
+        throw Zappy_GUI::Server::BadParameter("Mauvais arguments.");
+    }
+}
+
 std::string Zappy_GUI::Server::ReadClient() {
     std::string buffer;
     char c;
     int result;
 
-    while (result = recv(_socket, &c, 1, 0) > 0) {
+    while ((result = recv(_socket, &c, 1, 0)) > 0) {
         buffer += c;
         if (c == '\n')
             break;
@@ -103,8 +117,9 @@ std::string Zappy_GUI::Server::ReadClient() {
 void Zappy_GUI::Server::Run() {
     
     GUIStart();
+    GUISize();
     srand(static_cast<unsigned>(time(0)));
-    Game game(0, 0);
+    Game game(_xMap, _yMap);
 
     while (game.GetWindow().isOpen()) {
         FD_ZERO(&_readfds);
@@ -178,6 +193,25 @@ void Zappy_GUI::Server::GUIStart() {
             }
         }
     }
+}
+
+void Zappy_GUI::Server::GUISize() {
+    FD_ZERO(&_readfds);
+    FD_SET(_socket, &_readfds);
+    
+    struct timeval timeout;
+    timeout.tv_sec = 1;
+    timeout.tv_usec = 0;
+
+    int activity = select(_socket + 1, &_readfds, NULL, NULL, &timeout);
+
+    if (activity < 0) {
+        CloseSocket();
+        throw Zappy_GUI::Server::ReceiveFailed("Select failed.");
+    }
+
+    std::string buffer = ReadClient();
+    mszFonction(buffer);
 }
 
 void Zappy_GUI::Server::CloseSocket() {
