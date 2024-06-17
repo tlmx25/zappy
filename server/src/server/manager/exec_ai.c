@@ -55,7 +55,8 @@ void exec_command_ai(server_t *server, client_ai_t *client)
     if (client->TTEA != 0)
         return;
     if (commands[client->action].func != NULL) {
-        debug_print("Client AI %i is executing action %s\n", client->num_player,
+        debug_print("Client AI %i is executing action %s\n",
+        client->num_player,
         commands[client->action].command);
         commands[client->action].func(server, client);
     }
