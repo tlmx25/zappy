@@ -12,7 +12,6 @@ Zappy_GUI::Server::Server(char *Port, char * adresse_ip) {
     _ip = adresse_ip;
 
     _map = {
-            {"bct", bctFonction},
             {"tna", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
             {"pnw", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
             {"ppo", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
