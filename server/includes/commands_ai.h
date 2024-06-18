@@ -76,4 +76,19 @@ void fork_command(server_t *server, client_ai_t *client);
  * @param client client who sent command fork
  */
 void prefork_command(server_t *server, client_ai_t *client);
+
+/**
+ * @brief execute take command, take "object" on the map
+ * @param server server for info
+ * @param client client who sent command take
+ */
+void take_command(server_t *server, client_ai_t *client);
+
+/**
+ * @brief execute set command, drop "object" on the map
+ * @param server server for info
+ * @param client client who sent command set
+ */
+void set_command(server_t *server, client_ai_t *client);
+
 #endif //SERVER_COMMANDS_AI_H

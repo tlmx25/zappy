@@ -16,14 +16,14 @@ static const command_ai_t commands[] = {
     {"Connect_nbr", 0, connect_nbr_command, NULL},
     {"Inventory", 1, inventory_command, NULL},
     {"Fork", 42, fork_command, prefork_command},
+    {"Take", 7, take_command, NULL},
+    {"Set", 7, set_command, NULL},
     {NULL, 0, NULL, NULL}
 };
 
 //    {"Look", 7, look_command},
 //    {"Broadcast", 7, broadcast_command},
 //    {"Eject", 7, eject_command},
-//    {"Take", 7, take_command},
-//    {"Set", 7, set_command},
 
 static int check_death(server_t *server, client_ai_t *tmp)
 {
@@ -87,6 +87,7 @@ static void check_command(server_t *server, client_ai_t *client)
     if (client->action != -1 || client->buff_in == NULL)
         return;
     tab = my_str_to_word_array(client->buff_in, "\n");
+
     if (tab == NULL || tab[0] == NULL)
         return;
     for (int i = 0; commands[i].command != NULL; i++) {
