@@ -5,10 +5,48 @@
 ** main
 */
 
-#include "stdio.h"
+#include "server.hpp"
+#include "Game.hpp"
 
-int main(void)
+static int verif_args(int ac, char **av)
 {
-    printf("Hello, World!\n");
-    return (0);
+    if (ac != 5) {
+        return 84;
+    }
+    if (strcmp(av[1], "-p") != 0)
+        return 84;
+    if (strcmp(av[3], "-h") != 0)
+        return 84;
+    return 0;
+}
+
+static void print_usage()
+{
+    std::cout << "USAGE: ./zappy_gui -p port -h machine" << std::endl;
+}
+
+int main(int ac, char **av) {
+    if (std::string(av[1]) == "-h" && ac == 2) {
+        print_usage();
+        return 0;
+    }
+    if (verif_args(ac, av) == 84)
+        return 84;
+
+    try
+    {
+        Zappy_GUI::Server server(av[2], av[4]);
+
+        server.OpenSocket();
+        server.ConnectSocket();
+        server.Run();
+      srand(static_cast<unsigned>(time(0)));
+      Game game(30, 30);
+      game.run();
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << std::endl;
+    }
+    return 0;
 }
