@@ -72,6 +72,7 @@ SRC += connect_nbr_command.c
 SRC += inventory_command.c
 SRC += fork_command.c
 SRC += look_command.c
+SRC += object_command.c
 
 CFLAGS = -Wall -Wextra -I includes/
 

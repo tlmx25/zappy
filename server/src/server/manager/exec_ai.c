@@ -17,12 +17,27 @@ static const command_ai_t commands[] = {
     {"Inventory", 1, inventory_command, NULL},
     {"Fork", 42, fork_command, prefork_command},
     {"Look", 7, look_command, NULL},
+    {"Take", 7, take_command, NULL},
+    {"Take food", 7, take_command, NULL},
+    {"Take linemate", 7, take_command, NULL},
+    {"Take deraumere", 7, take_command, NULL},
+    {"Take sibur", 7, take_command, NULL},
+    {"Take mendiane", 7, take_command, NULL},
+    {"Take phiras", 7, take_command, NULL},
+    {"Take thystame", 7, take_command, NULL},
+    {"Set", 7, set_command, NULL},
+    {"Set food", 7, set_command, NULL},
+    {"Set linemate", 7, set_command, NULL},
+    {"Set deraumere", 7, set_command, NULL},
+    {"Set sibur", 7, set_command, NULL},
+    {"Set mendiane", 7, set_command, NULL},
+    {"Set phiras", 7, set_command, NULL},
+    {"Set thystame", 7, set_command, NULL},
     {NULL, 0, NULL, NULL}
 };
 
 //    {"Broadcast", 7, broadcast_command},
 //    {"Eject", 7, eject_command},
-//    {"Take", 7, take_command},
 //    {"Set", 7, set_command},
 
 static int check_death(server_t *server, client_ai_t *tmp)
@@ -78,6 +93,7 @@ void add_option(client_ai_t *client, char *cmd)
     client->option = my_array_to_str_separator((char const **)&tab[1], " ");
     free_tab(tab);
 }
+
 static void reconstruct_buff(client_ai_t *client, char **tab, server_t *server)
 {
     free(client->buff_in);
