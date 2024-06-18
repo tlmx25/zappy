@@ -11,7 +11,6 @@ class Worker:
         self.direction = None
         self.action = Action(self.server, 0)
 
-
     def waiting_to_start(self):
         self.server.send("Broadcast Worker,READY\n")
         while not self.server.check_read():
@@ -44,15 +43,13 @@ class Worker:
                 continue
             self.action.takeObjectPlayerTile(lookRespond)
 
-
-
     def set_welcome_data(self):
         response = ""
         try:
             if self.server.check_read() and self.server.recv() == "WELCOME\n" and self.server.check_send():
                 self.server.send(self.team_name + "\n")
                 response = self.server.recv()
-                if (response == "ko\n"):
+                if response == "ko\n":
                     return
         except Exception as e:
             print(e, file=sys.stderr)
