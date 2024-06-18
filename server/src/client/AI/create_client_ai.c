@@ -41,6 +41,7 @@ client_ai_t *create_client_ai(int fd, char *team_name, position_t position)
     client->position = position;
     client->level = 1;
     client->TTL = 126;
+    client->option = NULL;
     init_client_ai(client);
     return client;
 }
