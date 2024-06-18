@@ -16,14 +16,51 @@
     #include "Map.hpp"
     #include "Trantorian.hpp"
 
+/**
+ *  
+ * @brief Game class
+ * 
+ */
 class Game
 {
     public:
+        /**
+         * @brief Construct a new Game object
+         * 
+         * @param x The width of the map
+         * @param y The height of the map
+         */
         Game(int x, int y);
+
+        /**
+         * @brief Destroy the Game object
+         * 
+         */
         ~Game();
+
+        /**
+         * @brief Run the game
+         * 
+         */
         void run();
+
+        /**
+         * @brief Handle the events
+         * 
+         */
         void handleEvents();
+
+        /**
+         * @brief Update the game
+         * 
+         */
         void render();
+
+        /**
+         * @brief Get the team number
+         * 
+         * @return int The team number
+         */
         int getTeamNumber(std::string teamName);
     private:
         sf::RenderWindow window;

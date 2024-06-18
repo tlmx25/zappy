@@ -9,9 +9,6 @@
 
 Map::Map(int width, int height, int windowSize) : width(width), height(height), windowSize(windowSize)
 {
-    // // Initialize random seed
-    // srand(static_cast<unsigned>(time(0)));
-
     mapHeightInPixels = height * tileSize;
     mapWidthInPixels = width * tileSize;
     sf::Vector2f center((mapWidthInPixels - windowSize) / 2.0f, (mapHeightInPixels - windowSize) / 2.0f);

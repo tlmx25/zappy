@@ -94,6 +94,9 @@ void Trantorian::setInventory(int q0, int q1, int q2, int q3, int q4, int q5, in
 
 void Trantorian::setPos(sf::Vector2i pos)
 {
+    const int tileSize = 90;
+    sf::Vector2f newPos(pos.x * tileSize, pos.y * tileSize);
+
     this->pos = pos;
 }
 
