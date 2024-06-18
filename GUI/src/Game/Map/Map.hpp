@@ -15,24 +15,74 @@
     #include <cmath>
     #include "Tile.hpp"
 
-// TODO: Objects sprites handled here: create, load etc in constructor
-
+/**
+ * @brief Map class
+ * 
+ */
 class Map
 {
     public:
+        /**
+         * @brief Construct a new Map object
+         * 
+         * @param width The width of the map
+         * @param height The height of the map
+         * @param windowSize The size of the window
+         */
         Map(int width, int height, int windowSize);
+
+        /**
+         * @brief Destroy the Map object
+         * 
+         */
         ~Map() = default;
+
+        /**
+         * @brief Generate a random color
+         * 
+         * @return sf::Color The generated color
+         */
         sf::Color generateRandomColor();
+
+        /**
+         * @brief Interpolate between two colors
+         * 
+         * @param start The start color
+         * @param end The end color
+         * @param t The time
+         * @return sf::Color The interpolated color
+         */
         sf::Color interpolateColor(sf::Color start, sf::Color end, float t);
+
+        /**
+         * @brief Update the colors of the tiles
+         * 
+         * @param time The time
+         */
         void updateColors(float time);
+
+        /**
+         * @brief Render the tiles
+         * 
+         * @param window The window to render the tiles on
+         */
         void renderTiles(sf::RenderWindow& window);
+
+        /**
+         * @brief Get the tiles
+         * 
+         * @return std::vector<Tile>& The tiles
+         */
+        std::vector<Tile>& getTiles();
+
+        
         sf::View view;
         int mapWidthInPixels;
         int mapHeightInPixels;
     private:
         int width;
         int height;
-        int tileSize = 80;
+        int tileSize = 90;
         int windowSize = 1200;
         float colorChangeSpeed = 1.0f;
         float lastColorChange = 0.0f;

@@ -33,12 +33,12 @@ int main(int ac, char **av) {
         return 84;
 
     try
-    {
-        Zappy_GUI::Server server(av[2], av[4]);
+      {
+      Zappy_GUI::Server server(av[2], av[4]);
 
-        server.OpenSocket();
-        server.ConnectSocket();
-        server.Run();
+      server.OpenSocket();
+      server.ConnectSocket();
+      server.Run();
     }
     catch(const std::exception& e)
     {
