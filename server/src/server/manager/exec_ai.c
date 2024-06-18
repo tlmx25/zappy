@@ -33,10 +33,10 @@ static const command_ai_t commands[] = {
     {"Set mendiane", 7, set_command, NULL},
     {"Set phiras", 7, set_command, NULL},
     {"Set thystame", 7, set_command, NULL},
+    {"Broadcast", 7, broadcast_command, NULL},
     {NULL, 0, NULL, NULL}
 };
 
-//    {"Broadcast", 7, broadcast_command},
 //    {"Eject", 7, eject_command},
 //    {"Set", 7, set_command},
 
@@ -118,13 +118,10 @@ static void invalid_command(client_ai_t *client, char *command)
     client->num_player, command);
 }
 
-static void check_command(server_t *server, client_ai_t *client)
+void check_command_exist(client_ai_t *client, char *command, server_t *server)
 {
-    char **tab = NULL;
+    char **tab = my_str_to_word_array(command, " ");
 
-    if (client->action != -1 || client->buff_in == NULL)
-        return;
-    tab = my_str_to_word_array(client->buff_in, "\n");
     if (tab == NULL || tab[0] == NULL)
         return;
     for (int i = 0; commands[i].command != NULL; i++) {
@@ -134,6 +131,19 @@ static void check_command(server_t *server, client_ai_t *client)
             break;
         }
     }
+    free_tab(tab);
+}
+
+static void check_command(server_t *server, client_ai_t *client)
+{
+    char **tab = NULL;
+
+    if (client->action != -1 || client->buff_in == NULL)
+        return;
+    tab = my_str_to_word_array(client->buff_in, "\n");
+    if (tab == NULL || tab[0] == NULL)
+        return;
+    check_command_exist(client, tab[0], server);
     if (client->action == -1)
         invalid_command(client, tab[0]);
     reconstruct_buff(client, tab, server);
@@ -156,7 +166,6 @@ static void meteor_shower(server_t *server)
 void exec_ai_list(server_t *server)
 {
     client_ai_t *tmp = server->ai_clients->head;
-    static int meteor = 0;
     static struct timeval last_exec;
     static bool first = true;
 
