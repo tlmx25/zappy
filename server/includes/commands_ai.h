@@ -87,6 +87,20 @@ void prefork_command(server_t *server, client_ai_t *client);
 void look_command(server_t *server, client_ai_t *client);
 
 /**
+ * @brief execute the take command
+ * @param server server for info about the game
+ * @param client client who sent the command
+ */
+void take_command(server_t *server, client_ai_t *client);
+
+/**
+ * @brief execute the set command
+ * @param server server for info about the game
+ * @param client client who sent the command
+ */
+void set_command(server_t *server, client_ai_t *client);
+
+/**
  * @brief execute the broadcast command
  * @param server server for info about the game
  * @param client client who sent the command
