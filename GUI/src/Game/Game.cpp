@@ -12,6 +12,7 @@ Game::Game(int x, int y) : map(x, y, 1200)
     window.create(sf::VideoMode(1200, 1200), "Zappy");
     window.setFramerateLimit(60);
 
+    printf("Hello\n");
     // Load and start music
     if (!music.openFromFile("GUI/src/Assets/music.ogg")) {
         std::cerr << "Error loading music file" << std::endl;
@@ -21,16 +22,16 @@ Game::Game(int x, int y) : map(x, y, 1200)
     }
 
     // TODO: to remove, FOR TEST ONLY
-    for (auto& tile : map.getTiles()) {
-        tile.setItemQuantity(0, 1);
-        tile.setItemQuantity(1, 1);
-        tile.setItemQuantity(2, 1);
-        tile.setItemQuantity(3, 1);
-        tile.setItemQuantity(4, 1);
-        tile.setItemQuantity(5, 1);
-        tile.setItemQuantity(6, 1);
-    }
-    trantorians["test"] = std::make_shared<Trantorian>(0, "test", sf::Vector2i(2, 2), 0, 1, getTeamNumber("test"));
+    // for (auto& tile : map.getTiles()) {
+    //     tile.setItemQuantity(0, 1);
+    //     tile.setItemQuantity(1, 1);
+    //     tile.setItemQuantity(2, 1);
+    //     tile.setItemQuantity(3, 1);
+    //     tile.setItemQuantity(4, 1);
+    //     tile.setItemQuantity(5, 1);
+    //     tile.setItemQuantity(6, 1);
+    // }
+    // trantorians["test"] = std::make_shared<Trantorian>(0, "test", sf::Vector2i(2, 2), 0, 1, getTeamNumber("test"));
 }
 
 Game::~Game()
@@ -42,16 +43,14 @@ Game::~Game()
 
 void Game::run()
 {
-    while (window.isOpen()) {
-        handleEvents();
+    handleEvents();
 
-        float time = clock.getElapsedTime().asSeconds();
-        for (auto& trantorian : trantorians) {
-            trantorian.second->animate(time);
-        }
-
-        render();
+    float time = clock.getElapsedTime().asSeconds();
+    for (auto& trantorian : trantorians) {
+        trantorian.second->animate(time);
     }
+
+    render();
 }
 
 
@@ -124,4 +123,9 @@ int Game::getTeamNumber(std::string teamName)
         return nb;
     }
     return it->second;
+}
+
+sf::RenderWindow& Game::getWindow()
+{
+    return window;
 }

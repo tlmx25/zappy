@@ -13,6 +13,7 @@ Zappy_GUI::Server::Server(char *Port, char * adresse_ip) {
     _ip = adresse_ip;
 
     _map = {
+            {"bct", [](const std::string&, Game&) { std::cout << "Tile" << std::endl; }},
             {"tna", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
             {"pnw", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
             {"ppo", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
@@ -115,13 +116,12 @@ std::string Zappy_GUI::Server::ReadClient() {
 }
 
 void Zappy_GUI::Server::Run() {
-    
     GUIStart();
     GUISize();
     srand(static_cast<unsigned>(time(0)));
     Game game(_xMap, _yMap);
 
-    while (game.GetWindow().isOpen()) {
+    while (game.getWindow().isOpen()) {
         FD_ZERO(&_readfds);
         FD_ZERO(&_writefds);
         FD_SET(_socket, &_readfds);
@@ -170,9 +170,6 @@ void Zappy_GUI::Server::GUIStart() {
     }
 
     char buffer[1024];
-    srand(static_cast<unsigned>(time(0)));
-    // TODO: Give the map size as parameters got from the server
-    Game game(30, 30);
 
     if (FD_ISSET(_socket, &_readfds)) {
         int bytesReceived = recv(_socket, buffer, sizeof(buffer) - 1, 0);

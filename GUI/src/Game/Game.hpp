@@ -62,6 +62,13 @@ class Game
          * @return int The team number
          */
         int getTeamNumber(std::string teamName);
+
+        /**
+         * @brief Get the window
+         * 
+         * @return sf::RenderWindow the window
+         */
+        sf::RenderWindow& getWindow();
     private:
         sf::RenderWindow window;
         sf::Event event;
