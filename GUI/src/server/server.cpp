@@ -6,6 +6,7 @@
 */
 
 #include "server.hpp"
+#include "Game.hpp"
 
 Zappy_GUI::Server::Server(char *Port, char * adresse_ip) {
     _port = Port;
@@ -35,6 +36,9 @@ void Zappy_GUI::Server::ConnectSocket() {
 
 void Zappy_GUI::Server::Run() {
     char buffer[1024];
+    srand(static_cast<unsigned>(time(0)));
+    // TODO: Give the map size as parameters got from the server
+    Game game(30, 30);
 
     while (true) {
         // Recevoir des données
@@ -49,6 +53,7 @@ void Zappy_GUI::Server::Run() {
 
         buffer[bytesReceived] = '\0';
         std::cout << "Données reçues : " << buffer << std::endl;
+        game.run();
     }
 }
 

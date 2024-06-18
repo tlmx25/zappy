@@ -9,16 +9,12 @@
 
 Map::Map(int width, int height, int windowSize) : width(width), height(height), windowSize(windowSize)
 {
-    // // Initialize random seed
-    // srand(static_cast<unsigned>(time(0)));
-
     mapHeightInPixels = height * tileSize;
     mapWidthInPixels = width * tileSize;
     sf::Vector2f center((mapWidthInPixels - windowSize) / 2.0f, (mapHeightInPixels - windowSize) / 2.0f);
     view = sf::View(sf::FloatRect(center.x, center.y, windowSize, windowSize));
     for (int y = 0; y < height; ++y) {
         for (int x = 0; x < width; ++x) {
-            printf("new tile\n");
             Tile tile = Tile(sf::Vector2i(tileSize - 1, tileSize - 1), sf::Vector2i(x * tileSize, y * tileSize), 0, 0, 0, 0, 0, 0, 0);
             tile.setPos(sf::Vector2i(x * tileSize, y * tileSize));
             sf::Color initialColor = generateRandomColor();
@@ -42,6 +38,7 @@ void Map::renderTiles(sf::RenderWindow &window)
 {
     for (auto &tile : tiles) {
         window.draw(tile.getShape());
+        tile.draw(window);
     }
 }
 
@@ -68,4 +65,9 @@ sf::Color Map::interpolateColor(sf::Color start, sf::Color end, float t)
         static_cast<sf::Uint8>(start.g + t * (end.g - start.g)),
         static_cast<sf::Uint8>(start.b + t * (end.b - start.b))
     );
+}
+
+std::vector<Tile>& Map::getTiles()
+{
+    return tiles;
 }
