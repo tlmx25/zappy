@@ -13,9 +13,9 @@ Zappy_GUI::Server::Server(char *Port, char * adresse_ip) {
     _ip = adresse_ip;
 
     _map = {
-            {"bct", [](const std::string&, Game&) { std::cout << "Tile" << std::endl; }},
-            {"tna", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
-            {"pnw", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
+            {"bct", bctFonction},
+            {"tna", [](const std::string&, Game&) {}},
+            {"pnw", pnwFonction},
             {"ppo", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
             {"plv", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
             {"pin", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
@@ -147,6 +147,7 @@ void Zappy_GUI::Server::Run() {
             std::string key = FirstWord(buffer);
             if (buffer.empty() == true)
                 continue;
+            std::cout << buffer << std::endl;
             LambdaExecute(key, buffer, game);
         }
     }
@@ -157,7 +158,7 @@ void Zappy_GUI::Server::GUIStart() {
     FD_ZERO(&_readfds);
     FD_SET(_socket, &_writefds);
     FD_SET(_socket, &_readfds);
-    
+
     struct timeval timeout;
     timeout.tv_sec = 1;
     timeout.tv_usec = 0;
@@ -216,4 +217,68 @@ void Zappy_GUI::Server::GUISize() {
 
 void Zappy_GUI::Server::CloseSocket() {
     close(_socket);
+}
+
+void bctFonction(const std::string& command, Game& game)
+{
+    std::string temp;
+    std::string x;
+    std::string y;
+    std::string q0;
+    std::string q1;
+    std::string q2;
+    std::string q3;
+    std::string q4;
+    std::string q5;
+    std::string q6;
+
+    std::stringstream(command) >> temp >> x >> y >> q0 >> q1 >> q2 >> q3 >> q4 >> q5 >> q6;
+
+    try {
+        game.getMap().getTile(std::stoi(x), std::stoi(y)).setItemQuantity(0, std::stoi(q0));
+        game.getMap().getTile(std::stoi(x), std::stoi(y)).setItemQuantity(1, std::stoi(q1));
+        game.getMap().getTile(std::stoi(x), std::stoi(y)).setItemQuantity(2, std::stoi(q2));
+        game.getMap().getTile(std::stoi(x), std::stoi(y)).setItemQuantity(3, std::stoi(q3));
+        game.getMap().getTile(std::stoi(x), std::stoi(y)).setItemQuantity(4, std::stoi(q4));
+        game.getMap().getTile(std::stoi(x), std::stoi(y)).setItemQuantity(5, std::stoi(q5));
+        game.getMap().getTile(std::stoi(x), std::stoi(y)).setItemQuantity(6, std::stoi(q6));
+    } catch (std::invalid_argument &e) {
+        throw Zappy_GUI::Server::BadParameter("Mauvais arguments.");
+    }
+}
+
+void pnwFonction(const std::string& command, Game& game)
+{
+    std::string temp;
+    std::string nbr;
+    std::string x;
+    std::string y;
+    std::string O;
+    std::string L;
+    std::string N;
+
+    std::stringstream(command) >> temp >> nbr >> x >> y >> O >> L >> N;
+
+    try {
+        game.getTrantorians().insert({nbr, std::make_shared<Trantorian>(std::stoi(nbr), N, sf::Vector2i(std::stoi(x), std::stoi(y)), std::stoi(O), std::stoi(L), game.getTeamNumber(N))});
+    } catch (std::invalid_argument &e) {
+        throw Zappy_GUI::Server::BadParameter("Mauvais arguments.");
+    }
+}
+
+void ppoFonction(const std::string& command, Game& game)
+{
+    std::string temp;
+    std::string nbr;
+    std::string x;
+    std::string y;
+    std::string O;
+
+    std::stringstream(command) >> temp >> nbr >> x >> y >> O;
+
+    try {
+        game.getTrantorians().find(nbr);
+    } catch (std::invalid_argument &e) {
+        throw Zappy_GUI::Server::BadParameter("Mauvais arguments.");
+    }
 }

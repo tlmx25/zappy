@@ -75,6 +75,12 @@ class Map
          */
         std::vector<Tile>& getTiles();
 
+        /**
+         * @brief Get the tile
+         * 
+         * @return std::vector<Tile>& The tiles
+         */
+        Tile& getTile(int x, int y);
         
         sf::View view;
         int mapWidthInPixels;

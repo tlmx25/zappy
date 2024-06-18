@@ -69,6 +69,21 @@ class Game
          * @return sf::RenderWindow the window
          */
         sf::RenderWindow& getWindow();
+
+        /**
+         * @brief Get the map
+         * 
+         * @return Map the map
+         */
+        Map& getMap();
+
+        /**
+         * @brief Get the map
+         * 
+         * @return Map the map
+         */
+        std::map<std::string, std::shared_ptr<Trantorian>>& getTrantorians();
+
     private:
         sf::RenderWindow window;
         sf::Event event;
