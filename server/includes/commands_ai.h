@@ -10,6 +10,8 @@
 #ifndef SERVER_COMMANDS_AI_H
     #define SERVER_COMMANDS_AI_H
     #include "server.h"
+    #define OR rc->position.direction
+    #define DIR(a, b, c, d) (OR == 0) ? a : (OR == 1) ? b : (OR == 2) ? c : d
 
 typedef struct command_ai_s {
     char *command;
@@ -83,4 +85,11 @@ void prefork_command(server_t *server, client_ai_t *client);
  * @param client client who sent the command
  */
 void look_command(server_t *server, client_ai_t *client);
+
+/**
+ * @brief execute the broadcast command
+ * @param server server for info about the game
+ * @param client client who sent the command
+ */
+void broadcast_command(server_t *server, client_ai_t *client);
 #endif //SERVER_COMMANDS_AI_H
