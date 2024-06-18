@@ -111,8 +111,6 @@ static void check_command(server_t *server, client_ai_t *client)
 static void meteor_shower(server_t *server)
 {
     static int meteor = 0;
-    static struct timeval last_exec;
-    static bool first = true;
 
     meteor++;
     if (meteor == FREQ(20)) {
