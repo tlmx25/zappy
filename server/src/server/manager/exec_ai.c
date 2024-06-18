@@ -60,20 +60,36 @@ void exec_command_ai(server_t *server, client_ai_t *client)
         commands[client->action].command);
         commands[client->action].func(server, client);
     }
+    if (client->option) {
+        free(client->option);
+        client->option = NULL;
+    }
     client->action = -1;
 }
 
+void add_option(client_ai_t *client, char *cmd)
+{
+    char **tab = my_str_to_word_array(cmd, " ");
+
+    if (my_arrsize((char const **)tab) == 1) {
+        free_tab(tab);
+        return;
+    }
+    client->option = my_array_to_str_separator((char const **)&tab[1], " ");
+    free_tab(tab);
+}
 static void reconstruct_buff(client_ai_t *client, char **tab, server_t *server)
 {
     free(client->buff_in);
     client->buff_in = NULL;
+    add_option(client, tab[0]);
+    if (commands[client->action].prefunc) {
+        debug_print("Client AI %i is executing prefunc %s\n",
+        client->num_player, commands[client->action].command);
+        commands[client->action].prefunc(server, client);
+    }
     if (tab[1] == NULL) {
         client->buff_in = NULL;
-        if (commands[client->action].prefunc) {
-            debug_print("Client AI %i is executing prefunc %s\n",
-            client->num_player, commands[client->action].command);
-            commands[client->action].prefunc(server, client);
-        }
         return;
     }
     client->buff_in = my_array_to_str_separator((char const **)&tab[1], "\n");
