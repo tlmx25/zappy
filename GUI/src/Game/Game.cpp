@@ -22,9 +22,15 @@ Game::Game(int x, int y) : map(x, y, 1200)
     }
 
     // TODO: to remove, FOR TEST ONLY
-    // for (auto& tile : map.getTiles()) {
-    //     tile.setItemQuantity(0, 1);
-    // }
+    for (auto& tile : map.getTiles()) {
+        tile.setItemQuantity(0, 1);
+        tile.setItemQuantity(1, 1);
+        tile.setItemQuantity(2, 1);
+        tile.setItemQuantity(3, 1);
+        tile.setItemQuantity(4, 1);
+        tile.setItemQuantity(5, 1);
+        tile.setItemQuantity(6, 1);
+    }
     trantorians["test"] = std::make_shared<Trantorian>(0, "test", sf::Vector2i(2, 2), 0, 1, getTeamNumber("test"));
 }
 
