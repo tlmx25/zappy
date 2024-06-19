@@ -90,7 +90,9 @@ void take_command(server_t *server, client_ai_t *client)
     size_t obj = getobject(client->option);
     char *buffer = NULL;
 
-    debug_print("TAKE COMMAND\n");
+    debug_print("Client AI %i is executing action Take on object \"%s\""
+                " in pos : %i %i\n", client->num_player, client->option,
+                client->position.x, client->position.y);
     if (obj == (size_t)-1)
         return add_to_buffer(&client->buff_out, "ko\n", false);
     modifie_inventory(&client->inventory, &tile->object, obj);
