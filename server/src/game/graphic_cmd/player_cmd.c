@@ -7,82 +7,86 @@
 
 #include "server.h"
 
+static int check_num(char const *cmd, client_t *client)
+{
+    if (my_str_isnum(PLNUM(cmd)) == 0) {
+        add_to_buffer(&client->buffer_out, "sbp\n", false);
+        return -1;
+    }
+    return atoi(PLNUM(cmd));
+}
+
 void cmd_ppo(server_t *server, client_t *client, char const **command)
 {
-    int player_id = atoi(command[1]);
+    int player_id = check_num(command[1], client);
     client_ai_t *tmp = server->ai_clients->head;
     char *response = NULL;
 
-    for (int i = 0; i < server->ai_clients->size; i++) {
-        if (server->ai_clients->head->num_player == player_id) {
+    if (player_id == -1)
+        return;
+    for (; tmp != NULL; tmp = tmp->next) {
+        if (tmp->num_player == player_id) {
             response = malloc(sizeof(char) * 2048);
             sprintf(response, "ppo %d %d %d %d\n", player_id,
-                server->ai_clients->head->position.x,
-                server->ai_clients->head->position.y,
-                server->ai_clients->head->position.direction);
+                tmp->position.x, tmp->position.y, tmp->position.direction + 1);
             add_to_buffer(&client->buffer_out, response, true);
-            server->ai_clients->head = tmp;
             return;
         }
-        server->ai_clients->head = server->ai_clients->head->next;
     }
-    server->ai_clients->head = tmp;
     add_to_buffer(&client->buffer_out, "sbp\n", false);
 }
 
 void cmd_plv(server_t *server, client_t *client, char const **command)
 {
-    int player_id = atoi(command[1]);
+    int player_id = check_num(command[1], client);
     client_ai_t *tmp = server->ai_clients->head;
     char *response = NULL;
 
-    for (int i = 0; i < server->ai_clients->size; i++) {
-        if (server->ai_clients->head->num_player == player_id) {
+    if (player_id == -1)
+        return;
+    for (; tmp; tmp = tmp->next) {
+        if (tmp->num_player == player_id) {
             response = malloc(sizeof(char) * 2048);
             sprintf(response, "plv %d %lu\n", player_id,
-                server->ai_clients->head->level);
+                tmp->level);
             add_to_buffer(&client->buffer_out, response, true);
-            server->ai_clients->head = tmp;
             return;
         }
-        server->ai_clients->head = server->ai_clients->head->next;
     }
-    server->ai_clients->head = tmp;
     add_to_buffer(&client->buffer_out, "sbp\n", false);
 }
 
-static char *cmd_pin_create_response(server_t *server, char *response,
+char *cmd_pin_create_response(client_ai_t *client, char *response,
     int player_id)
 {
     sprintf(response, "pin %d %d %d %d %d %d %d %d %d %d\n", player_id,
-        server->ai_clients->head->position.x,
-        server->ai_clients->head->position.y,
-        server->ai_clients->head->inventory.food,
-        server->ai_clients->head->inventory.linemate,
-        server->ai_clients->head->inventory.deraumere,
-        server->ai_clients->head->inventory.sibur,
-        server->ai_clients->head->inventory.mendiane,
-        server->ai_clients->head->inventory.phiras,
-        server->ai_clients->head->inventory.thystame);
+            client->position.x,
+            client->position.y,
+            client->inventory.food,
+            client->inventory.linemate,
+            client->inventory.deraumere,
+            client->inventory.sibur,
+            client->inventory.mendiane,
+            client->inventory.phiras,
+            client->inventory.thystame);
     return response;
 }
 
 void cmd_pin(server_t *server, client_t *client, char const **command)
 {
-    int player_id = atoi(command[1]);
+    int player_id = check_num(command[1], client);
     client_ai_t *tmp = server->ai_clients->head;
     char *response = NULL;
 
-    for (int i = 0; i < server->ai_clients->size; i++) {
-        if (server->ai_clients->head->num_player == player_id) {
+    if (player_id == -1)
+        return;
+    for (; tmp; tmp = tmp->next) {
+        if (tmp->num_player == player_id) {
             response = malloc(sizeof(char) * 2048);
-            response = cmd_pin_create_response(server, response, player_id);
+            response = cmd_pin_create_response(tmp, response, player_id);
             add_to_buffer(&client->buffer_out, response, true);
-            server->ai_clients->head = tmp;
             return;
         }
-        server->ai_clients->head = server->ai_clients->head->next;
     }
-    server->ai_clients->head = tmp;
     add_to_buffer(&client->buffer_out, "sbp\n", false);
 }
