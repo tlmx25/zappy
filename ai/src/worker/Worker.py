@@ -33,11 +33,20 @@ class Worker:
         self.action.setGoodPosition()
         self.action.setFarmingPosition(int(self.id))
 
+    def setModeFarming(self):
+        self.action.setWhereToGo()
+        self.action.setGoodPosition()
+        self.action.setFarmingPosition(self.action.orientation)
+
     def run(self):
         self.starting_mode()
         while True:
             if self.action.state == 0:
                 self.action.goToQueen()
+                self.action.dropResource(self.action.getInventory())
+                self.action.waitDuringElevation()
+                self.setModeFarming()
+                self.action.state = 1
             lookRespond = self.action.look()
             if lookRespond is None:
                 continue

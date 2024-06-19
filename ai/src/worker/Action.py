@@ -4,7 +4,6 @@ from ai.src.Server import Server
 class Action:
     def __init__(self, server: Server, orientation: int):
         self.server = server
-        self.orientation = 0
         self.orientation = orientation
         self.lookResult = ""
         self.state = 0
@@ -23,12 +22,41 @@ class Action:
             8: self.goNorthWest
         }
 
+    def getOrientation(self):
+        while not self.server.check_read():
+            pass
+        response = self.server.recv()
+        if "message" in response:
+            parts = response.split(",")[0].split(" ")
+            self.orientation = parts[1]
+            return
+
     def setOrientation(self, orientation: int):
         self.orientation = orientation
 
     def goToQueen(self):
         while self.orientation != 0:
             self.directionMethod[self.orientation]()
+            self.getOrientation()
+
+    def dropResource(self, inventory):
+        items = inventory[1:-1].split(", ")
+        for item in items:
+            object_name, quantity = item.split()
+            quantity = int(quantity)
+            for _ in range(quantity):
+                self.server.send(f"Set {object_name}\n")
+                while not self.server.check_read():
+                    pass
+                response = self.server.recv()
+
+    def waitDuringElevation(self):
+        while True:
+            while not self.server.check_read():
+                pass
+            response = self.server.recv()
+            if "Finished" in response:
+                return True
 
     def analyseResponse(self, response):
         if "Assemble" in response:
