@@ -106,4 +106,12 @@ void set_command(server_t *server, client_ai_t *client);
  * @param client client who sent the command
  */
 void broadcast_command(server_t *server, client_ai_t *client);
+
+/**
+ * @brief execute the eject command
+ * @param server server for info about the game
+ * @param client client who sent the command
+ */
+void eject_command(server_t *server, client_ai_t *client);
+
 #endif //SERVER_COMMANDS_AI_H

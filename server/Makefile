@@ -74,6 +74,7 @@ SRC += fork_command.c
 SRC += look_command.c
 SRC += object_command.c
 SRC += broadcast_command.c
+SRC += eject_command.c
 
 CFLAGS = -Wall -Wextra -I includes/
 
