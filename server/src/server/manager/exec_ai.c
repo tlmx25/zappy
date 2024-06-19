@@ -20,11 +20,9 @@ static const command_ai_t commands[] = {
     {"Take", 7, take_command, NULL},
     {"Set", 7, set_command, NULL},
     {"Broadcast", 7, broadcast_command, NULL},
+    {"Eject", 7, eject_command, NULL},
     {NULL, 0, NULL, NULL}
 };
-
-//    {"Eject", 7, eject_command},
-//    {"Set", 7, set_command},
 
 static int check_death(server_t *server, client_ai_t *tmp)
 {
