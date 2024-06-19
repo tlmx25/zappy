@@ -113,7 +113,7 @@ void check_command_exist(client_ai_t *client, char *command, server_t *server)
     for (int i = 0; commands[i].command != NULL; i++) {
         if (my_strcmp(commands[i].command, tab[0]) == 0) {
             client->action = i;
-            client->TTEA = FREQ(commands[i].TTEA);
+            client->TTEA = commands[i].TTEA;
             break;
         }
     }
@@ -141,7 +141,7 @@ static void meteor_shower(server_t *server)
     static int meteor = 0;
 
     meteor++;
-    if (meteor == FREQ(20)) {
+    if (meteor == 20) {
         meteor = 0;
         debug_print("Meteor shower\n");
         distribute_ressources(server);
@@ -149,23 +149,23 @@ static void meteor_shower(server_t *server)
     }
 }
 
+void exec_nb_cycle(server_t *server, int nb, client_ai_t *tmp)
+{
+    for (int i = 0; i < nb; i++)
+    {
+        check_death(server, tmp);
+        exec_command_ai(server, tmp);
+    }
+}
+
 void exec_ai_list(server_t *server)
 {
     client_ai_t *tmp = server->ai_clients->head;
-    static struct timeval last_exec;
-    static bool first = true;
 
-    if (first) {
-        last_exec = get_current_time();
-        first = false;
-    }
+    meteor_shower(server);
     for (; tmp; tmp = tmp->next) {
         check_command(server, tmp);
-        if (get_seconds_elapsed(last_exec) >= 1.0f) {
-            check_death(server, tmp);
-            exec_command_ai(server, tmp);
-            meteor_shower(server);
-            last_exec = get_current_time();
-        }
+        check_death(server, tmp);
+        exec_command_ai(server, tmp);
     }
 }
