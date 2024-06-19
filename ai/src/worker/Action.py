@@ -1,4 +1,4 @@
-from ai.src.Server import Server
+from .. import Server
 
 
 class Action:
@@ -13,23 +13,23 @@ class Action:
         }
         self.directionMethod = {
             1: self.goNorth,
-            2: self.goNorthEast,
-            3: self.goEast,
-            4: self.goSouthEast,
+            8: self.goNorthEast,
+            7: self.goEast,
+            6: self.goSouthEast,
             5: self.goSouth,
-            6: self.goSouthWest,
-            7: self.goWest,
-            8: self.goNorthWest
+            4: self.goSouthWest,
+            3: self.goWest,
+            2: self.goNorthWest
         }
 
     def getOrientation(self):
+        print("getOrientation\n")
         while not self.server.check_read():
             pass
         response = self.server.recv()
         if "message" in response:
-            parts = response.split(",")[0].split(" ")
-            self.orientation = parts[1]
-            return
+            self.orientation = int(response.split(" ")[1].replace(',', ''))
+        return
 
     def setOrientation(self, orientation: int):
         self.orientation = orientation
@@ -61,25 +61,30 @@ class Action:
     def analyseResponse(self, response):
         if "Assemble" in response:
             self.state = 0
-            self.orientation = int(response.split(" ")[1])
+            self.orientation = int(response.split(" ")[1].replace(',', ''))
             return True
         return False
 
     def wait_respond(self, nbr):
-        for i in range(nbr):
+        print("wait respond:\n")
+        for i in range(nbr - 1):
             while not self.server.check_read():
+                print("waiting\n")
                 pass
             response = self.server.recv()
+            print(response + "\n")
             self.analyseResponse(response)
             if "message" in response:
-                self.orientation = int(response.split(" ")[1])
+                self.orientation = int(response.split(" ")[1].replace(',', ''))
 
     def goNorth(self):
+        print("goNorth\n")
         self.server.send("Forward\n")
         self.takeObject("food")
         self.wait_respond(2)
 
     def goSouth(self):
+        print("goSouth\n")
         self.server.send("Left\n")
         self.server.send("Left\n")
         self.server.send("Forward\n")
@@ -87,18 +92,21 @@ class Action:
         self.wait_respond(4)
 
     def goEast(self):
+        print("goEast\n")
         self.server.send("Right\n")
         self.server.send("Forward\n")
         self.takeObject("food")
         self.wait_respond(3)
 
     def goWest(self):
+        print("goWest\n")
         self.server.send("Left\n")
         self.server.send("Forward\n")
         self.takeObject("food")
         self.wait_respond(3)
 
     def goNorthEast(self):
+        print("goNorthEast\n")
         self.server.send("Forward\n")
         self.server.send("Right\n")
         self.server.send("Forward\n")
@@ -106,6 +114,7 @@ class Action:
         self.wait_respond(4)
 
     def goNorthWest(self):
+        print("goNorthWest\n")
         self.server.send("Forward\n")
         self.server.send("Left\n")
         self.server.send("Forward\n")
@@ -113,6 +122,7 @@ class Action:
         self.wait_respond(4)
 
     def goSouthEast(self):
+        print("goSouthEast\n")
         self.server.send("Right\n")
         self.server.send("Forward\n")
         self.server.send("Right\n")
@@ -121,6 +131,7 @@ class Action:
         self.wait_respond(5)
 
     def goSouthWest(self):
+        print("goSouthWest\n")
         self.server.send("Left\n")
         self.server.send("Forward\n")
         self.server.send("Left\n")

@@ -16,15 +16,19 @@ class Worker:
         while not self.server.check_read():
             pass
         response = self.server.recv()
-        while not self.server.check_send():
-            pass
-        response = self.server.recv()
-        if "message" and "FARM" in response:
-            parts = response.split(",")[0].split(" ")
-            self.direction = parts[1]
-            return
-        else:
-            raise Exception("Core: Error while waiting to start.")
+        print("first response " + response + "\n")
+
+        while True:
+            while not self.server.check_read():
+                pass
+            response = self.server.recv()
+            print("second response " + response + "\n")
+            if "message" and "FARM" in response:
+                print("second response " + response + "\n")
+                parts = response.split(",")[0].split(" ")
+                self.direction = parts[1]
+                return
+
 
     def starting_mode(self):
         self.action.setOrientation(int(self.direction))
@@ -55,9 +59,11 @@ class Worker:
     def set_welcome_data(self):
         response = ""
         try:
-            if self.server.check_read() and self.server.recv() == "WELCOME\n" and self.server.check_send():
+            if self.server.check_read():
+                print(self.team_name)
                 self.server.send(self.team_name + "\n")
                 response = self.server.recv()
+                print("client-num and X Y" + response)
                 if response == "ko\n":
                     return
         except Exception as e:
