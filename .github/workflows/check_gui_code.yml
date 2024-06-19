@@ -20,6 +20,7 @@ jobs:
 
   check_compilation_gui:
     name: check_compilation_gui
+    needs: build_gui
     runs-on: ubuntu-latest
     container: epitechcontent/epitest-docker
     timeout-minutes: 4
