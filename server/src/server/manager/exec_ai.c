@@ -151,8 +151,7 @@ static void meteor_shower(server_t *server)
 
 void exec_nb_cycle(server_t *server, int nb, client_ai_t *tmp)
 {
-    for (int i = 0; i < nb; i++)
-    {
+    for (int i = 0; i < nb; i++) {
         check_death(server, tmp);
         exec_command_ai(server, tmp);
     }
