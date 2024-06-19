@@ -14,7 +14,7 @@ char *read_socket(int fd)
     char tmp_buffer[1025] = {0};
     char *buffer = NULL;
     long readed;
-    int nb_read;
+    int nb_read = 0;
 
     for (; 1; nb_read++) {
         readed = read(fd, tmp_buffer, 1024);
