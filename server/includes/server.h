@@ -10,6 +10,7 @@
     #define ERROR 84
     #define UNUSED __attribute__((unused))
     #define FREQ(x) (x / server->option->freq)
+    #define PLNUM(x) (x[0] == '#') ? &x[1] : x
     #include <unistd.h>
     #include <stdlib.h>
     #include <stdio.h>
@@ -197,4 +198,13 @@ direction_t turn_right(direction_t direction);
  * @return return new direction
  */
 direction_t turn_left(direction_t direction);
+
+/**
+ * @brief execute fct function for all graphic client
+ * @param server for context
+ * @param cmd cmd to send in fct
+ * @param fct function pointer to execute for  all clients
+ */
+void send_to_all_graphic_func(server_t *server, char const **cmd,
+    void (*fct)(server_t *server, client_t *client, char const **command));
 #endif //SERVER_SERVER_H

@@ -6,13 +6,14 @@ set(CMAKE_CXX_STANDARD 20)
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -fno-gnu-unique")
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -Wextra -g3 -fno-gnu-unique")
 
-find_package(SFML 2.5 COMPONENTS graphics audio REQUIRED)
+find_package(SFML 2.5 COMPONENTS graphics audio system window REQUIRED)
 
 include_directories(
         src
         src/Game
         src/Game/Map
         src/Game/Tiles
+        src/Game/Trantorians
         src/server
 )
 
@@ -23,9 +24,10 @@ add_executable(${PROJECT_NAME}
         src/Game/Tiles/Tile.cpp
         src/Game/Game.cpp
         src/server/server.cpp
+        src/Game/Trantorians/Trantorian.cpp
 )
 
-target_link_libraries(${PROJECT_NAME} sfml-graphics sfml-window sfml-system)
+target_link_libraries(${PROJECT_NAME} sfml-graphics sfml-window sfml-system sfml-audio)
 
 
 set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES "lib")

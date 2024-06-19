@@ -6,7 +6,6 @@
 */
 
 #include "server.hpp"
-#include "Game.hpp"
 
 static int verif_args(int ac, char **av)
 {
@@ -26,6 +25,7 @@ static void print_usage()
 }
 
 int main(int ac, char **av) {
+
     if (std::string(av[1]) == "-h" && ac == 2) {
         print_usage();
         return 0;
@@ -34,15 +34,12 @@ int main(int ac, char **av) {
         return 84;
 
     try
-    {
-        Zappy_GUI::Server server(av[2], av[4]);
+      {
+      Zappy_GUI::Server server(av[2], av[4]);
 
-        server.OpenSocket();
-        server.ConnectSocket();
-        server.Run();
-      srand(static_cast<unsigned>(time(0)));
-      Game game(30, 30);
-      game.run();
+      server.OpenSocket();
+      server.ConnectSocket();
+      server.Run();
     }
     catch(const std::exception& e)
     {

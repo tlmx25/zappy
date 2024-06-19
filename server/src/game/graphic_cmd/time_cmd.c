@@ -7,6 +7,15 @@
 
 #include "server.h"
 
+static int check_num(char const *cmd, client_t *client)
+{
+    if (my_str_isnum(PLNUM(cmd)) == 0) {
+        add_to_buffer(&client->buffer_out, "sbp\n", false);
+        return -1;
+    }
+    return atoi(PLNUM(cmd));
+}
+
 void cmd_sgt(server_t *server, client_t *client, char UNUSED const **command)
 {
     char *response = NULL;
@@ -18,7 +27,7 @@ void cmd_sgt(server_t *server, client_t *client, char UNUSED const **command)
 
 void cmd_sst(server_t *server, client_t *client, char const **command)
 {
-    int freq = atoi(command[1]);
+    int freq = check_num(command[1], client);
     char *response = NULL;
 
     if (freq < 0)
