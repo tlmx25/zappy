@@ -6,7 +6,7 @@ class Action:
         self.server = server
         self.orientation = orientation
         self.lookResult = ""
-        self.state = 0
+        self.state = 1
         self.stateEnum = {
             0: "ELEVATION",
             1: "LOOKING_FOR_RESOURCE"
@@ -24,10 +24,12 @@ class Action:
 
     def getOrientation(self):
         print("getOrientation\n")
+        self.server.empty_buffer()
         while not self.server.check_read():
+            print("WAITING ASSEMBLE SIGNAL\n")
             pass
         response = self.server.recv()
-        if "message" in response:
+        if "Assemble" in response:
             self.orientation = int(response.split(" ")[1].replace(',', ''))
         return
 
@@ -73,9 +75,6 @@ class Action:
                 pass
             response = self.server.recv()
             print(response + "\n")
-            self.analyseResponse(response)
-            if "message" in response:
-                self.orientation = int(response.split(" ")[1].replace(',', ''))
 
     def goNorth(self):
         print("goNorth\n")
@@ -150,23 +149,33 @@ class Action:
         return False
 
     def setWhereToGo(self):
-        while not self.server.check_read():
-            pass
-        response = self.server.recv()
-        self.analyseResponse(response)
-        if "Look" in response:
-            self.lookResult = response
-        else:
-            self.setWhereToGo()
-
-    def setGoodPosition(self):
-        for i in range(4):
-            self.server.send("Look\n")
+        while True:
             while not self.server.check_read():
+                print("waiting in setWhereToGo\n")
                 pass
             response = self.server.recv()
             self.analyseResponse(response)
+            if "Look" in response:
+                response = response.replace("Look", "")
+                parts = response.split(", ")
+                self.lookResult = parts[1] if len(parts) > 1 else ""
+                print("lookResult: " + self.lookResult + "\n")
+                return
+
+    def setGoodPosition(self):
+        print("setGoodPosition\n")
+        for i in range(4):
+            self.server.send("Look\n")
+            while not self.server.check_read():
+                print("waiting in setGoodPosition\n")
+                pass
+            response = self.server.recv()
+            response = response.replace(" ", "+")
+            print("lookResult: " + self.lookResult + "\n")
+            print("myLook: " + response + "\n")
+            self.analyseResponse(response)
             if response == self.lookResult:
+                print("good position\n")
                 return
             self.server.send("Right\n")
             while not self.server.check_read():
@@ -175,17 +184,22 @@ class Action:
             self.analyseResponse(response)
 
     def setFarmingPosition(self, dist: int):
-        self.server.send("Left\n")
-        while not self.server.check_read():
-            pass
-        response = self.server.recv()
-        self.analyseResponse(response)
         for i in range(dist):
             self.server.send("Forward\n")
             while not self.server.check_read():
                 pass
             response = self.server.recv()
-            self.analyseResponse(response)
+        self.server.send("Left\n")
+        while not self.server.check_read():
+            pass
+        self.server.recv()
+        print("WAITING FARM SIGNAL !\n")
+        while True:
+            while not self.server.check_read():
+                pass
+            response = self.server.recv()
+            if "FARM" in response:
+                return
 
     def look(self):
         self.server.send("Look\n")
@@ -210,8 +224,15 @@ class Action:
             return True
         return False
 
+    def remove_duplicates(self, string_list):
+        return list(set(string_list))
+
     def takeObjectPlayerTile(self, lookResponse):
-        objects = lookResponse.split(",")[0].split(" ")
+        lookResponse = lookResponse.replace(" ", "")
+        lookResponse = lookResponse.replace("[", "")
+        lookResponse = lookResponse.replace("]", "")
+        objects = lookResponse.split(",")[0]
+        objects = self.remove_duplicates(objects)
         for obj in objects:
             if "player" not in obj:
                 self.takeObject(obj)

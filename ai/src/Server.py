@@ -8,8 +8,9 @@
 import socket
 import select
 
+
 class Server:
-    def __init__(self, _host = "", _port = 0):
+    def __init__(self, _host="", _port=0):
         self.host = _host
         self.port = _port
         self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -18,13 +19,13 @@ class Server:
                 self.connect_server()
         except:
             raise Exception("Server : Error in init probably during connection.")
-    
+
     def set_host(self, _host):
         self.host = _host
-    
+
     def set_port(self, _port):
         self.port = _port
-    
+
     def connect_server(self):
         try:
             self.s.connect((self.host, self.port))
@@ -32,7 +33,7 @@ class Server:
             print("Client connected succesfully.")
         except:
             raise Exception("Server : Error while connecting try changing port / host.")
-        
+
     def send(self, command):
         try:
             str_length = len(command)
@@ -41,7 +42,7 @@ class Server:
                 self.s.send(mess_part.encode())
         except Exception:
             raise Exception("Server : Error while sending message.")
-        
+
     def recv(self) -> str:
         response = b""
         try:
@@ -52,7 +53,15 @@ class Server:
             return str(response.decode())
         except Exception:
             raise Exception("Server : Error during recieve. Probably dev error.")
-        
+
+    def empty_buffer(self):
+        try:
+            while self.s.recv(1024):
+                print("Emptying buffer.")
+                pass
+        except:
+            return
+
     def check_read(self) -> bool:
         ready_to_read, _, _ = select.select([self.s], [], [], 1)
         if self.s in ready_to_read:

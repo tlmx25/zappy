@@ -55,6 +55,12 @@ class Worker:
             if lookRespond is None:
                 continue
             self.action.takeObjectPlayerTile(lookRespond)
+            self.server.send("Forward\n")
+            while not self.server.check_read():
+                pass
+            response = self.server.recv()
+            if "Assemble" in response:
+                self.action.state = 0
 
     def set_welcome_data(self):
         response = ""
