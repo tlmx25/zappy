@@ -124,6 +124,7 @@ class Tile
          * @param window The window to draw the tile on
          */
         void draw(sf::RenderWindow &window);
+        
     private:
         sf::Vector2i pos;
         sf::Vector2i size;

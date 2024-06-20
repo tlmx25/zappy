@@ -71,3 +71,12 @@ std::vector<Tile>& Map::getTiles()
 {
     return tiles;
 }
+
+Tile& Map::getTile(int x, int y)
+{
+    for (Tile& tile : tiles) {
+        if (tile.getPos().x == (x * 90) && tile.getPos().y == (y * 90))
+            return tile;
+    }
+    throw std::out_of_range("No tile.");
+}

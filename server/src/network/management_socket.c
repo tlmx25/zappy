@@ -6,6 +6,7 @@
 */
 
 #include <stdlib.h>
+#include <stdio.h>
 #include "management_socket.h"
 
 select_t *init_select(void)
@@ -45,7 +46,9 @@ int exec_select(select_t *select_config)
     else
         ret = select(select_config->max_fd + 1, &select_config->readfds,
             &select_config->writefds, NULL, NULL);
-    if (ret == -1)
+    if (ret == -1) {
+        perror("select");
         return ERROR;
+    }
     return 0;
 }

@@ -18,6 +18,8 @@ void delete_client(client_t *client)
         free(client->buffer_in);
     if (client->buffer_out != NULL)
         free(client->buffer_out);
+    if (client->team_name != NULL)
+        free(client->team_name);
     free(client);
 }
 
