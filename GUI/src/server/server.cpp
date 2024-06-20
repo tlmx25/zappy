@@ -115,6 +115,30 @@ std::string Zappy_GUI::Server::ReadClient() {
     return buffer;
 }
 
+void Zappy_GUI::Server::SendData(std::string message) {
+    FD_ZERO(&_writefds);
+    FD_SET(_socket, &_writefds);
+    
+    struct timeval timeout;
+    timeout.tv_sec = 1;
+    timeout.tv_usec = 0;
+
+    int activity = select(_socket + 1, NULL, &_writefds, NULL, &timeout);
+
+    if (activity < 0) {
+        CloseSocket();
+        throw Zappy_GUI::Server::ReceiveFailed("Select failed.");
+    }
+
+    if (FD_ISSET(_socket, &_writefds)) {
+            int bytesSent = send(_socket, message.c_str(), strlen(message.c_str()), 0);
+            if (bytesSent < 0) {
+                CloseSocket();
+                throw Zappy_GUI::Server::SendFailed("Send failed.");
+            }
+        }
+}
+
 void Zappy_GUI::Server::Run() {
     GUIStart();
     GUISize();
