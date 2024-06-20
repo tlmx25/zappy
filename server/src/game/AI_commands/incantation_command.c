@@ -66,7 +66,7 @@ bool check_requirement(tile_t *tile, client_ai_list_t *clients, size_t level)
     incantation_requirements_t *requirement = &REQUIREMENT[level];
     int nb_players = count_players_on_tile(clients, tile->coordinate, level);
 
-    if (nb_players < requirement->players)
+    if (nb_players + 1 < requirement->players)
         return false;
     if (tile->object.linemate < requirement->linemate)
         return false;
