@@ -52,7 +52,7 @@ static void notify_preincant(server_t *server, int *players,
         return;
     send_to_all_graphic_arg(server->graphic_clients, "pic %d %d %d %s\n",
     client->position.x, client->position.y, client->level, players_str);
-    debug_print("Player %i start incantation at {%i, %i} with players %s\n",
+    debug_print("Player %i start incantation at {%i, %i} with players [%s]\n",
     client->num_player, client->position.x, client->position.y, players_str);
     free(players_str);
 }
@@ -74,7 +74,7 @@ static int *load_player(server_t *server, client_ai_t *client)
         if (tmp->num_player == client->num_player)
             continue;
         if (tmp->position.x == client->position.x && tmp->position.y ==
-        client->position.y && tmp->level == client->level) {
+        client->position.y && tmp->level == client->level && tmp->action == -1 ) {
             add_to_buffer(&tmp->buff_out, "Elevation underway\n", false);
             tmp->action = client->action;
             tmp->TTEA = client->TTEA + 300;

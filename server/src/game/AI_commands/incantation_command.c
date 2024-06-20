@@ -39,6 +39,8 @@ char *int_array_to_str(int *array)
     char buffer[4096] = {0};
     int index;
 
+    if (array == NULL)
+        return NULL;
     for (int i = 0; array[i] != -1; i++) {
         index = my_strlen(buffer);
         snprintf(buffer + index, 4096 - index, " %d", array[i]);
@@ -53,7 +55,7 @@ static int count_players_on_tile(client_ai_list_t *clients,
 
     for (client_ai_t *tmp = clients->head; tmp; tmp = tmp->next) {
         if (tmp->position.x == position.x && tmp->position.y == position.y
-        && tmp->level == level)
+        && tmp->level == level && tmp->action == -1)
             nb_players++;
     }
     return nb_players;
@@ -86,10 +88,27 @@ static void send_message_to_incantation_players(server_t *server, int *players,
 {
     client_ai_t *tmp = NULL;
 
-    for (int i = 0; players[i] != -1; i++) {
+    for (int i = 0; players && players[i] != -1; i++) {
         tmp = get_client_ai_by_num(server->ai_clients, players[i]);
         if (tmp)
             add_to_buffer(&tmp->buff_out, message, false);
+    }
+}
+
+static void set_player(int *players, client_ai_list_t *clients,
+    client_list_t *graph)
+{
+    client_ai_t *tmp = NULL;
+
+    for (int i = 0; players && players[i] != -1; i++) {
+        tmp = get_client_ai_by_num(clients, players[i]);
+        if (tmp) {
+            tmp->action = -1;
+            tmp->TTEA = 0;
+            tmp->level++;
+            send_to_all_graphic_arg(graph, "plv %i %i\n", tmp->num_player,
+            tmp->level);
+        }
     }
 }
 
@@ -97,16 +116,8 @@ void notify_incant(server_t *server, int *players, client_ai_t *client)
 {
     char *players_str = int_array_to_str(players);
     char buffer[32];
-    client_ai_t *tmp = NULL;
 
-    for (int i = 0; players[i] != -1; i++) {
-        tmp = get_client_ai_by_num(server->ai_clients, players[i]);
-        if (tmp) {
-            tmp->action = -1;
-            tmp->TTEA = 0;
-            tmp->level++;
-        }
-    }
+    set_player(players, server->ai_clients, server->graphic_clients);
     debug_print("Incantation players: [%s] its finish %i -> %i\n", players_str,
     client->level - 1, client->level);
     snprintf(buffer, 32, "Current level: %ld\n", client->level);
@@ -114,6 +125,7 @@ void notify_incant(server_t *server, int *players, client_ai_t *client)
     add_to_buffer(&client->buff_out, buffer, false);
     send_to_all_graphic_arg(server->graphic_clients, "pie %i %i 1\n",
     client->position.x, client->position.y);
+    free(players_str);
 }
 
 static void failed_incantation(server_t *server, client_ai_t *client,
@@ -144,9 +156,11 @@ void incantation_end(server_t *server, incantation_t *incantation)
     server->ai_clients, client->level))
         return failed_incantation(server, client, incantation,
         "requirement not met");
-    notify_incant(server, incantation->players, client);
     client->TTEA = 0;
     client->action = -1;
     client->level++;
+    send_to_all_graphic_arg(server->graphic_clients, "plv %i %i\n",
+    client->num_player, client->level);
+    notify_incant(server, incantation->players, client);
     delete_incantation_from_list(server->world->incantations, incantation);
 }
