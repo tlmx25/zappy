@@ -26,7 +26,7 @@ Zappy_GUI::Server::Server(char *Port, char * adresse_ip) {
             {"pfk", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
             {"pdr", pdrFonction},
             {"pgt", pgtFonction},
-            {"pdi", pdiFonction},
+            {"pdi", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
             {"enw", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
             {"ebo", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
             {"edi", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
@@ -347,7 +347,7 @@ void pdrFonction(const std::string& command, Game& game)
         throw Zappy_GUI::Server::BadParameter("L'argument de l'objet n'est pas un entier valide.");
     }
 
-    auto& player = it->second;
+    auto player = it->second;
     auto& tile = game.getMap().getTile(player->getPos().x, player->getPos().y);
     player->dropItem(tile, item);
 }
@@ -372,23 +372,7 @@ void pgtFonction(const std::string& command, Game& game)
         throw Zappy_GUI::Server::BadParameter("L'argument de l'objet n'est pas un entier valide.");
     }
 
-    auto& player = it->second;
+    auto player = it->second;
     auto& tile = game.getMap().getTile(player->getPos().x, player->getPos().y);
     player->collectItem(tile, item);
-}
-
-void pdiFonction(const std::string& command, Game& game)
-{
-    std::string temp;
-    std::string nbr;
-
-    std::stringstream(command) >> temp >> nbr;
-
-    auto& trantorians = game.getTrantorians();
-    auto it = trantorians.find(nbr);
-    if (it == trantorians.end()) {
-        throw Zappy_GUI::Server::BadParameter("Mauvais arguments.");
-    }
-
-    trantorians.erase(nbr);
 }

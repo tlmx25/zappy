@@ -112,24 +112,14 @@ void Trantorian::setLevel(int level)
 
 void Trantorian::collectItem(Tile &tile, int nb)
 {
-    for (int i = 0; i < 7; i++) {
-        while (nb != 0 && tile.getItemsQuantity(i) > 0) {
-            this->inventory[i]++;
-            tile.removeItem(i);
-            nb--;
-        }
-    }
+    this->inventory[nb]++;
+    tile.removeItem(nb);
 }
 
 void Trantorian::dropItem(Tile &tile, int nb)
 {
-    for (int i = 0; i < 7; i++) {
-        while (nb != 0 && this->inventory[i] > 0) {
-            tile.addItem(i);
-            this->inventory[i]--;
-            nb--;
-        }
-    }
+    tile.addItem(nb);
+    this->inventory[nb]--;
 }
 
 bool Trantorian::isElevating()
