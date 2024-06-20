@@ -59,7 +59,6 @@ static void notify_preincant(server_t *server, int *players,
 
 static void failed_preincantation(client_ai_t *client)
 {
-
     add_to_buffer(&client->buff_out, "ko\n", false);
     client->action = -1;
     client->TTEA = 0;
@@ -74,7 +73,8 @@ static int *load_player(server_t *server, client_ai_t *client)
         if (tmp->num_player == client->num_player)
             continue;
         if (tmp->position.x == client->position.x && tmp->position.y ==
-        client->position.y && tmp->level == client->level && tmp->action == -1 ) {
+        client->position.y && tmp->level == client->level
+        && tmp->action == -1) {
             add_to_buffer(&tmp->buff_out, "Elevation underway\n", false);
             tmp->action = client->action;
             tmp->TTEA = client->TTEA + 300;
