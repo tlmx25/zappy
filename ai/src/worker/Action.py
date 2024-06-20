@@ -31,7 +31,8 @@ class Action:
         response = self.server.recv()
         if "Assemble" in response:
             self.orientation = int(response.split(" ")[1].replace(',', ''))
-        return
+            return "Assemble"
+        return "NotImportant"
 
     def setOrientation(self, orientation: int):
         self.orientation = orientation
@@ -42,7 +43,9 @@ class Action:
             self.getOrientation()
 
     def dropResource(self, inventory):
+        print("dropResource\n")
         items = inventory[1:-1].split(", ")
+        print("items: " + str(items) + "\n")
         for item in items:
             object_name, quantity = item.split()
             quantity = int(quantity)
@@ -140,13 +143,7 @@ class Action:
 
     def takeObject(self, objects):
         self.server.send("Take " + objects + "\n")
-        while not self.server.check_read():
-            pass
-        response = self.server.recv()
-        self.analyseResponse(response)
-        if "ok" in response:
-            return True
-        return False
+        self.waitTillGoodResp()
 
     def setWhereToGo(self):
         while True:
@@ -166,33 +163,22 @@ class Action:
         print("setGoodPosition\n")
         for i in range(4):
             self.server.send("Look\n")
-            while not self.server.check_read():
-                print("waiting in setGoodPosition\n")
-                pass
-            response = self.server.recv()
+            response = self.waitTillGoodResp()
             response = response.replace(" ", "+")
             print("lookResult: " + self.lookResult + "\n")
             print("myLook: " + response + "\n")
-            self.analyseResponse(response)
             if response == self.lookResult:
                 print("good position\n")
                 return
             self.server.send("Right\n")
-            while not self.server.check_read():
-                pass
-            response = self.server.recv()
-            self.analyseResponse(response)
+            self.waitTillGoodResp()
 
     def setFarmingPosition(self, dist: int):
         for i in range(dist):
             self.server.send("Forward\n")
-            while not self.server.check_read():
-                pass
-            response = self.server.recv()
+            self.waitTillGoodResp()
         self.server.send("Left\n")
-        while not self.server.check_read():
-            pass
-        self.server.recv()
+        self.waitTillGoodResp()
         print("WAITING FARM SIGNAL !\n")
         while True:
             while not self.server.check_read():
@@ -203,19 +189,15 @@ class Action:
 
     def look(self):
         self.server.send("Look\n")
-        while not self.server.check_read():
-            pass
-        response = self.server.recv()
-        if self.analyseResponse(response):
-            return None
+        print("Send Look !")
+        response = self.waitTillGoodResp()
         return response
 
     def getInventory(self):
+        print("getInventory\n")
         self.server.send("Inventory\n")
-        while not self.server.check_read():
-            pass
-        response = self.server.recv()
-        self.analyseResponse(response)
+        response = self.waitTillGoodResp()
+        print("Inventory: " + response)
         return response
 
     def doINeedFood(self, inventory):
@@ -224,16 +206,38 @@ class Action:
             return True
         return False
 
-    def remove_duplicates(self, string_list):
-        return list(set(string_list))
-
     def takeObjectPlayerTile(self, lookResponse):
-        lookResponse = lookResponse.replace(" ", "")
-        lookResponse = lookResponse.replace("[", "")
-        lookResponse = lookResponse.replace("]", "")
-        objects = lookResponse.split(",")[0]
-        objects = self.remove_duplicates(objects)
+        print("lookResponse: " + lookResponse)
+        lookResponse = lookResponse.replace("[ ", "")
+        lookResponse = lookResponse.replace(" ]", "")
+        print("lookResponse: " + lookResponse)
+        objects = lookResponse.split(",")[0].split(" ")
+        print("objects: " + str(objects))
         for obj in objects:
             if "player" not in obj:
+                print("take: " + obj)
                 self.takeObject(obj)
+        return
+
+    def waitTillGoodResp(self):
+        while True:
+            while not self.server.check_read():
+                pass
+            response = self.server.recv()
+            if "message" in response:
+                self.analyseResponse(response)
+                pass
+            else:
+                return response
+    def sendInventoryToQueen(self):
+        print("sendInventoryToQueen\n")
+        self.server.send("Inventory\n")
+        response = self.waitTillGoodResp()
+        response = response.replace("[ ", "[")
+        response = response.replace(" ]", "]")
+        response = response.replace(", ", ",")
+        response = response.replace(" ", "+")
+        print("SendInventoryResponse: " + response)
+        self.server.send("Broadcast Worker,FOUND" + response + "\n")
+        self.waitTillGoodResp()
         return

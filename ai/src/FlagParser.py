@@ -36,10 +36,10 @@ class FlagParser:
         return False
         
     def parse_flag(self):
-        if (self.ac == 2 and self.av[1] == "-help"):
+        if self.ac == 2 and self.av[1] == "-help":
             self.display_help()
             exit(0)
-        if (self.ac < 5 or (self.ac % 2 != 1 and self.ac >= 5)):
+        if self.ac < 5 or (self.ac % 2 != 1 and self.ac >= 5):
             return self.display_help()
         if not "-p" in self.av or not "-n" in self.av:
             return self.display_help()

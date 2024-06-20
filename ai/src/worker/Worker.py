@@ -23,7 +23,7 @@ class Worker:
                 pass
             response = self.server.recv()
             print("second response " + response + "\n")
-            if "message" and "FARM" in response:
+            if "message" and "Assemble" in response:
                 print("second response " + response + "\n")
                 parts = response.split(",")[0].split(" ")
                 self.direction = parts[1]
@@ -44,8 +44,11 @@ class Worker:
 
     def run(self):
         self.starting_mode()
+        print("STARTING MODE FINISHED")
+        count = 0
         while True:
             if self.action.state == 0:
+                print("IN ASSEMBLE MODE")
                 self.action.goToQueen()
                 self.action.dropResource(self.action.getInventory())
                 self.action.waitDuringElevation()
@@ -55,8 +58,14 @@ class Worker:
             if lookRespond is None:
                 continue
             self.action.takeObjectPlayerTile(lookRespond)
+            count += 1
+            if count == 3:
+                self.action.sendInventoryToQueen()
+                count = 0
             self.server.send("Forward\n")
+            print("Send Forward")
             while not self.server.check_read():
+                print("WAITING FORWARD RESPONSE")
                 pass
             response = self.server.recv()
             if "Assemble" in response:
