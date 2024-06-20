@@ -29,37 +29,22 @@ class Server:
         try:
             print("Host : " + self.host + " Port : " + str(self.port))
             self.s.connect((self.host, self.port))
-            self.s.setblocking(False)
             print("Client connected succesfully.")
         except:
             raise Exception("Server : Error while connecting try changing port / host.")
         
     def send(self, command):
         try:
-            str_length = len(command)
-            for i in range(0, str_length, 1024):
-                mess_part = command[i:i + 1024]
-                self.s.send(mess_part.encode())
+            self.s.sendall(command.encode("ascii"))
         except Exception:
             raise Exception("Server : Error while sending message.")
-        
+
     def recv(self) -> str:
-        response = b""
         try:
-            while self.check_read():
-                response_part = self.s.recv(1024)
-                if (response_part):
-                    response += response_part
-            return str(response.decode())
+            response = self.s.recv(8192).decode()
+            return response
         except Exception:
-            raise Exception("Server : Error during recieve. Probably dev error.")
-        
-    def check_read(self) -> bool:
-        ready_to_read, _, _ = select.select([self.s], [], [], 1)
-        if self.s in ready_to_read:
-            return True
-        else:
-            return False
+            raise Exception("Server : Error during recieve.")
 
     def close_socket(self):
         try:

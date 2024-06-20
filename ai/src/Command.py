@@ -1,4 +1,4 @@
-from Server import Server
+from src.Server import Server
 
 class Command:
 
@@ -15,8 +15,8 @@ class Command:
 
     def mooveForward(self):
         self.server.send("Forward\n")
-        while not self.server.check_read():
-            pass
+        ##while not self.server.check_read():
+        ##    pass
         response = self.server.recv()
         if self.parse_response(response) == 42:
             return 42
@@ -77,10 +77,14 @@ class Command:
         return response
 
     def fork(self):
-        self.server.send("Fork")
+
+        self.server.send("Fork\n")
+        print("J'ai send fork")
         while not self.server.check_read():
             pass
+        print("Je reçois une réponse")
         response = self.server.recv()
+        print("LA RESPONSE : " + response)
         if self.parse_response(response) == 42:
             return 42
         return response
@@ -104,6 +108,7 @@ class Command:
         if self.parse_response(response) == 42:
             return -1
         if self.parse_response(response) == -1:
+            print("no ressource")
             return -1
         return response
 

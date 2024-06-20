@@ -11,19 +11,34 @@
     #include "my.h"
 
 
+/**
+ * @brief client structure
+ *
+ * this structure is used to store the information about a classic client
+ * (not AI client)
+ */
 typedef struct client_s {
-    int fd;
-    char *team_name;
-    char *buffer_in;
-    char *buffer_out;
-    struct client_s *next;
-    struct client_s *prev;
+    int fd; /** file descriptor of the client */
+    char *team_name; /** team name of the client */
+    char *buffer_in; /** buffer in of the client, this is where the data
+    we receive is stored */
+    char *buffer_out; /** buffer out of the client, this is where the data
+     we send is stored */
+    int to_disconnect; /** if 1 the client will be disconnected
+    by the sevrer */
+    struct client_s *next; /** next client (for the linked list) */
+    struct client_s *prev; /** previous client (for the linked list) */
 } client_t;
 
+/**
+ * @brief client list structure
+ *
+ * this structure is used to store the list of the clients
+ */
 typedef struct client_list_s {
-    client_t *head;
-    client_t *tail;
-    int size;
+    client_t *head; /** head of the client list */
+    client_t *tail; /** tail of the client list */
+    int size; /** size of the client list */
 } client_list_t;
 
 /**

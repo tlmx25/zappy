@@ -101,8 +101,13 @@ tests_clean:
 	@ rm -f *.gcda
 	@ rm -f unit_tests
 
-
 re: 	fclean all
+
+doc:
+	doxygen Doxyfile
+
+doc_clean:
+	rm -rf doc/
 
 .PHONY: all clean fclean re .SILENT
 

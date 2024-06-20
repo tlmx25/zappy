@@ -12,50 +12,86 @@
     #include <stddef.h>
     #define WARN_RESULT __attribute__((warn_unused_result))
 
+/**
+ * @brief inventory structure
+ *
+ * the inventory structure is used to store the information about the inventory
+ * of a client or tile
+ */
 typedef struct inventory_s {
-    int food;
-    int linemate;
-    int deraumere;
-    int sibur;
-    int mendiane;
-    int phiras;
-    int thystame;
+    int food; /** food quantity */
+    int linemate; /** linemate quantity */
+    int deraumere; /** deraumere quantity */
+    int sibur; /** sibur quantity */
+    int mendiane; /** mendiane quantity */
+    int phiras; /** phiras quantity */
+    int thystame; /** thystame quantity */
 } inventory_t;
 
+/**
+ * @brief direction enum
+ *
+ * the direction enum is used to store the direction of a client
+ */
 typedef enum {
-    NORTH,
-    EAST,
-    SOUTH,
-    WEST,
-    NONE
+    NORTH, /** north direction */
+    EAST, /** east direction */
+    SOUTH, /** south direction */
+    WEST, /** west direction */
+    NONE /** no direction */
 } direction_t;
 
+/**
+ * @brief position structure
+ *
+ * the position structure is used to store the information about the position
+ * of a client
+ */
 typedef struct position_s {
-    int x;
-    int y;
-    direction_t direction;
+    int x; /** x position */
+    int y; /** y position */
+    direction_t direction; /** direction associate with tge position */
 } position_t;
 
+
+/**
+ * @brief client_ai structure
+ *
+ * the client_ai structure is used to store the information about a AI client
+ * (not classic client, it's a player)
+ */
 typedef struct client_ai_s {
-    int fd;
-    char *team_name;
-    int num_player;
-    char *buff_in;
-    char *buff_out;
-    struct client_ai_s *next;
-    struct client_ai_s *prev;
-    position_t position;
-    size_t level;
-    size_t TTL;
-    char *action;
-    size_t TTEA;
-    inventory_t inventory;
+    int fd; /** file descriptor of the client */
+    char *team_name; /** team name of the client */
+    int num_player; /** num of the player */
+    char *buffer_in; /** buffer in of the client, this is where the data
+    we receive is stored, different action is stored with '\n' for separator */
+    char *buffer_out; /** buffer out of the client, this is where the data
+     we send is stored */
+    struct client_ai_s *next; /** next client (for the linked list) */
+    struct client_ai_s *prev; /** previous client (for the linked list) */
+    int to_disconnect; /** if 1 the client will be disconnected
+    by the sevrer
+ */
+    position_t position; /** position of the client */
+    size_t level; /** level of the client */
+    size_t TTL; /** time to live of the client*/
+    int action; /** is the actual action performed by the client depend
+    of TTEA to execute */
+    char *option; /** it's option for some command of the client */
+    size_t TTEA; /** is the time remaining before the end of the action */
+    inventory_t inventory; /** inventory of the client */
 } client_ai_t;
 
+/**
+ * @brief client_ai list structure
+ *
+ * the client_ai list structure is used to store the list of the clients
+ */
 typedef struct client_ai_list_s {
-    client_ai_t *head;
-    client_ai_t *tail;
-    int size;
+    client_ai_t *head; /** head of the client list */
+    client_ai_t *tail; /** tail of the client list */
+    int size; /** size of the client list */
 } client_ai_list_t;
 
 /**

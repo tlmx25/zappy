@@ -22,21 +22,39 @@ typedef enum {
     true
 } bool_t;
 
+/**
+* @brief A structure to represent a server.
+*
+* This structure represents a server. It contains a flag to indicate if the
+ * server is running,
+* the port number, the socket, a select configuration, lists of pending
+ * clients, graphic clients, and AI clients,
+* server options, and the world.
+*/
 typedef struct server_s {
-    bool_t is_running;
-    int port;
-    int socket;
-    select_t *select_config;
-    client_list_t *pending_clients;
-    client_list_t *graphic_clients;
-    client_ai_list_t *ai_clients;
-    option_t *option;
+    bool is_running; /**< Flag to indicate if the server is running. */
+    int port; /**< The port number for the server. */
+    int socket; /**< The socket for the server. */
+    select_t *select_config; /**< The select configuration for the server. */
+    client_list_t *pending_clients; /**< List of pending clients. */
+    client_list_t *graphic_clients; /**< List of graphic clients. */
+    client_ai_list_t *ai_clients; /**< List of AI clients. */
+    option_t *option; /**< Server options. */
+    world_t *world; /**< The world for the server. */
 } server_t;
 
+/**
+* @brief A structure to represent a command.
+*
+* This structure represents a command. It contains the command string, a
+ * function pointer to execute the command,
+* and the number of arguments required for the command.
+*/
 typedef struct command_s {
-    char *command;
-    void (*func)(server_t *server, client_t *client, char const **command);
-    int nb_args;
+    char *command; /**< The command string. */
+    void (*func)(server_t *server, client_t *client, char const **command); /**
+ * < Function to execute the command. */
+    int nb_args; /**< The number of arguments required for the command. */
 } command_t;
 
 typedef struct command_ai_s {
