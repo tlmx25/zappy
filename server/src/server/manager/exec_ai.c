@@ -103,7 +103,7 @@ static void invalid_command(client_ai_t *client, char *command)
     client->num_player, command);
 }
 
-void check_command_exist(client_ai_t *client, char *command, server_t *server)
+void check_command_exist(client_ai_t *client, char *command)
 {
     char **tab = my_str_to_word_array(command, " ");
 
@@ -128,7 +128,7 @@ static void check_command(server_t *server, client_ai_t *client)
     tab = my_str_to_word_array(client->buff_in, "\n");
     if (tab == NULL || tab[0] == NULL)
         return;
-    check_command_exist(client, tab[0], server);
+    check_command_exist(client, tab[0]);
     if (client->action == -1)
         invalid_command(client, tab[0]);
     reconstruct_buff(client, tab, server);

@@ -52,15 +52,13 @@ static void notify_preincant(server_t *server, int *players,
         return;
     send_to_all_graphic_arg(server->graphic_clients, "pic %d %d %d %s\n",
     client->position.x, client->position.y, client->level, players_str);
-    debug_print("Player %i start incantation at {%i, %i} with players %s\n",
+    debug_print("Player %i start incantation at {%i, %i} with players [%s]\n",
     client->num_player, client->position.x, client->position.y, players_str);
     free(players_str);
 }
 
-static void failed_preincantation(server_t *server, client_ai_t *client)
+static void failed_preincantation(client_ai_t *client)
 {
-    int *players = NULL;
-
     add_to_buffer(&client->buff_out, "ko\n", false);
     client->action = -1;
     client->TTEA = 0;
@@ -75,7 +73,8 @@ static int *load_player(server_t *server, client_ai_t *client)
         if (tmp->num_player == client->num_player)
             continue;
         if (tmp->position.x == client->position.x && tmp->position.y ==
-        client->position.y && tmp->level == client->level) {
+        client->position.y && tmp->level == client->level
+        && tmp->action == -1) {
             add_to_buffer(&tmp->buff_out, "Elevation underway\n", false);
             tmp->action = client->action;
             tmp->TTEA = client->TTEA + 300;
@@ -97,12 +96,12 @@ void incantation_precommand(server_t *server, client_ai_t *client)
     incantation_t *incantation;
 
     if (can_incant == false)
-        return failed_preincantation(server, client);
+        return failed_preincantation(client);
     players = load_player(server, client);
     incantation = create_incantation(client->num_player,
     incantation_level + 1, client->position);
     if (incantation == NULL)
-        return failed_preincantation(server, client);
+        return failed_preincantation(client);
     add_incantation_to_list(server->world->incantations, incantation);
     incantation->players = players;
     notify_preincant(server, players, client);
