@@ -14,24 +14,51 @@
 typedef struct egg_list_s egg_list_t;
 typedef struct server_s server_t;
 
+/**
+* @brief A structure to represent a tile in the game world.
+*
+* This structure represents a tile in the game world. It contains the
+ * coordinates of the tile,
+* an inventory of objects on the tile, and the number of AI on the tile.
+*/
 typedef struct tile_s {
-    position_t coordinate;
-    inventory_t object;
-    size_t ai;
+    position_t coordinate; /**< The coordinates of the tile in the
+ * game world. */
+    inventory_t object; /**< The inventory of objects on the tile. */
+    size_t ai; /**< The number of AI on the tile. */
 } tile_t;
 
+/**
+* @brief A structure to represent a team in the game.
+*
+* This structure represents a team in the game. It contains the name of the
+ * team,
+* the maximum number of clients that can join the team, and the current
+ * number of clients in the team.
+*/
 typedef struct team_s {
-    char *name;
-    int max_clients;
-    int current_clients;
+    char *name; /**< The name of the team. */
+    int max_clients; /**< The maximum number of clients that can join the
+ * team. */
+    int current_clients; /**< The current number of clients in the team. */
 } team_t;
 
+/**
+* @brief A structure to represent the world in the game.
+*
+* This structure represents the world in the game. It contains the
+ * number of teams,
+* a pointer to the tiles in the world, a pointer to the teams in the world,
+* a pointer to the list of eggs in the world, and a pointer to the list of
+ * incantations in the world.
+*/
 typedef struct world_s {
-    int nbr_teams;
-    tile_t *tiles;
-    team_t *teams;
-    egg_list_t *eggs;
-    incantation_list_t *incantations;
+    int nbr_teams; /**< The number of teams in the world. */
+    tile_t *tiles; /**< A pointer to the tiles in the world. */
+    team_t *teams; /**< A pointer to the teams in the world. */
+    egg_list_t *eggs; /**< A pointer to the list of eggs in the world. */
+    incantation_list_t *incantations; /**< A pointer to the list of
+ * incantations in the world. */
 } world_t;
 
 /**

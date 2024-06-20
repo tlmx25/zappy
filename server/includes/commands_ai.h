@@ -13,21 +13,35 @@
     #define OR rc->position.direction
     #define DIR(a, b, c, d) (OR == 0) ? a : (OR == 1) ? b : (OR == 2) ? c : d
 
+/**
+ * @brief command_ai structure
+ *
+ * the command_ai structure is used to store the information about the
+ * commands that the AI can send
+ */
 typedef struct command_ai_s {
-    char *command;
-    size_t TTEA;
-    void (*func)(server_t *server, client_ai_t *client);
-    void (*prefunc)(server_t *server, client_ai_t *client);
+    char *command; /** i'ts string represent the command */
+    size_t TTEA; /** time to execute the command */
+    void (*func)(server_t *server, client_ai_t *client); /** function to
+   execute at the end of TTEA*/
+    void (*prefunc)(server_t *server, client_ai_t *client); /** function to
+ * execute at the start of TTEA */
 } command_ai_t;
 
+/**
+ * @brief incantation_requirements structure
+ *
+ * the incantation_requirements structure is used to store the information
+ * about the requirements for the incantation
+ */
 typedef struct incantation_requirements_s {
-    int players;
-    int linemate;
-    int deraumere;
-    int sibur;
-    int mendiane;
-    int phiras;
-    int thystame;
+    int players; /** number of players required */
+    int linemate; /** linemate quantity */
+    int deraumere; /** deraumere quantity */
+    int sibur; /** sibur quantity */
+    int mendiane; /** mendiane quantity */
+    int phiras; /** phiras quantity */
+    int thystame; /** thystame quantity */
 } incantation_requirements_t;
 
 /**

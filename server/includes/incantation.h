@@ -14,20 +14,33 @@
     #include "my.h"
     #include "client_ai.h"
 
+/**
+ * @brief incantation structure
+ *
+ * the incantation structure is used to store the information about the
+ * incantation that is currently happening
+ */
 typedef struct incantation_s {
-    int main_player;
-    int *players;
-    size_t level_target;
-    position_t position;
-    size_t TTE;
-    struct incantation_s *next;
-    struct incantation_s *prev;
+    int main_player; /** player that started the incantation */
+    int *players; /** list of the players that are in the incantation */
+    size_t level_target; /** level that the incantation is targeting */
+    position_t position; /** position of the incantation */
+    size_t TTE; /** is the time remaining before the end of the incantation */
+    struct incantation_s *next; /** next incantation (for the linked list) */
+    struct incantation_s *prev; /** previous incantation
+    (for the linked list) */
 } incantation_t;
 
+/**
+ * @brief incantation list structure
+ *
+ * the incantation list structure is used to store the list of the incantations
+ * that are currently happening
+ */
 typedef struct incantation_list_s {
-    incantation_t *head;
-    incantation_t *tail;
-    int size;
+    incantation_t *head; /** head of the incantation list */
+    incantation_t *tail; /** tail of the incantation list */
+    int size; /** size of the incantation list */
 } incantation_list_t;
 
 /**
