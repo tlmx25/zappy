@@ -27,7 +27,6 @@ class Server:
     
     def connect_server(self):
         try:
-            print("Host : " + self.host + " Port : " + str(self.port))
             self.s.connect((self.host, self.port))
             print("Client connected succesfully.")
         except:

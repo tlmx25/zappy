@@ -114,4 +114,13 @@ int parse_freq(option_t *option, const char **av, int i);
  * @param option option struct to dump
  */
 void dump_option(option_t *option);
+
+/**
+ * @brief parse debug option
+ * @param option option struct
+ * @param av command line
+ * @param i index of the option
+ * @return int new index
+ */
+int parse_debug(option_t *option, const char **av, int i);
 #endif //SERVER_OPTION_H

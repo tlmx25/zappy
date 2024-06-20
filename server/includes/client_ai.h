@@ -64,9 +64,9 @@ typedef struct client_ai_s {
     int fd; /** file descriptor of the client */
     char *team_name; /** team name of the client */
     int num_player; /** num of the player */
-    char *buffer_in; /** buffer in of the client, this is where the data
+    char *buff_in; /** buffer in of the client, this is where the data
     we receive is stored, different action is stored with '\n' for separator */
-    char *buffer_out; /** buffer out of the client, this is where the data
+    char *buff_out; /** buffer out of the client, this is where the data
      we send is stored */
     struct client_ai_s *next; /** next client (for the linked list) */
     struct client_ai_s *prev; /** previous client (for the linked list) */
@@ -159,4 +159,37 @@ void delete_client_ai_list(client_ai_list_t *list);
  * @param num num of the client to delete
  */
 void delete_client_ai_by_num(client_ai_list_t *list, int num);
+
+/**
+ * @brief send a message to all clients
+ * @param list list of clients
+ * @param msg message to send
+ */
+void send_to_all_ai(client_ai_list_t *list, char *msg);
+
+/**
+ * @brief send a message to all clients except one
+ * @param list list of clients
+ * @param msg message to send
+ * @param client client to not send the message to
+ */
+void send_to_other_ai(client_ai_list_t *list, char *msg, client_ai_t *client);
+
+/**
+ * @brief get a client by his num_player
+ * @param list list of clients
+ * @param num num(id) of the client
+ * @return client_ai_t* client found, NULL if not found
+ */
+client_ai_t *get_client_ai_by_num(client_ai_list_t *ai, int id);
+
+/**
+ * @brief count the number of clients by team and level
+ * @param ai list of clients
+ * @param team_name team name to count
+ * @param level level to count
+ * @return return the number of clients matching the team and level
+ */
+size_t count_client_ai_by_team_level(client_ai_list_t *ai, char *team_name,
+    size_t level);
 #endif //SERVER_CLIENT_AI_H

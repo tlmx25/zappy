@@ -14,11 +14,12 @@ char *read_socket(int fd)
     char tmp_buffer[1025] = {0};
     char *buffer = NULL;
     long readed;
+    int nb_read = 0;
 
-    while (1) {
+    for (; 1; nb_read++) {
         readed = read(fd, tmp_buffer, 1024);
         tmp_buffer[readed] = 0;
-        if (readed == -1)
+        if (readed == -1 || nb_read > 50)
             return NULL;
         if (readed == 0)
             break;
@@ -38,16 +39,22 @@ int write_socket(int fd, char *str)
     return 0;
 }
 
-void add_to_buffer(char **buffer, char *str, bool_t free_str)
+void add_to_buffer(char **buffer, char *str, bool free_str)
 {
+    char *tmp = NULL;
+
     if (str == NULL)
         return;
-    if (str[my_strlen(str) - 1] != '\n')
-        str = my_strcat_free(str, "\n", 1, 0);
+    if (str[my_strlen(str) - 1] != '\n') {
+        tmp = str;
+        str = my_strcat_free(str, "\n", 0, 0);
+    }
     if (*buffer == NULL)
         *buffer = my_strdup(str);
     else
-        *buffer = my_strcat_free(*buffer, str, 1, 1);
+        *buffer = my_strcat_free(*buffer, str, 1, 0);
     if (free_str)
         free(str);
+    if (tmp != NULL && free_str)
+        free(tmp);
 }

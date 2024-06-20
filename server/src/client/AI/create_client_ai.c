@@ -11,15 +11,16 @@
 
 static void init_client_ai(client_ai_t *client)
 {
-    client->action = NULL;
+    client->action = -1;
     client->TTEA = 0;
-    client->inventory.food = 10;
+    client->inventory.food = 9;
     client->inventory.linemate = 0;
     client->inventory.deraumere = 0;
     client->inventory.sibur = 0;
     client->inventory.mendiane = 0;
     client->inventory.phiras = 0;
     client->inventory.thystame = 0;
+    client->to_disconnect = 0;
 }
 
 client_ai_t *create_client_ai(int fd, char *team_name, position_t position)
@@ -39,7 +40,8 @@ client_ai_t *create_client_ai(int fd, char *team_name, position_t position)
     client->prev = NULL;
     client->position = position;
     client->level = 1;
-    client->TTL = 0;
+    client->TTL = 126;
+    client->option = NULL;
     init_client_ai(client);
     return client;
 }

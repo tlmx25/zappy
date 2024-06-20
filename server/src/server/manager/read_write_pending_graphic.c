@@ -7,6 +7,14 @@
 
 #include "server.h"
 
+static void error_read(client_t *tmp)
+{
+    tmp->buffer_in = read_socket(tmp->fd);
+    if (tmp->buffer_in == NULL) {
+        tmp->to_disconnect = true;
+    }
+}
+
 void read_pending_graphic_list(server_t *server, client_list_t *list)
 {
     client_t *tmp = list->head;
@@ -15,7 +23,12 @@ void read_pending_graphic_list(server_t *server, client_list_t *list)
     while (tmp != NULL) {
         next = tmp->next;
         if (FD_ISSET(tmp->fd, &server->select_config->readfds))
-            tmp->buffer_in = read_socket(tmp->fd);
+            error_read(tmp);
+        if (tmp->to_disconnect == true) {
+            debug_print("Client %s disconnected fd: %i\n", (tmp->team_name) ?
+            tmp->team_name : "PENDING", tmp->fd);
+            delete_client_from_list(list, tmp, true);
+        }
         tmp = next;
     }
 }

@@ -114,4 +114,26 @@ void delete_client_by_fd(client_list_t *list, int fd, int delete_client);
  * @return client_t* the client, NULL if not found
  */
 client_t *get_client_by_fd(client_list_t *list, int fd);
+
+/**
+ * @brief send message to all client in the list
+ * @param list
+ * @param msg
+ */
+void send_to_all_graphic(client_list_t *list, char *msg);
+
+/**
+ * @brief send message to all client in the list with format
+ * @param list list of clients
+ * @param format format of the message
+ * @param ... variable arguments
+ */
+void send_to_all_graphic_arg(client_list_t *list, char *format, ...);
+
+/**
+ * @brief deleting client from list without close fd
+ * @param list list of clients
+ * @param client client to delete
+ */
+void client_is_converted(client_list_t *list, client_t *client);
 #endif //SERVER_CLIENT_H
