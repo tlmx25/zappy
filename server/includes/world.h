@@ -9,6 +9,7 @@
     #define ZAPPY_WORLD_H
     #include "server.h"
     #include "eggs.h"
+    #include "incantation.h"
 
 typedef struct egg_list_s egg_list_t;
 typedef struct server_s server_t;
@@ -30,6 +31,7 @@ typedef struct world_s {
     tile_t *tiles;
     team_t *teams;
     egg_list_t *eggs;
+    incantation_list_t *incantations;
 } world_t;
 
 /**
@@ -60,4 +62,10 @@ bool init_world(server_t *server);
  */
 bool delete_world(world_t *world);
 
+/**
+ * @brief finish the incantation
+ * @param server server for info about the game
+ * @param incantation incantation to finish
+ */
+void incantation_end(server_t *server, incantation_t *incantation);
 #endif //ZAPPY_WORLD_H

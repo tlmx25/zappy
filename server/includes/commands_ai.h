@@ -20,6 +20,16 @@ typedef struct command_ai_s {
     void (*prefunc)(server_t *server, client_ai_t *client);
 } command_ai_t;
 
+typedef struct incantation_requirements_s {
+    int players;
+    int linemate;
+    int deraumere;
+    int sibur;
+    int mendiane;
+    int phiras;
+    int thystame;
+} incantation_requirements_t;
+
 /**
  * @brief execute the forward command, move the client depending on
  * the direction
@@ -115,5 +125,30 @@ void broadcast_command(server_t *server, client_ai_t *client);
  * @param client client who sent the command
  */
 void eject_command(server_t *server, client_ai_t *client);
+
+/**
+ * @brief execute the incantation command, start the incantation for
+ * level up the player
+ * @param server server for info about the game
+ * @param client client who sent the command
+ */
+void incantation_precommand(server_t *server, client_ai_t *client);
+
+/**
+ * @brief check the requirement for incantation (level up)
+ * @param tile tile where the incantation is
+ * @param requirement requirement for the incantation
+ * @param clients all clients
+ * @param level level of the incantation
+ * @return true if the incantation can be done, false otherwise
+ */
+bool check_requirement(tile_t *tile, client_ai_list_t *clients, size_t level);
+
+/**
+ * @brief transform an array of int to a string
+ * @param array array of int
+ * @return array in string format or NULL if error
+ */
+char *int_array_to_str(int *array);
 
 #endif //SERVER_COMMANDS_AI_H

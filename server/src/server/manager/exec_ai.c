@@ -21,12 +21,13 @@ static const command_ai_t commands[] = {
     {"Set", 7, set_command, NULL},
     {"Broadcast", 7, broadcast_command, NULL},
     {"Eject", 7, eject_command, NULL},
+    {"Incantation", 30, NULL, incantation_precommand},
     {NULL, 0, NULL, NULL}
 };
 
 static int check_death(server_t *server, client_ai_t *tmp)
 {
-    tmp->TTL -= 1 * server->option->freq;
+    tmp->TTL -= 1;
     tmp->TTL = (tmp->TTL <= 0) ? 0 : tmp->TTL;
     if (tmp->TTL == 0) {
         if (tmp->inventory.food != 0) {
@@ -147,11 +148,16 @@ static void meteor_shower(server_t *server)
     }
 }
 
-void exec_nb_cycle(server_t *server, int nb, client_ai_t *tmp)
+void check_incant(server_t *server)
 {
-    for (int i = 0; i < nb; i++) {
-        check_death(server, tmp);
-        exec_command_ai(server, tmp);
+    incantation_t *tmp = server->world->incantations->head;
+    incantation_t *next = NULL;
+
+    for (; tmp; tmp = next) {
+        next = tmp->next;
+        tmp->TTE--;
+        if (tmp->TTE == 0)
+            incantation_end(server, tmp);
     }
 }
 
@@ -160,6 +166,7 @@ void exec_ai_list(server_t *server)
     client_ai_t *tmp = server->ai_clients->head;
 
     meteor_shower(server);
+    check_incant(server);
     for (; tmp; tmp = tmp->next) {
         check_command(server, tmp);
         check_death(server, tmp);

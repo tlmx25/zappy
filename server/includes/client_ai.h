@@ -140,4 +140,12 @@ void send_to_all_ai(client_ai_list_t *list, char *msg);
  * @param client client to not send the message to
  */
 void send_to_other_ai(client_ai_list_t *list, char *msg, client_ai_t *client);
+
+/**
+ * @brief get a client by his num_player
+ * @param list list of clients
+ * @param num num(id) of the client
+ * @return client_ai_t* client found, NULL if not found
+ */
+client_ai_t *get_client_ai_by_num(client_ai_list_t *ai, int id);
 #endif //SERVER_CLIENT_AI_H
