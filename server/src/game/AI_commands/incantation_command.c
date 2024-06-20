@@ -144,6 +144,20 @@ static void failed_incantation(server_t *server, client_ai_t *client,
     free(players_str);
 }
 
+void check_win_incantation(server_t *server)
+{
+    char **names = server->option->names;
+
+    for (int i = 0; names[i]; i++) {
+        if (count_client_ai_by_team_level(server->ai_clients,
+        names[i], 8) >= 6) {
+            send_to_all_graphic_arg(server->graphic_clients,
+            "seg %s\n", names[i]);
+            return;
+        }
+    }
+}
+
 void incantation_end(server_t *server, incantation_t *incantation)
 {
     client_ai_t *client = get_client_ai_by_num(server->ai_clients,
@@ -162,5 +176,7 @@ void incantation_end(server_t *server, incantation_t *incantation)
     send_to_all_graphic_arg(server->graphic_clients, "plv %i %i\n",
     client->num_player, client->level);
     notify_incant(server, incantation->players, client);
+    if (client->level == 8)
+        check_win_incantation(server);
     delete_incantation_from_list(server->world->incantations, incantation);
 }

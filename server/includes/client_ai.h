@@ -148,4 +148,14 @@ void send_to_other_ai(client_ai_list_t *list, char *msg, client_ai_t *client);
  * @return client_ai_t* client found, NULL if not found
  */
 client_ai_t *get_client_ai_by_num(client_ai_list_t *ai, int id);
+
+/**
+ * @brief count the number of clients by team and level
+ * @param ai list of clients
+ * @param team_name team name to count
+ * @param level level to count
+ * @return return the number of clients matching the team and level
+ */
+size_t count_client_ai_by_team_level(client_ai_list_t *ai, char *team_name,
+    size_t level);
 #endif //SERVER_CLIENT_AI_H
