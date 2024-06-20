@@ -54,6 +54,8 @@ void read_ai_list(server_t *server, client_ai_list_t *list)
         if (tmp->to_disconnect == true) {
             debug_print("Client AI disconnected num : %i, fd: %i\n",
             tmp->num_player, tmp->fd);
+            send_to_all_graphic_arg(server->graphic_clients, "pdi %i\n",
+            tmp->num_player);
             delete_client_ai_from_list(list, tmp, true);
         }
         tmp = next;

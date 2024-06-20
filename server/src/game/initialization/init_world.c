@@ -109,6 +109,7 @@ bool delete_world(world_t *world)
     free(world->teams);
     free(world->tiles);
     delete_eggs_list(world->eggs);
+    delete_incantation_list(world->incantations);
     free(world);
     return true;
 }
