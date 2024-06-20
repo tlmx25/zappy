@@ -49,6 +49,36 @@ void Trantorian::setSprite()
                 std::cerr << "Error loading trantorian sprite" << std::endl;
             }
             break;
+        case 4:
+            if (!texture.loadFromFile("GUI/src/Assets/VIRUS/VIRUS-BLUE.png")) {
+                std::cerr << "Error loading trantorian sprite" << std::endl;
+            }
+            break;
+        case 5:
+            if (!texture.loadFromFile("GUI/src/Assets/VIRUS/VIRUS-PURPLE.png")) {
+                std::cerr << "Error loading trantorian sprite" << std::endl;
+            }
+            break;
+        case 6:
+            if (!texture.loadFromFile("GUI/src/Assets/VIRUS/VIRUS-ORANGE.png")) {
+                std::cerr << "Error loading trantorian sprite" << std::endl;
+            }
+            break;
+        case 7:
+            if (!texture.loadFromFile("GUI/src/Assets/VIRUS/VIRUS-WHITE.png")) {
+                std::cerr << "Error loading trantorian sprite" << std::endl;
+            }
+            break;
+        case 8:
+            if (!texture.loadFromFile("GUI/src/Assets/VIRUS/VIRUS-CYAN.png")) {
+                std::cerr << "Error loading trantorian sprite" << std::endl;
+            }
+            break;
+        case 9:
+            if (!texture.loadFromFile("GUI/src/Assets/VIRUS/VIRUS-GREY.png")) {
+                std::cerr << "Error loading trantorian sprite" << std::endl;
+            }
+            break;
         default:
             // TODO: handle error for invalid teamNumber
             break;

@@ -84,7 +84,7 @@ class Map
         int height;
         int tileSize = 90;
         int windowSize = 1200;
-        float colorChangeSpeed = 1.0f;
+        float colorChangeSpeed = 0.60f;
         float lastColorChange = 0.0f;
         sf::Color lightColor = sf::Color(36, 76, 156);
         sf::Color darkColor = sf::Color(1, 39, 117);
