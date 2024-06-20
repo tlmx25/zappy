@@ -16,16 +16,16 @@ Zappy_GUI::Server::Server(char *Port, char * adresse_ip) {
             {"bct", bctFonction},
             {"tna", [](const std::string&, Game&) {}},
             {"pnw", pnwFonction},
-            {"ppo", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
-            {"plv", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
-            {"pin", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
+            {"ppo", ppoFonction},
+            {"plv", plvFonction},
+            {"pin", pinFonction},
             {"pex", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
             {"pbc", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
             {"pic", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
             {"pie", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
             {"pfk", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
-            {"pdr", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
-            {"pgt", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
+            {"pdr", pdrFonction},
+            {"pgt", pgtFonction},
             {"pdi", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
             {"enw", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
             {"ebo", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
@@ -276,9 +276,103 @@ void ppoFonction(const std::string& command, Game& game)
 
     std::stringstream(command) >> temp >> nbr >> x >> y >> O;
 
-    try {
-        game.getTrantorians().find(nbr);
-    } catch (std::invalid_argument &e) {
+    auto& trantorians = game.getTrantorians();
+    auto it = trantorians.find(nbr);
+    if (it == trantorians.end()) {
         throw Zappy_GUI::Server::BadParameter("Mauvais arguments.");
     }
+    auto player = it->second;
+    player->setPos(sf::Vector2i(std::stoi(x), std::stoi(y)));
+}
+
+void plvFonction(const std::string& command, Game& game)
+{
+    std::string temp;
+    std::string nbr;
+    std::string L;
+
+    std::stringstream(command) >> temp >> nbr >> L;
+
+    auto& trantorians = game.getTrantorians();
+    auto it = trantorians.find(nbr);
+    if (it == trantorians.end()) {
+        throw Zappy_GUI::Server::BadParameter("Mauvais arguments.");
+    }
+    auto player = it->second;
+    player->setLevel(std::stoi(L));
+}
+
+void pinFonction(const std::string& command, Game& game)
+{
+    std::string temp;
+    std::string nbr;
+    std::string x;
+    std::string y;
+    std::string q0;
+    std::string q1;
+    std::string q2;
+    std::string q3;
+    std::string q4;
+    std::string q5;
+    std::string q6;
+
+    std::stringstream(command) >> temp >> nbr >> x >> y >> q0 >> q1 >> q2 >> q3 >> q4 >> q5 >> q6;
+
+    auto& trantorians = game.getTrantorians();
+    auto it = trantorians.find(nbr);
+    if (it == trantorians.end()) {
+        throw Zappy_GUI::Server::BadParameter("Mauvais arguments.");
+    }
+    auto player = it->second;
+    player->setInventory(std::stoi(q0),std::stoi(q1),std::stoi(q2),std::stoi(q3),std::stoi(q4),std::stoi(q5),std::stoi(q6));
+}
+
+void pdrFonction(const std::string& command, Game& game)
+{
+    std::string temp;
+    std::string nbr;
+    std::string i;
+
+    std::stringstream(command) >> temp >> nbr >> i;
+
+    auto& trantorians = game.getTrantorians();
+    auto it = trantorians.find(nbr);
+    if (it == trantorians.end()) {
+        throw Zappy_GUI::Server::BadParameter("Mauvais arguments.");
+    }
+    int item;
+    try {
+        item = std::stoi(i);
+    } catch (const std::invalid_argument& e) {
+        throw Zappy_GUI::Server::BadParameter("L'argument de l'objet n'est pas un entier valide.");
+    }
+
+    auto player = it->second;
+    auto& tile = game.getMap().getTile(player->getPos().x, player->getPos().y);
+    player->dropItem(tile, item);
+}
+
+void pgtFonction(const std::string& command, Game& game)
+{
+    std::string temp;
+    std::string nbr;
+    std::string i;
+
+    std::stringstream(command) >> temp >> nbr >> i;
+
+    auto& trantorians = game.getTrantorians();
+    auto it = trantorians.find(nbr);
+    if (it == trantorians.end()) {
+        throw Zappy_GUI::Server::BadParameter("Mauvais arguments.");
+    }
+    int item;
+    try {
+        item = std::stoi(i);
+    } catch (const std::invalid_argument& e) {
+        throw Zappy_GUI::Server::BadParameter("L'argument de l'objet n'est pas un entier valide.");
+    }
+
+    auto player = it->second;
+    auto& tile = game.getMap().getTile(player->getPos().x, player->getPos().y);
+    player->collectItem(tile, item);
 }

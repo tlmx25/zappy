@@ -102,3 +102,8 @@ namespace Zappy_GUI {
 void bctFonction(const std::string& command, Game&);
 void pnwFonction(const std::string& command, Game&);
 void ppoFonction(const std::string& command, Game&);
+void plvFonction(const std::string& command, Game&);
+void pinFonction(const std::string& command, Game&);
+void pdrFonction(const std::string& command, Game&);
+void pgtFonction(const std::string& command, Game&);
+void pdiFonction(const std::string& command, Game&);
