@@ -88,25 +88,27 @@ void take_command(server_t *server, client_ai_t *client)
 {
     tile_t *tile = get_tile_by_pos(server, client->position);
     size_t obj = getobject(client->option);
-    char *buffer = NULL;
 
-    debug_print("TAKE COMMAND\n");
+    debug_print("Client AI %i is executing action Take on object \"%s\""
+                " in pos : %i %i\n", client->num_player, client->option,
+                client->position.x, client->position.y);
     if (obj == (size_t)-1)
         return add_to_buffer(&client->buff_out, "ko\n", false);
     modifie_inventory(&client->inventory, &tile->object, obj);
     add_to_buffer(&client->buff_out, "ok\n", false);
-    buffer = malloc(sizeof(char) * 1024);
-    snprintf(buffer, 1024, "pgt %i %li\n",
-        client->num_player, obj);
-    send_to_all_graphic(server->graphic_clients, buffer);
-    free(buffer);
+    send_to_all_graphic_arg(server->graphic_clients, "pgt %i %li\n",
+    client->num_player, obj);
+    send_to_all_graphic_arg(server->graphic_clients,
+    "bct %i %i %d %d %d %d %d %d %d\n",
+    client->position.x, client->position.y, tile->object.food,
+    tile->object.linemate, tile->object.deraumere, tile->object.sibur,
+    tile->object.mendiane, tile->object.phiras, tile->object.thystame);
 }
 
 void set_command(server_t *server, client_ai_t *client)
 {
     tile_t *tile = get_tile_by_pos(server, client->position);
     size_t obj = getobject(client->option);
-    char *buffer = NULL;
 
     debug_print("Client AI %i is executing action Set on object \"%s\""
                 " in pos : %i %i\n", client->num_player, client->option,
@@ -115,9 +117,11 @@ void set_command(server_t *server, client_ai_t *client)
         return add_to_buffer(&client->buff_out, "ko\n", false);
     modifie_inventory(&tile->object, &client->inventory, obj);
     add_to_buffer(&client->buff_out, "ok\n", false);
-    buffer = malloc(sizeof(char) * 1024);
-    snprintf(buffer, 1024, "pdr %i %li\n",
-        client->num_player, obj);
-    send_to_all_graphic(server->graphic_clients, buffer);
-    free(buffer);
+    send_to_all_graphic_arg(server->graphic_clients, "pdr %i %li\n",
+    client->num_player, obj);
+    send_to_all_graphic_arg(server->graphic_clients,
+    "bct %i %i %d %d %d %d %d %d %d\n",
+    client->position.x, client->position.y, tile->object.food,
+    tile->object.linemate, tile->object.deraumere, tile->object.sibur,
+    tile->object.mendiane, tile->object.phiras, tile->object.thystame);
 }
