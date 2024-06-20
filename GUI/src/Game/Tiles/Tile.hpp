@@ -73,8 +73,9 @@ class Tile
          * @param q4 The quantity of mendiane
          * @param q5 The quantity of phiras
          * @param q6 The quantity of thystame
+         * @param q7 The quantity of the egg
          */
-        void setAllItemsQuantity(int q0, int q1, int q2, int q3, int q4, int q5, int q6);
+        void setAllItemsQuantity(int q0, int q1, int q2, int q3, int q4, int q5, int q6, int q7);
 
         /**
          * @brief Set the quantity of an item
@@ -124,7 +125,6 @@ class Tile
          * @param window The window to draw the tile on
          */
         void draw(sf::RenderWindow &window);
-        
     private:
         sf::Vector2i pos;
         sf::Vector2i size;
@@ -138,6 +138,7 @@ class Tile
         int q4;
         int q5;
         int q6;
+        int q7; // the egg
         std::map<std::string, std::shared_ptr<sf::Texture>> textures;
         std::map<std::string, std::shared_ptr<sf::Sprite>> items;
 };

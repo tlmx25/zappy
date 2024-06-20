@@ -64,9 +64,9 @@ typedef struct client_ai_s {
     int fd; /** file descriptor of the client */
     char *team_name; /** team name of the client */
     int num_player; /** num of the player */
-    char *buffer_in; /** buffer in of the client, this is where the data
+    char *buff_in; /** buffer in of the client, this is where the data
     we receive is stored, different action is stored with '\n' for separator */
-    char *buffer_out; /** buffer out of the client, this is where the data
+    char *buff_out; /** buffer out of the client, this is where the data
      we send is stored */
     struct client_ai_s *next; /** next client (for the linked list) */
     struct client_ai_s *prev; /** previous client (for the linked list) */

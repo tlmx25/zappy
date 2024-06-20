@@ -20,7 +20,17 @@ Game::Game(int x, int y) : map(x, y, 1200)
         music.play();
     }
 
-    // trantorians["test"] = std::make_shared<Trantorian>(0, "test", sf::Vector2i(2, 2), 0, 1, getTeamNumber("test"));
+    // TODO: to remove, FOR TEST ONLY
+    for (auto& tile : map.getTiles()) {
+        tile.setItemQuantity(0, 1);
+        tile.setItemQuantity(1, 1);
+        tile.setItemQuantity(2, 1);
+        tile.setItemQuantity(3, 1);
+        tile.setItemQuantity(4, 1);
+        tile.setItemQuantity(5, 1);
+        tile.setItemQuantity(6, 1);
+    }
+    trantorians["test"] = std::make_shared<Trantorian>(0, "test", sf::Vector2i(2, 2), 0, 1, getTeamNumber("test"));
 }
 
 Game::~Game()
@@ -32,14 +42,16 @@ Game::~Game()
 
 void Game::run()
 {
-    handleEvents();
+    while (window.isOpen()) {
+        handleEvents();
 
-    float time = clock.getElapsedTime().asSeconds();
-    for (auto& trantorian : trantorians) {
-        trantorian.second->animate(time);
+        float time = clock.getElapsedTime().asSeconds();
+        for (auto& trantorian : trantorians) {
+            trantorian.second->animate(time);
+        }
+
+        render();
     }
-
-    render();
 }
 
 
@@ -112,19 +124,4 @@ int Game::getTeamNumber(std::string teamName)
         return nb;
     }
     return it->second;
-}
-
-sf::RenderWindow& Game::getWindow()
-{
-    return window;
-}
-
-Map& Game::getMap()
-{
-    return map;
-}
-
-std::map<std::string, std::shared_ptr<Trantorian>>& Game::getTrantorians()
-{
-    return trantorians;
 }
