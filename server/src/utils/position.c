@@ -9,7 +9,6 @@
 
 static void forward_north(server_t *server, position_t *pos)
 {
-    printf("forward north\n");
     if (pos->y == 0)
         pos->y = server->option->height - 1;
     else
@@ -18,7 +17,6 @@ static void forward_north(server_t *server, position_t *pos)
 
 static void forward_east(server_t *server, position_t *pos)
 {
-    printf("forward east\n");
     if (pos->x == server->option->width - 1)
         pos->x = 0;
     else
@@ -27,7 +25,6 @@ static void forward_east(server_t *server, position_t *pos)
 
 static void forward_south(server_t *server, position_t *pos)
 {
-    printf("forward south\n");
     if (pos->y == server->option->height - 1)
         pos->y = 0;
     else
@@ -36,7 +33,6 @@ static void forward_south(server_t *server, position_t *pos)
 
 static void forward_west(server_t *server, position_t *pos)
 {
-    printf("forward west\n");
     if (pos->x == 0)
         pos->x = server->option->width - 1;
     else

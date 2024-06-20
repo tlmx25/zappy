@@ -37,11 +37,17 @@ void cmd_mct(server_t *server, client_t *client, char UNUSED const **command)
 
 void cmd_bct(server_t *server, client_t *client, char const **command)
 {
-    int x = atoi(command[1]);
-    int y = atoi(command[2]);
+    int x = 0;
+    int y = 0;
     char *response = NULL;
     tile_t *tile = &server->world->tiles[y * x];
 
+    if (my_str_isnum(command[1]) == 0 || my_str_isnum(command[2]) == 0) {
+        add_to_buffer(&client->buffer_out, "sbp\n", false);
+        return;
+    }
+    x = atoi(command[1]);
+    y = atoi(command[2]);
     response = malloc(sizeof(char) * 2048);
     sprintf(response, "bct %d %d %d %d %d %d %d %d %d\n", x, y,
         tile->object.food,
