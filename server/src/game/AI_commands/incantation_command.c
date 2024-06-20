@@ -36,7 +36,6 @@ static tile_t *get_tile_by_pos(server_t *server, position_t position)
 
 char *int_array_to_str(int *array)
 {
-    char *str = NULL;
     char buffer[4096] = {0};
     int index;
 

@@ -57,9 +57,8 @@ static void notify_preincant(server_t *server, int *players,
     free(players_str);
 }
 
-static void failed_preincantation(server_t *server, client_ai_t *client)
+static void failed_preincantation(client_ai_t *client)
 {
-    int *players = NULL;
 
     add_to_buffer(&client->buff_out, "ko\n", false);
     client->action = -1;
@@ -97,12 +96,12 @@ void incantation_precommand(server_t *server, client_ai_t *client)
     incantation_t *incantation;
 
     if (can_incant == false)
-        return failed_preincantation(server, client);
+        return failed_preincantation(client);
     players = load_player(server, client);
     incantation = create_incantation(client->num_player,
     incantation_level + 1, client->position);
     if (incantation == NULL)
-        return failed_preincantation(server, client);
+        return failed_preincantation(client);
     add_incantation_to_list(server->world->incantations, incantation);
     incantation->players = players;
     notify_preincant(server, players, client);
