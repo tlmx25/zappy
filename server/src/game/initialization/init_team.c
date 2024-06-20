@@ -13,11 +13,9 @@ static bool eggs_init(server_t *server)
 {
     debug_print("Init eggs\n");
     srand(time(NULL));
-    server->world->eggs = malloc(sizeof(egg_list_t));
+    server->world->eggs = create_egg_list();
     if (server->world->eggs == NULL)
         return false;
-    server->world->eggs->head = NULL;
-    server->world->eggs->tail = NULL;
     for (int i = 0; i < server->world->nbr_teams; i++) {
         for (int j = 0; j < server->option->clients_nb; j++) {
             create_add_egg_to_list(server->world->eggs,
@@ -29,6 +27,29 @@ static bool eggs_init(server_t *server)
     return true;
 }
 
+void enw_all_egg(server_t *server, client_t *client)
+{
+    char *buffer = NULL;
+    egg_t *tmp = server->world->eggs->head;
+
+    debug_print("ENW ALL EGGS\n");
+    for (; tmp != NULL; tmp = tmp->next) {
+        buffer = malloc(sizeof(char) * 2048);
+        sprintf(buffer, "enw %i %i %i %i\n", tmp->id, -1, tmp->pos.x,
+            tmp->pos.y);
+        add_to_buffer(&client->buffer_out, buffer, true);
+    }
+}
+
+static bool incantation_init(server_t *server)
+{
+    debug_print("Init incantation\n");
+    server->world->incantations = create_incantation_list();
+    if (server->world->incantations == NULL)
+        return false;
+    return true;
+}
+
 bool team_init(server_t *server)
 {
     debug_print("Init teams\n");
@@ -37,12 +58,14 @@ bool team_init(server_t *server)
         server->world->nbr_teams++);
     server->world->teams = malloc(sizeof(team_t) * server->world->nbr_teams);
     if (server->world->teams == NULL)
-        return (false);
+        return false;
     for (int i = 0; i < server->world->nbr_teams; i++) {
         server->world->teams[i].name = strdup(server->option->names[i]);
         server->world->teams[i].max_clients = server->option->clients_nb;
         server->world->teams[i].current_clients = 0;
     }
+    if (incantation_init(server) == false)
+        return false;
     if (eggs_init(server) == false)
         return false;
     return true;

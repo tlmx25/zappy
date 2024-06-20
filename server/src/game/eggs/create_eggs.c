@@ -10,10 +10,13 @@
 egg_t *create_egg(position_t pos, char *team_name)
 {
     egg_t *new = malloc(sizeof(egg_t));
+    static int id = 0;
 
     if (new == NULL)
         return NULL;
     new->pos = pos;
+    new->id = id;
+    id++;
     new->team_name = my_strdup(team_name);
     new->next = NULL;
     new->prev = NULL;

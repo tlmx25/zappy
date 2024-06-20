@@ -18,6 +18,8 @@ void delete_client_ai(client_ai_t *client)
         free(client->buff_in);
     if (client->buff_out)
         free(client->buff_out);
+    if (client->option)
+        free(client->option);
     free(client);
 }
 

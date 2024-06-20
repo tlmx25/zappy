@@ -11,17 +11,30 @@
     #define SERVER_EGGS_H
     #include "server.h"
 
+/**
+* @brief A structure to represent an egg in the game.
+*
+* This structure represents an egg in the game. Each egg has a position,
+* a team name, an id, and pointers to the next and previous eggs in the list.
+*/
 typedef struct egg_s {
-    position_t pos;
-    char *team_name;
-    struct egg_s *next;
-    struct egg_s *prev;
+    position_t pos; /**< The position of the egg in the game world. */
+    char *team_name; /**< The name of the team that the egg belongs to. */
+    int id; /**< The unique identifier for the egg. */
+    struct egg_s *next; /**< A pointer to the next egg in the list. */
+    struct egg_s *prev; /**< A pointer to the previous egg in the list. */
 } egg_t;
 
+/**
+* @brief A structure to represent a list of eggs.
+*
+* This structure represents a list of eggs in the game. It contains pointers
+* to the head and tail of the list, and the size of the list.
+*/
 typedef struct egg_list_s {
-    egg_t *head;
-    egg_t *tail;
-    int size;
+    egg_t *head; /**< A pointer to the first egg in the list. */
+    egg_t *tail; /**< A pointer to the last egg in the list. */
+    int size; /**< The number of eggs in the list. */
 } egg_list_t;
 
 /**

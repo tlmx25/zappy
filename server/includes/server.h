@@ -10,6 +10,7 @@
     #define ERROR 84
     #define UNUSED __attribute__((unused))
     #define FREQ(x) (x / server->option->freq)
+    #define PLNUM(x) (x[0] == '#') ? &x[1] : x
     #include <unistd.h>
     #include <stdlib.h>
     #include <stdio.h>
@@ -21,22 +22,39 @@
     #include "world.h"
     #include "time_utils.h"
 
+/**
+* @brief A structure to represent a server.
+*
+* This structure represents a server. It contains a flag to indicate if the
+ * server is running,
+* the port number, the socket, a select configuration, lists of pending
+ * clients, graphic clients, and AI clients,
+* server options, and the world.
+*/
 typedef struct server_s {
-    bool is_running;
-    int port;
-    int socket;
-    select_t *select_config;
-    client_list_t *pending_clients;
-    client_list_t *graphic_clients;
-    client_ai_list_t *ai_clients;
-    option_t *option;
-    world_t *world;
+    bool is_running; /**< Flag to indicate if the server is running. */
+    int port; /**< The port number for the server. */
+    int socket; /**< The socket for the server. */
+    select_t *select_config; /**< The select configuration for the server. */
+    client_list_t *pending_clients; /**< List of pending clients. */
+    client_list_t *graphic_clients; /**< List of graphic clients. */
+    client_ai_list_t *ai_clients; /**< List of AI clients. */
+    option_t *option; /**< Server options. */
+    world_t *world; /**< The world for the server. */
 } server_t;
 
+/**
+* @brief A structure to represent a command.
+*
+* This structure represents a command. It contains the command string, a
+ * function pointer to execute the command,
+* and the number of arguments required for the command.
+*/
 typedef struct command_s {
-    char *command;
-    void (*func)(server_t *server, client_t *client, char const **command);
-    int nb_args;
+    char *command; /**< The command string. */
+    void (*func)(server_t *server, client_t *client, char const **command); /**
+ * < Function to execute the command. */
+    int nb_args; /**< The number of arguments required for the command. */
 } command_t;
 
 /**
@@ -197,4 +215,13 @@ direction_t turn_right(direction_t direction);
  * @return return new direction
  */
 direction_t turn_left(direction_t direction);
+
+/**
+ * @brief execute fct function for all graphic client
+ * @param server for context
+ * @param cmd cmd to send in fct
+ * @param fct function pointer to execute for  all clients
+ */
+void send_to_all_graphic_func(server_t *server, char const **cmd,
+    void (*fct)(server_t *server, client_t *client, char const **command));
 #endif //SERVER_SERVER_H
