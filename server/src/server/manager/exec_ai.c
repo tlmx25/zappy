@@ -18,31 +18,16 @@ static const command_ai_t commands[] = {
     {"Fork", 42, fork_command, prefork_command},
     {"Look", 7, look_command, NULL},
     {"Take", 7, take_command, NULL},
-    {"Take food", 7, take_command, NULL},
-    {"Take linemate", 7, take_command, NULL},
-    {"Take deraumere", 7, take_command, NULL},
-    {"Take sibur", 7, take_command, NULL},
-    {"Take mendiane", 7, take_command, NULL},
-    {"Take phiras", 7, take_command, NULL},
-    {"Take thystame", 7, take_command, NULL},
     {"Set", 7, set_command, NULL},
-    {"Set food", 7, set_command, NULL},
-    {"Set linemate", 7, set_command, NULL},
-    {"Set deraumere", 7, set_command, NULL},
-    {"Set sibur", 7, set_command, NULL},
-    {"Set mendiane", 7, set_command, NULL},
-    {"Set phiras", 7, set_command, NULL},
-    {"Set thystame", 7, set_command, NULL},
     {"Broadcast", 7, broadcast_command, NULL},
+    {"Eject", 7, eject_command, NULL},
+    {"Incantation", 30, NULL, incantation_precommand},
     {NULL, 0, NULL, NULL}
 };
 
-//    {"Eject", 7, eject_command},
-//    {"Set", 7, set_command},
-
 static int check_death(server_t *server, client_ai_t *tmp)
 {
-    tmp->TTL -= 1 * server->option->freq;
+    tmp->TTL -= 1;
     tmp->TTL = (tmp->TTL <= 0) ? 0 : tmp->TTL;
     if (tmp->TTL == 0) {
         if (tmp->inventory.food != 0) {
@@ -118,7 +103,7 @@ static void invalid_command(client_ai_t *client, char *command)
     client->num_player, command);
 }
 
-void check_command_exist(client_ai_t *client, char *command, server_t *server)
+void check_command_exist(client_ai_t *client, char *command)
 {
     char **tab = my_str_to_word_array(command, " ");
 
@@ -127,7 +112,7 @@ void check_command_exist(client_ai_t *client, char *command, server_t *server)
     for (int i = 0; commands[i].command != NULL; i++) {
         if (my_strcmp(commands[i].command, tab[0]) == 0) {
             client->action = i;
-            client->TTEA = FREQ(commands[i].TTEA);
+            client->TTEA = commands[i].TTEA;
             break;
         }
     }
@@ -143,7 +128,7 @@ static void check_command(server_t *server, client_ai_t *client)
     tab = my_str_to_word_array(client->buff_in, "\n");
     if (tab == NULL || tab[0] == NULL)
         return;
-    check_command_exist(client, tab[0], server);
+    check_command_exist(client, tab[0]);
     if (client->action == -1)
         invalid_command(client, tab[0]);
     reconstruct_buff(client, tab, server);
@@ -155,7 +140,7 @@ static void meteor_shower(server_t *server)
     static int meteor = 0;
 
     meteor++;
-    if (meteor == FREQ(20)) {
+    if (meteor == 20) {
         meteor = 0;
         debug_print("Meteor shower\n");
         distribute_ressources(server);
@@ -163,23 +148,28 @@ static void meteor_shower(server_t *server)
     }
 }
 
+void check_incant(server_t *server)
+{
+    incantation_t *tmp = server->world->incantations->head;
+    incantation_t *next = NULL;
+
+    for (; tmp; tmp = next) {
+        next = tmp->next;
+        tmp->TTE--;
+        if (tmp->TTE == 0)
+            incantation_end(server, tmp);
+    }
+}
+
 void exec_ai_list(server_t *server)
 {
     client_ai_t *tmp = server->ai_clients->head;
-    static struct timeval last_exec;
-    static bool first = true;
 
-    if (first) {
-        last_exec = get_current_time();
-        first = false;
-    }
+    meteor_shower(server);
+    check_incant(server);
     for (; tmp; tmp = tmp->next) {
         check_command(server, tmp);
-        if (get_seconds_elapsed(last_exec) >= 1.0f) {
-            check_death(server, tmp);
-            exec_command_ai(server, tmp);
-            meteor_shower(server);
-            last_exec = get_current_time();
-        }
+        check_death(server, tmp);
+        exec_command_ai(server, tmp);
     }
 }
