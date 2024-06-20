@@ -25,7 +25,6 @@ int main(int ac, char **av)
     server = create_server(av);
     if (server == NULL)
         return 84;
-    init_game(server);
     run_server(server);
     delete_server(server);
     return 0;

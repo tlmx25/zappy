@@ -22,7 +22,5 @@ void delete_server(server_t *server)
         free(server->select_config);
     if (server->option)
         delete_option(server->option);
-    if (server->world)
-        delete_world(server->world);
     free(server);
 }

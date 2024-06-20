@@ -100,26 +100,31 @@ void Trantorian::setPos(sf::Vector2i pos)
     this->pos = pos;
 }
 
-sf::Vector2i Trantorian::getPos()
-{
-    return pos;
-}
-
 void Trantorian::setLevel(int level)
 {
     this->level = level;
 }
 
-void Trantorian::collectItem(Tile &tile, int nb)
+void Trantorian::collectItem(std::shared_ptr<Tile> &tile, int nb)
 {
-    this->inventory[nb]++;
-    tile.removeItem(nb);
+    for (int i = 0; i < 7; i++) {
+        while (nb != 0 && tile->getItemsQuantity(i) > 0) {
+            this->inventory[i]++;
+            tile->removeItem(i);
+            nb--;
+        }
+    }
 }
 
-void Trantorian::dropItem(Tile &tile, int nb)
+void Trantorian::dropItem(std::shared_ptr<Tile> &tile, int nb)
 {
-    tile.addItem(nb);
-    this->inventory[nb]--;
+    for (int i = 0; i < 7; i++) {
+        while (nb != 0 && this->inventory[i] > 0) {
+            tile->addItem(i);
+            this->inventory[i]--;
+            nb--;
+        }
+    }
 }
 
 bool Trantorian::isElevating()

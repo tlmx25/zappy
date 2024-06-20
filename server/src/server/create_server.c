@@ -62,7 +62,14 @@ static server_t *init_server(int port)
     server->socket = create_socket(port);
     if (server->socket == -1) {
         free(server);
-        printf("\033[1;31m[ERROR] Server open port error\033[0m\n");
+        return NULL;
+    }
+    server->pending_clients = create_client_list();
+    server->graphic_clients = create_client_list();
+    server->ai_clients = create_client_ai_list();
+    if (!server->pending_clients || !server->graphic_clients
+        || !server->ai_clients) {
+        delete_server(server);
         return NULL;
     }
     return server;
@@ -70,9 +77,6 @@ static server_t *init_server(int port)
 
 static server_t *start_server(server_t *server)
 {
-    server->pending_clients = create_client_list();
-    server->graphic_clients = create_client_list();
-    server->ai_clients = create_client_ai_list();
     if (!server->pending_clients || !server->graphic_clients
         || !server->ai_clients || server->select_config == NULL) {
         delete_server(server);
@@ -80,7 +84,6 @@ static server_t *start_server(server_t *server)
     }
     server->select_config->max_fd = server->socket;
     server->is_running = true;
-    debug_print("Server started\n");
     return server;
 }
 
@@ -89,8 +92,6 @@ server_t *create_server(char **av)
     option_t *option = parse_option((const char **)av);
     server_t *server;
 
-    if (debug_active())
-        dump_option(option);
     if (option == NULL)
         return NULL;
     server = init_server(option->port);

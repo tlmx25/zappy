@@ -1,18 +1,19 @@
 #!/usr/bin/env python3
 
-from ai.src.Server import Server
-from ai.src.FlagParser import FlagParser
-from ai.src.queen.Queen import Queen
+from src import Server as Server
+from src import FlagParser as FlagParser
 import sys
 
 if __name__ == '__main__':
-    parser = FlagParser(len(sys.argv), sys.argv)
+    parser = FlagParser.FlagParser(len(sys.argv), sys.argv)
     if not parser.parse_flag():
         exit(84)
+    server = Server.Server(parser.get_host(), parser.get_port())
     try:
-        server = Server(parser.get_host(), parser.get_port())
-        queen = Queen(server)
-        queen.set_welcome_data(server, parser)
-        queen.run()
-    except Exception as e:
-        print(e, file=sys.stderr)
+        print("Welcome : " + server.recv(), end="")
+        server.send(parser.get_team() + "\n")
+        print("team : " + server.recv())
+        server.send("Broadcast Hello\n")
+        print("Broadcast : " + server.recv())
+    except Exception:
+        raise Exception("Error during sending")

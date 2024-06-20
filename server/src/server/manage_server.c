@@ -11,12 +11,6 @@
 #include <netinet/in.h>
 #include "server.h"
 
-static void add_new_client(server_t *server, client_t *new_client)
-{
-    add_client_to_list(server->pending_clients, new_client);
-    debug_print("New client connected fd: %i\n", new_client->fd);
-}
-
 static void accept_new_client(server_t *server)
 {
     int new_socket = 0;
@@ -36,7 +30,7 @@ static void accept_new_client(server_t *server)
     server->select_config->max_fd = (server->select_config->max_fd <
     new_socket) ? new_socket : server->select_config->max_fd;
     new_client = create_client(new_socket);
-    add_new_client(server, new_client);
+    add_client_to_list(server->pending_clients, new_client);
     free(address);
 }
 
@@ -54,32 +48,9 @@ static void write_list(server_t *server)
     write_ai_list(server, server->ai_clients);
 }
 
-static void exec_nb_cycle(server_t *server, int nb_cycle)
-{
-    for (int i = 0; i < nb_cycle; i++)
-        exec_ai_list(server);
-}
-
 static void exec_list(server_t *server)
 {
-    static struct timeval last_exec;
-    static bool first = true;
-    static double rest = 0;
-    int nb_action;
-
-    if (first) {
-        last_exec = get_current_time();
-        first = false;
-    }
-    exec_pending(server);
     exec_graphic_list(server);
-    rest += get_seconds_elapsed(last_exec) * server->option->freq;
-    nb_action = (int)rest;
-    rest -= nb_action;
-    if (nb_action > 0) {
-        exec_nb_cycle(server, nb_action);
-    }
-    last_exec = get_current_time();
 }
 
 void manage_server(server_t *server)

@@ -6,18 +6,8 @@
 */
 
 #include "server.h"
-#include "graphique_cmd.h"
 
 static const command_t GRAPHIC_COMMANDS[] = {
-    {"msz", &cmd_msz, 0},
-    {"bct", &cmd_bct, 2},
-    {"mct", &cmd_mct, 0},
-    {"tna", &cmd_tna, 0},
-    {"ppo", &cmd_ppo, 1},
-    {"plv", &cmd_plv, 1},
-    {"pin", &cmd_pin, 1},
-    {"sgt", &cmd_sgt, 0},
-    {"sst", &cmd_sst, 1},
     {NULL, NULL, 0},
 };
 
@@ -44,9 +34,8 @@ static void check_command(server_t *server, client_t *client,
             return;
         }
     }
-    debug_print("[GRAPHIC] command: [%s] for client: [%i] not exist\n",
-        command, client->fd);
     free_tab(tab);
+    printf("command not found\n");
     add_to_buffer(&client->buffer_out, "suc\n", false);
 }
 

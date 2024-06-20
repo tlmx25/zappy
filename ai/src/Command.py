@@ -1,6 +1,7 @@
-from ai.src.Server import Server
+from Server import Server
 
 class Command:
+
     def __init__(self, server: Server):
         self.commandSend = []
         self.server = server
@@ -12,7 +13,7 @@ class Command:
             return -1
         return response
 
-    def move_forward(self):
+    def mooveForward(self):
         self.server.send("Forward\n")
         while not self.server.check_read():
             pass
@@ -21,8 +22,8 @@ class Command:
             return 42
         return response
 
-    def turn_right(self):
-        self.server.send("Right\n")
+    def mooveRight(self):
+        self.server.send("Right")
         while not self.server.check_read():
             pass
         response = self.server.recv()
@@ -30,8 +31,8 @@ class Command:
             return 42
         return response
 
-    def turn_left(self):
-        self.server.send("Left\n")
+    def mooveLeft(self):
+        self.server.send("Left")
         while not self.server.check_read():
             pass
         response = self.server.recv()
@@ -40,7 +41,7 @@ class Command:
         return response
 
     def look(self):
-        self.server.send("Look\n")
+        self.server.send("Look")
         while not self.server.check_read():
             pass
         response = self.server.recv()
@@ -49,7 +50,7 @@ class Command:
         return response
 
     def inventory(self):
-        self.server.send("Inventory\n")
+        self.server.send("Inventory")
         while not self.server.check_read():
             pass
         response = self.server.recv()
@@ -58,7 +59,7 @@ class Command:
         return response
 
     def broadcast(self, message):
-        self.server.send("Broadcast " + message + "\n")
+        self.server.send("Broadcast " + message)
         while not self.server.check_read():
             pass
         response = self.server.recv()
@@ -66,8 +67,8 @@ class Command:
             return 42
         return response
 
-    def connect_nbr(self):
-        self.server.send("Connect_nbr\n")
+    def connectNumber(self, number):
+        self.server.send("Connect_nbr " + number)
         while not self.server.check_read():
             pass
         response = self.server.recv()
@@ -76,7 +77,7 @@ class Command:
         return response
 
     def fork(self):
-        self.server.send("Fork\n")
+        self.server.send("Fork")
         while not self.server.check_read():
             pass
         response = self.server.recv()
@@ -85,7 +86,7 @@ class Command:
         return response
 
     def eject(self):
-        self.server.send("Eject\n")
+        self.server.send("Eject")
         while not self.server.check_read():
             pass
         response = self.server.recv()
@@ -95,8 +96,8 @@ class Command:
             return -1
         return response
 
-    def take_object(self, object):
-        self.server.send("Take " + object + "\n")
+    def takeObject(self, object):
+        self.server.send("Take " + object)
         while not self.server.check_read():
             pass
         response = self.server.recv()
@@ -106,8 +107,8 @@ class Command:
             return -1
         return response
 
-    def set_object(self, object):
-        self.server.send("Set " + object + "\n")
+    def setObject(self, object):
+        self.server.send("Set " + object)
         while not self.server.check_read():
             pass
         response = self.server.recv()
@@ -118,7 +119,7 @@ class Command:
         return response
 
     def incantation(self):
-        self.server.send("Incantation\n")
+        self.server.send("Incantation")
         while not self.server.check_read():
             pass
         response = self.server.recv()

@@ -20,7 +20,6 @@ client_t *create_client(int fd)
     client->buffer_out = my_strdup("WELCOME\n");
     client->next = NULL;
     client->prev = NULL;
-    client->to_disconnect = 0;
     return client;
 }
 

@@ -1,4 +1,4 @@
-from src import Action as Action
+from Action import Action
 
 resources_needed = {
     1: {"nb_players": 1, "linemate": 1, "deraumere": 0, "sibur": 0, "mendiane": 0, "phiras": 0, "thystame": 0},
@@ -23,7 +23,7 @@ resource_density = {
 class Survive:
     def __init__(self, command, server, level):
         self.needFood = False
-        self.action = Action.Action(command, server)
+        self.action = Action(command, server)
         self.command = command
         self.server = server
         self.level = level

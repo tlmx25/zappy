@@ -18,12 +18,12 @@ void delete_client_ai(client_ai_t *client)
         free(client->buff_in);
     if (client->buff_out)
         free(client->buff_out);
-    if (client->option)
-        free(client->option);
+    if (client->action)
+        free(client->action);
     free(client);
 }
 
-void delete_client_ai_from_list(client_ai_list_t *list, client_ai_t *client,
+void delete_client_from_ai_list(client_ai_list_t *list, client_ai_t *client,
     int delete_client_bool)
 {
     client_ai_t *tmp = list->head;
@@ -72,7 +72,7 @@ void delete_client_ai_by_num(client_ai_list_t *list, int num)
     while (tmp != NULL) {
         next = tmp->next;
         if (tmp->num_player == num) {
-            delete_client_ai_from_list(list, tmp, 1);
+            delete_client_from_ai_list(list, tmp, 1);
             return;
         }
         tmp = next;

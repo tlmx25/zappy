@@ -27,6 +27,7 @@ class Server:
     
     def connect_server(self):
         try:
+            print("Host : " + self.host + " Port : " + str(self.port))
             self.s.connect((self.host, self.port))
             self.s.setblocking(False)
             print("Client connected succesfully.")
@@ -56,13 +57,6 @@ class Server:
     def check_read(self) -> bool:
         ready_to_read, _, _ = select.select([self.s], [], [], 1)
         if self.s in ready_to_read:
-            return True
-        else:
-            return False
-
-    def check_send(self) -> bool:
-        _, write_set, _ = select.select([], [self.s], [], 0.5)
-        if write_set:
             return True
         else:
             return False
