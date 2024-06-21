@@ -5,8 +5,8 @@
 ## Queen.py
 ##
 
-from src.trantor.Trantor import Trantor
-from src.Server import Server
+from ai.src.trantor.Trantor import Trantor
+from ai.src.Server import Server
 import subprocess
 
 
@@ -45,11 +45,12 @@ class Queen(Trantor):
     
     def init_worker(self):
         worker_id = str(self.connected_worker + 1)
-        self.connect_nbr()
-        if (self.free_slots_team < 1):
+        if self.free_slots_team < 1:
             response = self.fork()
-        subprocess.run("./mainWorker.py", worker_id, self.team, self.server.host, self.server.port)
+            self.free_slots_team += 1
+        subprocess.run(["./mainWorker.py", worker_id, self.team, self.server.host, str(self.server.port)])
         self.connected_worker += 1
+        self.free_slots_team -= 1
         if self.connected_worker == 5:
             self.cycle = 2
 
