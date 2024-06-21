@@ -6,23 +6,56 @@
 */
 
 #include "server.h"
+#include "commands_ai.h"
 
-static void ai_ejection(server_t *server, client_ai_t *client,
-    direction_t direction)
+static int get_dir(client_ai_t *em, client_ai_t *rc)
 {
-    if (direction == NORTH)
-        client->position.y = (client->position.y - 1) % server->option->height;
-    if (direction == SOUTH)
-        client->position.y = (client->position.y + 1) % server->option->height;
-    if (direction == EAST)
-        client->position.x = (client->position.x - 1) % server->option->width;
-    if (direction == WEST)
-        client->position.x = (client->position.x + 1) % server->option->width;
+    int x = rc->position.x - em->position.x;
+    int y = rc->position.y - em->position.y;
+
+    if (x > 0 && y > 0)
+        return DIR(2, 4, 6, 8);
+    if (x > 0 && y < 0)
+        return DIR(4, 6, 8, 2);
+    if (x < 0 && y > 0)
+        return DIR(8, 2, 4, 6);
+    if (x < 0 && y < 0)
+        return DIR(6, 8, 2, 4);
+    if (x > 0 && y == 0)
+        return DIR(3, 5, 7, 1);
+    if (x < 0 && y == 0)
+        return DIR(7, 1, 3, 5);
+    if (x == 0 && y > 0)
+        return DIR(1, 3, 5, 7);
+    if (x == 0 && y < 0)
+        return DIR(5, 7, 1, 3);
+    return 0;
 }
 
-bool verif_ai(server_t *server, client_ai_t *client)
+static void ai_ejection(server_t *server, client_ai_t *em,
+    client_ai_t *rc)
 {
-    direction_t direction = client->position.direction;
+    position_t new_pos = em->position;
+
+    new_pos = get_next_position(server, new_pos);
+    new_pos.direction = rc->position.direction;
+    rc->position = new_pos;
+}
+
+static void send_eject(server_t *server, client_ai_t *em, client_ai_t *rc)
+{
+    char buffer[1024] = {0};
+    int dir = get_dir(em, rc);
+
+    snprintf(buffer, 1024, "eject: %i\n", dir);
+    add_to_buffer(&rc->buff_out, buffer, false);
+    send_to_all_graphic_arg(server->graphic_clients,
+    "ppo %i %i %i %i\n", rc->num_player, rc->position.x,
+    rc->position.y, rc->position.direction + 1);
+}
+
+void verif_ai(server_t *server, client_ai_t *client)
+{
     client_ai_t *tmp_ai = server->ai_clients->head;
     int x = client->position.x;
     int y = client->position.y;
@@ -30,16 +63,17 @@ bool verif_ai(server_t *server, client_ai_t *client)
     for (; tmp_ai != NULL; tmp_ai = tmp_ai->next)
         if ((tmp_ai->position.x == x) && (tmp_ai->position.y == y) &&
             tmp_ai != client) {
-            ai_ejection(server, tmp_ai, direction);
-            debug_print("Client AI %i has been ejected by client AI %i\n",
-                tmp_ai->num_player, client->num_player);
-            add_to_buffer(&client->buff_out, "ok\n", false);
-            return true;
+            ai_ejection(server, client, tmp_ai);
+            debug_print(
+            "Client AI %i has been ejected by client AI %i {%i, %i, %c}\n",
+                tmp_ai->num_player, client->num_player, tmp_ai->position.x,
+                tmp_ai->position.y,
+                get_direction_char(tmp_ai->position.direction));
+            send_eject(server, client, tmp_ai);
         }
-    return false;
 }
 
-bool verif_egg(server_t *server, client_ai_t *client)
+static void verif_egg(server_t *server, client_ai_t *client)
 {
     egg_t *tmp_egg = server->world->eggs->head;
     int x = client->position.x;
@@ -49,18 +83,17 @@ bool verif_egg(server_t *server, client_ai_t *client)
         if ((tmp_egg->pos.x == x) && (tmp_egg->pos.y == y)) {
             debug_print("Egg %i has been destruct by client AI %i\n",
                 tmp_egg->id, client->num_player);
+            send_to_all_graphic_arg(server->graphic_clients, "edi %i\n",
+                tmp_egg->id);
             delete_egg_from_list(server->world->eggs, tmp_egg, true);
-            add_to_buffer(&client->buff_out, "ok\n", false);
-            return true;
         }
-    return false;
 }
 
 void eject_command(server_t *server, client_ai_t *client)
 {
-    if (verif_ai(server, client) == true)
-        return;
-    if (verif_egg(server, client) == true)
-        return;
-    return add_to_buffer(&client->buff_out, "ko\n", false);
+    verif_ai(server, client);
+    verif_egg(server, client);
+    send_to_all_graphic_arg(server->graphic_clients, "pex %i\n",
+    client->num_player);
+    return add_to_buffer(&client->buff_out, "ok\n", false);
 }
