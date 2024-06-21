@@ -27,7 +27,7 @@ static void print_usage()
 
 int main(int ac, char **av)
 {
-    Game game(5, 5);
+    Game game(30, 30);
     game.run();
     // if (std::string(av[1]) == "-h" && ac == 2) {
     //     print_usage();

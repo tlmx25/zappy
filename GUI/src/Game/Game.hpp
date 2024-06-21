@@ -15,6 +15,7 @@
     #include <SFML/Audio.hpp>
     #include "Map.hpp"
     #include "Trantorian.hpp"
+    #include "Chatbox.hpp"
 
 /**
  *  
@@ -90,6 +91,7 @@ class Game
         sf::Clock clock;
         float currentZoom = 1.0f;
         Map map;
+        Chatbox chatbox;
         std::map<std::string, std::shared_ptr<Trantorian>> trantorians;
         sf::Music music;
         std::map<std::string, int> teamToNumber;

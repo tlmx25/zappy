@@ -9,7 +9,7 @@
 
 Game::Game(int x, int y) : map(x, y, 1200)
 {
-    window.create(sf::VideoMode(1200, 1200), "Zappy");
+    window.create(sf::VideoMode(960, 960), "Zappy");
     window.setFramerateLimit(60);
 
     // Load and start music
@@ -25,6 +25,11 @@ Game::Game(int x, int y) : map(x, y, 1200)
             tile.setItemQuantity(i, 1);
         }
     }
+    std::string msg = "Welcome to Zappy qerhqerheqrh regheqh end!";
+    std::string team = "test";
+    std::string id = "0";
+    chatbox.addMessage(team, id, msg);
+    chatbox.addMessage(team, id, msg);
     // trantorians["test"] = std::make_shared<Trantorian>(0, "test", sf::Vector2i(2, 2), 0, 1, getTeamNumber("test"));
 }
 
@@ -89,6 +94,7 @@ void Game::handleEvents()
         }
         sf::sleep(sf::milliseconds(200)); // To avoid multiple key presses
     }
+    chatbox.handleEvents(event);
 }
 
 void Game::render()
@@ -104,7 +110,8 @@ void Game::render()
         trantorian.second->draw(window);
     }
     // To draw UI elements correctly?
-    // window.setView(window.getDefaultView());
+    window.setView(window.getDefaultView());
+    chatbox.render(window);
     window.display();
 }
 
