@@ -7,8 +7,8 @@ import sys
 
 if __name__ == '__main__':
     try:
-        # tester = Tester.AiTester()
-        # tester.test_run()
+        tester = Tester.AiTester()
+        tester.test_run()
         unittest = UnitTest.TestAction()
         unittest.set_welcome_data()
         unittest.test_multiProcessOrientation()
