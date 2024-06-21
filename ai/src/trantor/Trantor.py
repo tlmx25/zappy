@@ -71,6 +71,8 @@ class Trantor(ITrantor):
             return None
         self.server.send(command)
         response = self.receive()
+        # if response is not None:
+        #     print("Response : " + response, file=sys.stderr)
         while response is None or self.incantation:
             response = self.receive()
         return response
@@ -108,6 +110,7 @@ class Trantor(ITrantor):
     def look(self) -> dict:
         interpreted_look = {}
         response = self.send("Look\n")
+        print("Look response : " + response, file=sys.stderr)
         response = response.replace("[", "").replace("]", "").split(',')
         for i in range(0, len(response)):
             interpreted_look[i] = {"player" : 0, "food" : 0, "linemate" : 0, "deraumere" : 0, "sibur" : 0, "mendiane" : 0, "phiras" : 0, "thystame" : 0}
@@ -133,7 +136,7 @@ class Trantor(ITrantor):
                         interpreted_look[i]["thystame"] += 1
                     case _:
                         pass
-        #print("Look : " + str(interpreted_look), file=sys.stderr)
+        print("Look : " + str(interpreted_look), file=sys.stderr)
         return interpreted_look
         
     def inventory(self) -> str:
