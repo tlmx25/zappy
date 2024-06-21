@@ -174,4 +174,14 @@ class Trantor(ITrantor):
             self.free_slots_team = int(splited_r[0])
             for i in range (1, 2):
                 self.world_dimension.append(splited_r[i])
-        
+
+    def dropResource(self, inventory):
+        print("dropResource\n")
+        items = inventory[1:-1].split(", ")
+        print("items: " + str(items) + "\n")
+        for item in items:
+            object_name, quantity = item.split()
+            quantity = int(quantity)
+            for _ in range(quantity):
+                print(f"Set {object_name}\n")
+                self.send(f"Set {object_name}\n")
