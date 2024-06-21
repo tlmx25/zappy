@@ -81,7 +81,9 @@ class Worker(Trantor):
             if self.state == 0:
                 print("IN ASSEMBLE MODE")
                 self.goToQueen()
+                self.broadcast("Worker" + self.id + ",Assembled\n")
                 self.dropResource(self.getInventory())
+                self.broadcast("Worker" + self.id + ",DROP\n")
                 self.waitDuringElevation()
                 self.setModeFarming()
                 self.state = 1
@@ -163,6 +165,7 @@ class Worker(Trantor):
 
     def waitDuringElevation(self):
         while True:
+            self.take_object("food")
             for mes in self.messages:
                 if "Finished" in mes[1]:
                     self.emptyMessage()
