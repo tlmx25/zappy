@@ -167,6 +167,14 @@ class ITrantor(ABC):
         pass
 
     @abstractmethod
+    def connect_nbr(self):
+        """
+        Send commands to update team free slots.
+        @return None
+        """
+        pass
+
+    @abstractmethod
     def run(self):
         """
         Starting point for AI instructions.
