@@ -21,6 +21,8 @@
     #include <map>
     #include <functional>
     #include "Game.hpp"
+
+    #define UNUSED __attribute__((unused))
         
 namespace Zappy_GUI {
 
@@ -169,6 +171,12 @@ void pnwFonction(const std::string& command, Game&);
 void ppoFonction(const std::string& command, Game&);
 void plvFonction(const std::string& command, Game&);
 void pinFonction(const std::string& command, Game&);
+void pfkFonction(const std::string& command, Game&);
 void pdrFonction(const std::string& command, Game&);
 void pgtFonction(const std::string& command, Game&);
 void pdiFonction(const std::string& command, Game&);
+void enwFonction(const std::string& command, Game&);
+void eboFonction(const std::string& command, Game&);
+void ediFonction(const std::string& command, Game&);
+void sucFonction(const std::string& command, Game&);
+void sbpFonction(const std::string& command, Game&);
