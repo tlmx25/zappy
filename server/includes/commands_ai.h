@@ -156,7 +156,8 @@ void incantation_precommand(server_t *server, client_ai_t *client);
  * @param level level of the incantation
  * @return true if the incantation can be done, false otherwise
  */
-bool check_requirement(tile_t *tile, client_ai_list_t *clients, size_t level, bool final);
+bool check_requirement(tile_t *tile, client_ai_list_t *clients, size_t level,
+    bool final);
 
 /**
  * @brief transform an array of int to a string

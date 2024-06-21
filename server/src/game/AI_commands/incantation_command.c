@@ -47,7 +47,7 @@ static int count_players_on_tile(client_ai_list_t *clients,
     return nb_players;
 }
 
-bool check_requirement(tile_t *tile, client_ai_list_t *clients, size_t level,\
+bool check_requirement(tile_t *tile, client_ai_list_t *clients, size_t level,
     bool final)
 {
     incantation_requirements_t *requirement = &REQUIREMENT[level];
