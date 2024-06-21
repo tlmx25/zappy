@@ -26,8 +26,6 @@ char *read_socket(int fd)
         buffer = my_strcat_free(buffer, tmp_buffer, 1, 0);
         if (buffer == NULL)
             return NULL;
-        printf("buffer: |%s|\n", buffer);
-        printf("readed: |%ld|\n", readed);
         if (buffer[my_strlen(buffer) - 1] == '\n')
             break;
     }
