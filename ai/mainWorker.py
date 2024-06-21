@@ -2,12 +2,12 @@
 import sys
 import os
 
-current_dir = os.path.dirname(os.path.abspath(__file__))
-src_dir = os.path.abspath(os.path.join(current_dir, os.pardir, os.pardir, os.pardir))
-sys.path.append(src_dir)
+# current_dir = os.path.dirname(os.path.abspath(__file__))
+# src_dir = os.path.abspath(os.path.join(current_dir, os.pardir, os.pardir, os.pardir))
+# sys.path.append(src_dir)
 
-from ai.src.worker.Worker import Worker
-from ai.src import Server
+from src.worker import Worker
+from src import Server
 
 if __name__ == '__main__':
     if len(sys.argv) != 5:
@@ -17,9 +17,7 @@ if __name__ == '__main__':
         print("Worker started with ip: " + sys.argv[3] + " and port: " + sys.argv[4])
         server = Server.Server(sys.argv[3], int(sys.argv[4]))
         print("Worker started with ip: " + sys.argv[3] + " and port: " + sys.argv[4])
-        Worker = Worker(sys.argv, server)
-        Worker.set_welcome_data()
-        Worker.waiting_to_start()
+        Worker = Worker.Worker(sys.argv, server)
         Worker.run()
     except Exception as e:
         print(e, file=sys.stderr)
