@@ -84,10 +84,6 @@ void distribute_ressources_meteor(server_t *server)
     init_ressources(&inv, server);
     stabilize_ressources(&inv, server);
     srand(time(NULL));
-    debug_print("food: %i linemate: %i deraumere: %i sibur: "
-                "%i mendiane: %i phiras: %i thystame: %i\n",
-        inv.food, inv.linemate, inv.deraumere, inv.sibur,
-        inv.mendiane, inv.phiras, inv.thystame);
     while (inv.food > 0 || inv.linemate > 0 || inv.deraumere
         > 0 || inv.sibur > 0 || inv.mendiane > 0 ||
         inv.phiras > 0 || inv.thystame > 0) {
