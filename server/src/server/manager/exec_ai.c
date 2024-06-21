@@ -143,7 +143,7 @@ static void meteor_shower(server_t *server)
     if (meteor == 20) {
         meteor = 0;
         debug_print("Meteor shower\n");
-        distribute_ressources(server);
+        distribute_ressources_meteor(server);
         send_to_all_graphic_func(server, NULL, cmd_mct);
     }
 }

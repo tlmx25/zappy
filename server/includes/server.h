@@ -195,6 +195,12 @@ void exec_ai_list(server_t *server);
 void distribute_ressources(server_t *server);
 
 /**
+ * @brief distribute ressources to the world after a meteor shower
+ * @param server server containing the world
+ */
+void distribute_ressources_meteor(server_t *server);
+
+/**
  * @brief get the next position of a client depending on the direction
  * @param server server for info and context
  * @param pos position of the client
