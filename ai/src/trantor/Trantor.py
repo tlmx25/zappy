@@ -11,8 +11,19 @@ from src.FlagParser import FlagParser
 import sys
 
 class Trantor(ITrantor):
+    """
+    The Trantor class implements the ITrantor interface, defining all general-purpose functions.
+    """
+    
     def __init__(self, server : Server):
+        """
+        Set values at class init.
+        @param server: server class use to communicate
+        @type server: Server
+        @return: None
+        """
         self.server = server
+        self.team = ""
         self.free_slots_team = 0
         self.world_dimension = []
         self.messages = []
@@ -29,7 +40,7 @@ class Trantor(ITrantor):
         
     # Gestion de messages
 
-    def receive(self):
+    def receive(self) -> str:
         serv_response = self.server.recv()
         while serv_response[-1] != "\n":
             serv_response += self.server.recv()
@@ -91,6 +102,7 @@ class Trantor(ITrantor):
         return self.move_forward()
     
     def take_object(self, object: str) -> str:
+        #print("Take : " + object)
         return self.send("Take " + object + "\n")
         
     def look(self) -> dict:
@@ -150,6 +162,10 @@ class Trantor(ITrantor):
     def eject(self) -> str:
         return self.send("Eject\n")
     
+    def connect_nbr(self):
+        response = self.send("Connect_nbr\n")
+        self.free_slots_team = int(response)
+        
     def run(self):
         self.inventory()
         while self.alive:
@@ -167,6 +183,7 @@ class Trantor(ITrantor):
         server_res = self.server.recv()
         if server_res == "WELCOME\n":
             response = self.server.send(parser.get_team() + "\n")
+            self.team = parser.get_team()
             response = self.server.recv()
             if (response == "ko\n"):
                 raise Exception("ATrantor : Error in team name.")
