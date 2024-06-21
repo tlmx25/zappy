@@ -44,7 +44,7 @@ class Queen(Trantor):
             self.cycle = 2
     
     def init_worker(self):
-        worker_id = "worker_" + str(self.connected_worker + 1)
+        worker_id = str(self.connected_worker + 1)
         self.connect_nbr()
         if (self.free_slots_team < 1):
             response = self.fork()
