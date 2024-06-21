@@ -44,7 +44,11 @@ class Queen(Trantor):
             self.cycle = 2
     
     def init_worker(self):
-        subprocess.run("./src/worker/Worker.py")
+        worker_id = "worker_" + str(self.connected_worker + 1)
+        self.connect_nbr()
+        if (self.free_slots_team < 1):
+            response = self.fork()
+        subprocess.run("./mainWorker.py", worker_id, self.team, self.server.host, self.server.port)
         self.connected_worker += 1
         if self.connected_worker == 5:
             self.cycle = 2

@@ -23,6 +23,7 @@ class Trantor(ITrantor):
         @return: None
         """
         self.server = server
+        self.team = ""
         self.free_slots_team = 0
         self.world_dimension = []
         self.messages = []
@@ -161,6 +162,10 @@ class Trantor(ITrantor):
     def eject(self) -> str:
         return self.send("Eject\n")
     
+    def connect_nbr(self):
+        response = self.send("Connect_nbr\n")
+        self.free_slots_team = int(response)
+        
     def run(self):
         self.inventory()
         while self.alive:
@@ -178,6 +183,7 @@ class Trantor(ITrantor):
         server_res = self.server.recv()
         if server_res == "WELCOME\n":
             response = self.server.send(parser.get_team() + "\n")
+            self.team = parser.get_team()
             response = self.server.recv()
             if (response == "ko\n"):
                 raise Exception("ATrantor : Error in team name.")
