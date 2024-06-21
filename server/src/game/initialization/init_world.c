@@ -76,23 +76,24 @@ static void stabilize_ressources(inventory_t *inventory, server_t *server)
 
 void distribute_ressources_meteor(server_t *server)
 {
-    inventory_t inventory = {0};
+    inventory_t inv = {0};
     int i = 0;
     int r_to_spawn = 0;
 
     debug_print("Distribute ressources meteor shower\n");
-    init_ressources(&inventory, server);
-    stabilize_ressources(&inventory, server);
+    init_ressources(&inv, server);
+    stabilize_ressources(&inv, server);
     srand(time(NULL));
-    debug_print("food: %i linemate: %i deraumere: %i sibur: %i mendiane: %i phiras: %i thystame: %i\n",
-        inventory.food, inventory.linemate, inventory.deraumere, inventory.sibur,
-        inventory.mendiane, inventory.phiras, inventory.thystame);
-    while (inventory.food > 0 || inventory.linemate > 0 || inventory.deraumere
-        > 0 || inventory.sibur > 0 || inventory.mendiane > 0 ||
-        inventory.phiras > 0 || inventory.thystame > 0) {
+    debug_print("food: %i linemate: %i deraumere: %i sibur: "
+                "%i mendiane: %i phiras: %i thystame: %i\n",
+        inv.food, inv.linemate, inv.deraumere, inv.sibur,
+        inv.mendiane, inv.phiras, inv.thystame);
+    while (inv.food > 0 || inv.linemate > 0 || inv.deraumere
+        > 0 || inv.sibur > 0 || inv.mendiane > 0 ||
+        inv.phiras > 0 || inv.thystame > 0) {
         i = rand() % (server->option->width * server->option->height);
         r_to_spawn = rand() % 7;
-        repartion_ressources(server, &inventory, i, r_to_spawn);
+        repartion_ressources(server, &inv, i, r_to_spawn);
     }
 }
 

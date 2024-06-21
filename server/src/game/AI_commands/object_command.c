@@ -45,7 +45,18 @@ static size_t getobject(char *option)
     return -1;
 }
 
-bool modifie_inventory2(inventory_t *to_add, inventory_t *to_remove,
+static bool modifie_inventory3(inventory_t *to_add, inventory_t *to_remove,
+    size_t obj)
+{
+    if (obj == 3 && to_remove->sibur > 0) {
+        to_add->sibur++;
+        to_remove->sibur--;
+        return true;
+    }
+    return false;
+}
+
+static bool modifie_inventory2(inventory_t *to_add, inventory_t *to_remove,
     size_t obj)
 {
     if (obj == 4 && to_remove->mendiane > 0) {
@@ -63,7 +74,7 @@ bool modifie_inventory2(inventory_t *to_add, inventory_t *to_remove,
         to_remove->thystame--;
         return true;
     }
-    return false;
+    return modifie_inventory3(to_add, to_remove, obj);
 }
 
 bool modifie_inventory(inventory_t *to_add, inventory_t *to_remove, size_t obj)
@@ -83,11 +94,6 @@ bool modifie_inventory(inventory_t *to_add, inventory_t *to_remove, size_t obj)
     if (obj == 2 && to_remove->deraumere > 0) {
         to_add->deraumere++;
         to_remove->deraumere--;
-        return true;
-    }
-    if (obj == 3 && to_remove->sibur > 0) {
-        to_add->sibur++;
-        to_remove->sibur--;
         return true;
     }
     return modifie_inventory2(to_add, to_remove, obj);
