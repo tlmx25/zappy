@@ -25,3 +25,17 @@ void remove_object(tile_t *tile, incantation_requirements_t *requirement,
     tile->object.deraumere, tile->object.sibur, tile->object.mendiane,
     tile->object.phiras, tile->object.thystame);
 }
+
+char *int_array_to_str(int *array)
+{
+    char buffer[4096] = {0};
+    int index;
+
+    if (array == NULL)
+        return NULL;
+    for (int i = 0; array[i] != -1; i++) {
+        index = my_strlen(buffer);
+        snprintf(buffer + index, 4096 - index, " %d", array[i]);
+    }
+    return my_strdup(buffer);
+}

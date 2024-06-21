@@ -91,7 +91,7 @@ void incantation_precommand(server_t *server, client_ai_t *client)
     tile_t *tile = get_tile_by_pos(server, client->position);
     size_t incantation_level = client->level;
     bool can_incant = check_requirement(tile,
-    server->ai_clients, incantation_level);
+server->ai_clients, incantation_level, false);
     int *players = NULL;
     incantation_t *incantation;
 
