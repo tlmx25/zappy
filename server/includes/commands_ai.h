@@ -13,12 +13,36 @@
     #define OR rc->position.direction
     #define DIR(a, b, c, d) (OR == 0) ? a : (OR == 1) ? b : (OR == 2) ? c : d
 
+/**
+ * @brief command_ai structure
+ *
+ * the command_ai structure is used to store the information about the
+ * commands that the AI can send
+ */
 typedef struct command_ai_s {
-    char *command;
-    size_t TTEA;
-    void (*func)(server_t *server, client_ai_t *client);
-    void (*prefunc)(server_t *server, client_ai_t *client);
+    char *command; /** i'ts string represent the command */
+    size_t TTEA; /** time to execute the command */
+    void (*func)(server_t *server, client_ai_t *client); /** function to
+   execute at the end of TTEA*/
+    void (*prefunc)(server_t *server, client_ai_t *client); /** function to
+ * execute at the start of TTEA */
 } command_ai_t;
+
+/**
+ * @brief incantation_requirements structure
+ *
+ * the incantation_requirements structure is used to store the information
+ * about the requirements for the incantation
+ */
+typedef struct incantation_requirements_s {
+    int players; /** number of players required */
+    int linemate; /** linemate quantity */
+    int deraumere; /** deraumere quantity */
+    int sibur; /** sibur quantity */
+    int mendiane; /** mendiane quantity */
+    int phiras; /** phiras quantity */
+    int thystame; /** thystame quantity */
+} incantation_requirements_t;
 
 /**
  * @brief execute the forward command, move the client depending on
@@ -116,4 +140,39 @@ void broadcast_command(server_t *server, client_ai_t *client);
  */
 void eject_command(server_t *server, client_ai_t *client);
 
+/**
+ * @brief execute the incantation command, start the incantation for
+ * level up the player
+ * @param server server for info about the game
+ * @param client client who sent the command
+ */
+void incantation_precommand(server_t *server, client_ai_t *client);
+
+/**
+ * @brief check the requirement for incantation (level up)
+ * @param tile tile where the incantation is
+ * @param requirement requirement for the incantation
+ * @param clients all clients
+ * @param level level of the incantation
+ * @return true if the incantation can be done, false otherwise
+ */
+bool check_requirement(tile_t *tile, client_ai_list_t *clients, size_t level,
+    bool final);
+
+/**
+ * @brief transform an array of int to a string
+ * @param array array of int
+ * @return array in string format or NULL if error
+ */
+char *int_array_to_str(int *array);
+
+/**
+ * @brief remove the object from tile afet incantation and reset player
+ * @param tile tile where the incantation is
+ * @param requirement requirement for incantion for remove quatntity of object
+ * @param client client who sent the incantation and his reset
+ * @param clients list of client for send data to graphic client
+ */
+void remove_object(tile_t *tile, incantation_requirements_t *requirement,
+    client_ai_t *client, client_list_t *clients);
 #endif //SERVER_COMMANDS_AI_H

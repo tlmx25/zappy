@@ -91,16 +91,13 @@ server_t *create_server(char **av)
 
     if (debug_active())
         dump_option(option);
-    printf("okok\n");
     if (option == NULL)
         return NULL;
-    printf("okok\n");
     server = init_server(option->port);
     if (server == NULL) {
         delete_option(option);
         return NULL;
     }
-    printf("okok\n");
     server->option = option;
     server->select_config = init_select();
     return start_server(server);

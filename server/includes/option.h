@@ -9,18 +9,36 @@
     #define SERVER_OPTION_H
     #include <unistd.h>
 
+/**
+* @brief A structure to represent server options.
+*
+* This structure represents server options. It contains the port number,
+* the width and height of the world, the number of clients, the
+ * frequency of the game,
+* and the names of the teams.
+*/
 typedef struct option_s {
-    int port;
-    int width;
-    int height;
-    int clients_nb;
-    int freq;
-    char **names;
+    int port; /**< The port number for the server. */
+    int width; /**< The width of the world. */
+    int height; /**< The height of the world. */
+    int clients_nb; /**< The number of clients. */
+    int freq; /**< The frequency of the game. */
+    char **names; /**< The names of the teams. */
 } option_t;
 
+/**
+* @brief A structure to represent a mapping between option flags
+* and their parsing functions.
+*
+* This structure represents a mapping between option flags and their
+ * parsing functions.
+* It contains a flag string and a function pointer to the corresponding
+ * parsing function.
+*/
 typedef struct option_tab_s {
-    char *flag;
-    int (*func)(option_t *option, const char **av, int i);
+    char *flag; /**< The option flag. */
+    int (*func)(option_t *option, const char **av, int i); /**< The function to
+   parse the option. return the number of argument to skip*/
 } option_tab_t;
 
 

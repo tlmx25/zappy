@@ -107,7 +107,12 @@ void take_command(server_t *server, client_ai_t *client)
         return add_to_buffer(&client->buff_out, "ko\n", false);
     add_to_buffer(&client->buff_out, "ok\n", false);
     send_to_all_graphic_arg(server->graphic_clients, "pgt %i %li\n",
-        client->num_player, obj);
+    client->num_player, obj);
+    send_to_all_graphic_arg(server->graphic_clients,
+    "bct %i %i %d %d %d %d %d %d %d\n",
+    client->position.x, client->position.y, tile->object.food,
+    tile->object.linemate, tile->object.deraumere, tile->object.sibur,
+    tile->object.mendiane, tile->object.phiras, tile->object.thystame);
 }
 
 void set_command(server_t *server, client_ai_t *client)
@@ -123,6 +128,11 @@ void set_command(server_t *server, client_ai_t *client)
     if (modifie_inventory(&tile->object, &client->inventory, obj) == false)
         return add_to_buffer(&client->buff_out, "ko\n", false);
     add_to_buffer(&client->buff_out, "ok\n", false);
-    send_to_all_graphic_arg(server->graphic_clients, "pgt %i %li\n",
-        client->num_player, obj);
+    send_to_all_graphic_arg(server->graphic_clients, "pdr %i %li\n",
+    client->num_player, obj);
+    send_to_all_graphic_arg(server->graphic_clients,
+    "bct %i %i %d %d %d %d %d %d %d\n",
+    client->position.x, client->position.y, tile->object.food,
+    tile->object.linemate, tile->object.deraumere, tile->object.sibur,
+    tile->object.mendiane, tile->object.phiras, tile->object.thystame);
 }

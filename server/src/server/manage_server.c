@@ -56,7 +56,6 @@ static void write_list(server_t *server)
 
 static void exec_nb_cycle(server_t *server, int nb_cycle)
 {
-    debug_print("Executing %i cycles\n", nb_cycle);
     for (int i = 0; i < nb_cycle; i++)
         exec_ai_list(server);
 }

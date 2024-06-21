@@ -22,6 +22,7 @@ VPATH += src/client/classic/
 VPATH += src/client/graphic/
 VPATH += src/game/
 VPATH += src/game/eggs
+VPATH += src/game/incantation
 VPATH += src/game/AI_commands
 VPATH += src/game/initialization
 VPATH += src/game/graphic_cmd/
@@ -75,6 +76,12 @@ SRC += look_command.c
 SRC += object_command.c
 SRC += broadcast_command.c
 SRC += eject_command.c
+SRC += incantation_command.c
+SRC += get_client_ai.c
+SRC += preincant_command.c
+SRC += create_incantation.c
+SRC += delete_incantation.c
+SRC += remove_tile_incant.c
 
 CFLAGS = -Wall -Wextra -I includes/
 
@@ -131,8 +138,13 @@ tests_clean:
 	@ rm -f *.gcda
 	@ rm -f unit_tests
 
-
 re: 	fclean all
+
+doc:
+	doxygen Doxyfile
+
+doc_clean:
+	rm -rf doc/
 
 .PHONY: all clean fclean re .SILENT
 
