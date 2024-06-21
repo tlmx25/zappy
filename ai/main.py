@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
-from src.Server import Server
-from src.FlagParser import FlagParser
-from src.queen.Queen import Queen
+from ai.src.Server import Server
+from ai.src.FlagParser import FlagParser
+from ai.src.queen.Queen import Queen
 import sys
 
 if __name__ == '__main__':
