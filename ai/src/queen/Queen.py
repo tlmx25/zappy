@@ -21,16 +21,22 @@ class Queen(Trantor):
 
     def run(self):
         while self.alive:
-            if self.trantor_inventory["food"] < 25:
+            if self.trantor_inventory["food"] < 5:
                 self.cycle = 0
             self.cycle_action[self.cycle]()
             self.inventory()
     
     def get_food(self):
-        while self.trantor_inventory["food"] < 40:
+        ko_food = 0
+        while self.trantor_inventory["food"] < 15:
             response = self.take_object("food")
-            if response == "ko":
-                self.move_forward()
+            if response == "ko" and ko_food < 2:
+                response = self.move_forward()
+                ko_food += 1
+            elif ko_food >= 2:
+                self.move_right()
+                self.turn_left()
+                ko_food = 0
             self.inventory()
         if self.connected_worker < 5:
             self.cycle = 1
@@ -44,7 +50,4 @@ class Queen(Trantor):
             self.cycle = 2
 
     def temp(self):
-        resopnse = self.fork()
-        if resopnse == "ok":
-            print("fork success")
         pass

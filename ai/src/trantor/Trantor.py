@@ -16,6 +16,12 @@ class Trantor(ITrantor):
     """
     
     def __init__(self, server : Server):
+        """
+        Set values at class init.
+        @param server: server class use to communicate
+        @type server: Server
+        @return: None
+        """
         self.server = server
         self.free_slots_team = 0
         self.world_dimension = []

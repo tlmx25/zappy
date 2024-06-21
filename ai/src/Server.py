@@ -13,6 +13,14 @@ class Server:
     """
 
     def __init__(self, _host = "", _port = 0):
+        """
+        Define init values for Server class
+        @param _host: host used by the socket
+        @type _host: str
+        @param _port: port used by the socket
+        @type _port: int
+        @return: None
+        """
         self.host = _host
         self.port = _port
         self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
