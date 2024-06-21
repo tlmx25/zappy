@@ -29,7 +29,7 @@ Tile::Tile(sf::Vector2i size, sf::Vector2i pos, int q0, int q1, int q2, int q3, 
         items["q4"] = std::make_shared<sf::Sprite>();
         items["q5"] = std::make_shared<sf::Sprite>();
         items["q6"] = std::make_shared<sf::Sprite>();
-        // items["egg"] = std::make_shared<sf::Sprite>();
+        items["q7"] = std::make_shared<sf::Sprite>();
         load_sprites();
     } catch (const std::exception &e) {
         // TODO: faire erreur propre
@@ -79,6 +79,9 @@ void Tile::addItem(int item)
         case 6:
             this->q6++;
             break;
+        case 7:
+            this->q7++;
+            break;
     }
 }
 
@@ -106,6 +109,9 @@ void Tile::removeItem(int item)
         case 6:
             this->q6--;
             break;
+        case 7:
+            this->q7--;
+            break;
     }
 }
 
@@ -126,6 +132,8 @@ int Tile::getItemsQuantity(int item)
             return (this->q5);
         case 6:
             return (this->q6);
+        case 7:
+            return (this->q7);
     }
     return (0);
 }
@@ -171,6 +179,9 @@ void Tile::setItemQuantity(int item, int quantity)
         case 6:
             this->q6 = quantity;
             break;
+        case 7:
+            this->q7 = quantity;
+            break;
     }
 }
 
@@ -199,11 +210,11 @@ void Tile::draw(sf::RenderWindow &window)
         window.draw(*items["q0"]);
     }
     if (q1 > 0) {
-        items["q1"]->setPosition(pos.x + padding * 3, pos.y + padding);
+        items["q1"]->setPosition(pos.x + padding * 2, pos.y + padding);
         window.draw(*items["q1"]);
     }
     if (q2 > 0) {
-        items["q2"]->setPosition(pos.x + size.x - items["q2"]->getGlobalBounds().width - padding * 3, pos.y + padding);
+        items["q2"]->setPosition(pos.x + size.x - items["q2"]->getGlobalBounds().width - padding * 2, pos.y + padding);
         window.draw(*items["q2"]);
     }
     if (q3 > 0) {
@@ -221,5 +232,9 @@ void Tile::draw(sf::RenderWindow &window)
     if (q6 > 0) {
         items["q6"]->setPosition(pos.x + size.x - items["q6"]->getGlobalBounds().width - padding, pos.y + size.y / 2 - items["q6"]->getGlobalBounds().height / 2);
         window.draw(*items["q6"]);  
+    }
+    if (q7 > 0) {
+        items["q7"]->setPosition(pos.x + size.x / 2 - items["q7"]->getGlobalBounds().width / 2, pos.y + padding);
+        window.draw(*items["q7"]);
     }
 }
