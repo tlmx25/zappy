@@ -170,9 +170,8 @@ void incantation_end(server_t *server, incantation_t *incantation)
     server->ai_clients, client->level))
         return failed_incantation(server, client, incantation,
         "requirement not met");
-    client->TTEA = 0;
-    client->action = -1;
-    client->level++;
+    remove_object(get_tile_by_pos(server, client->position),
+    &REQUIREMENT[client->level], client, server->graphic_clients);
     send_to_all_graphic_arg(server->graphic_clients, "plv %i %i\n",
     client->num_player, client->level);
     notify_incant(server, incantation->players, client);
