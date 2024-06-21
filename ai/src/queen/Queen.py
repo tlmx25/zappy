@@ -48,7 +48,7 @@ class Queen(Trantor):
         if self.free_slots_team < 1:
             response = self.fork()
             self.free_slots_team += 1
-        subprocess.run(["./mainWorker.py", worker_id, self.team, self.server.host, str(self.server.port)])
+        subprocess.Popen(["./mainWorker.py", worker_id, self.team, self.server.host, str(self.server.port)])
         self.connected_worker += 1
         self.free_slots_team -= 1
         if self.connected_worker == 5:
