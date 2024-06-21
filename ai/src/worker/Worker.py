@@ -1,8 +1,8 @@
 import sys
 
-from src.Server import Server
-from src.trantor.Trantor import Trantor
-from src.FlagParser import FlagParser
+from ai.src.Server import Server
+from ai.src.trantor.Trantor import Trantor
+from ai.src.FlagParser import FlagParser
 
 class Worker(Trantor):
     def __init__(self, argv, server: Server):

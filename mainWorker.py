@@ -6,8 +6,8 @@ import os
 # src_dir = os.path.abspath(os.path.join(current_dir, os.pardir, os.pardir, os.pardir))
 # sys.path.append(src_dir)
 
-from src.worker import Worker
-from src import Server
+from ai.src.worker import Worker
+from ai.src import Server
 
 if __name__ == '__main__':
     if len(sys.argv) != 5:
