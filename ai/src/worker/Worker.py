@@ -46,7 +46,7 @@ class Worker(Trantor):
         self.broadcast("Worker" + self.id + "+Assembled\n")
         print("WAITING FARM SIGNAL !\n")
         while True:
-            self.emptyMessage()
+            # self.emptyMessage()
             self.take_object("food")
             for mes in self.messages:
                 if "FARM" in mes[1]:
