@@ -20,11 +20,11 @@ Game::Game(int x, int y) : map(x, y, 1200)
         music.play();
     }
 
-    for (auto& tile : map.getTiles()) {
-        for (int i = 0; i <= 6; i++) {
-            tile.setItemQuantity(i, 1);
-        }
-    }
+    // for (auto& tile : map.getTiles()) {
+    //     for (int i = 0; i <= 6; i++) {
+    //         tile.setItemQuantity(i, 1);
+    //     }
+    // }
     // trantorians["test"] = std::make_shared<Trantorian>(0, "test", sf::Vector2i(2, 2), 0, 1, getTeamNumber("test"));
 }
 
@@ -37,14 +37,12 @@ Game::~Game()
 
 void Game::run()
 {
-    while (window.isOpen()) {
-        handleEvents();
-        float time = clock.getElapsedTime().asSeconds();
-        for (auto& trantorian : trantorians) {
-            trantorian.second->animate(time);
-        }
-        render();
+    handleEvents();
+    float time = clock.getElapsedTime().asSeconds();
+    for (auto& trantorian : trantorians) {
+        trantorian.second->animate(time);
     }
+    render();
 }
 
 

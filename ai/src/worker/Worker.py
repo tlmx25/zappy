@@ -7,9 +7,9 @@ from ai.src.FlagParser import FlagParser
 class Worker(Trantor):
     def __init__(self, argv, server: Server):
         self._worker = None
-        self.id = argv[1]
         self.team_name = argv[2]
         super().__init__(server)
+        self.id = argv[1]
         self.direction = None
         self.orientation = 1
         self.state = 1
@@ -25,11 +25,11 @@ class Worker(Trantor):
         }
 
     def waiting_to_start(self):
-        response = self.broadcast("Worker,READY\n")
+        response = self.broadcast("Worker" + self.id + ",READY\n")
         print("first response " + response + "\n")
         while True:
             self.take_object("food")
-            print("WAITING Assemble SIGNAL\n")
+            #print("WAITING Assemble SIGNAL\n")
             for mes in self.messages:
                 print("message: " + mes[1] + "\n")
                 if "message" and "Assemble" in mes[1]:
@@ -37,8 +37,8 @@ class Worker(Trantor):
                     self.direction = mes[0]
                     # self.emptyMessage()
                     return
-                else:
-                    self.messages.pop(mes)
+                #else:
+                #    self.messages.pop(mes)
 
     def starting_mode(self):
         self.goToQueen()
@@ -124,7 +124,7 @@ class Worker(Trantor):
         print("getOrientation\n")
         self.emptyMessage()
         while True:
-            print("WAITING ASSEMBLE SIGNAL\n")
+            #print("WAITING ASSEMBLE SIGNAL\n")
             self.take_object("food")
             for mes in self.messages:
                 if "Assemble" in mes[1]:

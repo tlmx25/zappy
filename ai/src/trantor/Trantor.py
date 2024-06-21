@@ -24,6 +24,7 @@ class Trantor(ITrantor):
         """
         self.server = server
         self.team = ""
+        self.id = ""
         self.free_slots_team = 0
         self.world_dimension = []
         self.messages = []
@@ -53,6 +54,7 @@ class Trantor(ITrantor):
                 return "dead"
             elif "message" in response:
                 response = response[7:].replace(" ", "").split(",")
+                print("Le message to append for " + self.id + ": " + str(response))
                 self.messages.append((int(response[0]), response[1]))
             elif "eject" in response:
                 pass
@@ -144,7 +146,7 @@ class Trantor(ITrantor):
         for object in response:
             object = object.strip().split()
             self.trantor_inventory[object[0]] = int(object[1])
-        print("Inventory : " + str(self.trantor_inventory), file=sys.stderr)
+        #print("Inventory : " + str(self.trantor_inventory), file=sys.stderr)
         return "ok"
 
     def broadcast(self, message : str) -> str:
@@ -176,7 +178,6 @@ class Trantor(ITrantor):
                     break
             self.inventory()
             self.move_forward()
-            
     
     def set_starting_data(self, parser: FlagParser):
         server_res = self.server.recv()
