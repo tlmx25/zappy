@@ -468,4 +468,4 @@ void sucFonction(UNUSED const std::string& command,UNUSED Game& game)
     std::cout << "unknown command" << std::endl;
 }
 
-void pfkFonction(UNUSED const std::string& command, UNUSED Game& game) {}
+void sbpFonction(UNUSED const std::string& command, UNUSED Game& game) {}
