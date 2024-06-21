@@ -5,9 +5,9 @@
 ## ATrantor.py
 ##
 
-from src.trantor.ITrantor import ITrantor
-from src.Server import Server
-from src.FlagParser import FlagParser
+from ai.src.trantor.ITrantor import ITrantor
+from ai.src.Server import Server
+from ai.src.FlagParser import FlagParser
 import sys
 
 class Trantor(ITrantor):
@@ -164,13 +164,12 @@ class Trantor(ITrantor):
     
     def connect_nbr(self):
         response = self.send("Connect_nbr\n")
-        self.free_slots_team = int(response)
+        return None
         
     def run(self):
         self.inventory()
         while self.alive:
             look_res = self.look()
-            print("Je suis avant le for")
             for i in range(0, look_res[0]["food"]):
                 self.take_object("food")
                 if not self.alive:
@@ -185,7 +184,7 @@ class Trantor(ITrantor):
             response = self.server.send(parser.get_team() + "\n")
             self.team = parser.get_team()
             response = self.server.recv()
-            if (response == "ko\n"):
+            if response == "ko\n":
                 raise Exception("ATrantor : Error in team name.")
             splited_r = response.replace('\n', ' ').split(" ")
             self.free_slots_team = int(splited_r[0])

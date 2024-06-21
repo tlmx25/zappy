@@ -6,7 +6,7 @@
 ##
 
 from abc import ABC, abstractmethod
-from src.FlagParser import FlagParser
+from ai.src.FlagParser import FlagParser
 
 class ITrantor(ABC):
     """
