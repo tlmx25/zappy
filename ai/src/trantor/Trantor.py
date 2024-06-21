@@ -71,8 +71,6 @@ class Trantor(ITrantor):
             return None
         self.server.send(command)
         response = self.receive()
-        # if response is not None:
-        #     print("Response : " + response, file=sys.stderr)
         while response is None or self.incantation:
             response = self.receive()
         return response
