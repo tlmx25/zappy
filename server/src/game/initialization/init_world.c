@@ -78,18 +78,22 @@ void distribute_ressources_meteor(server_t *server)
 {
     inventory_t inv = {0};
     int i = 0;
-    int r_to_spawn = 0;
+    tile_t *tile;
 
     debug_print("Distribute ressources meteor shower\n");
     init_ressources(&inv, server);
     stabilize_ressources(&inv, server);
-    srand(time(NULL));
     while (inv.food > 0 || inv.linemate > 0 || inv.deraumere
         > 0 || inv.sibur > 0 || inv.mendiane > 0 ||
         inv.phiras > 0 || inv.thystame > 0) {
         i = rand() % (server->option->width * server->option->height);
-        r_to_spawn = rand() % 7;
-        repartion_ressources(server, &inv, i, r_to_spawn);
+        tile = &server->world->tiles[i];
+        repartion_ressources(server, &inv, i, rand() % 7);
+        send_to_all_graphic_arg(server->graphic_clients,
+            "bct %d %d %d %d %d %d %d %d %d\n",
+            tile->coordinate.x, tile->coordinate.y, tile->object.food,
+            tile->object.linemate, tile->object.deraumere, tile->object.sibur,
+            tile->object.mendiane, tile->object.phiras, tile->object.thystame);
     }
 }
 
