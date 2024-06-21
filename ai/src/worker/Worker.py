@@ -43,7 +43,7 @@ class Worker(Trantor):
 
     def starting_mode(self):
         self.goToQueen()
-        self.broadcast("Worker" + self.id + ",Assembled\n")
+        self.broadcast("Worker" + self.id + "+Assembled\n")
         print("WAITING FARM SIGNAL !\n")
         while True:
             self.emptyMessage()
@@ -82,9 +82,9 @@ class Worker(Trantor):
             if self.state == 0:
                 print("IN ASSEMBLE MODE")
                 self.goToQueen()
-                self.broadcast("Worker" + self.id + ",Assembled\n")
+                self.broadcast("Worker" + self.id + "+Assembled\n")
                 self.dropResource(self.getInventory())
-                self.broadcast("Worker" + self.id + ",DROP\n")
+                self.broadcast("Worker" + self.id + "+DROP\n")
                 self.waitDuringElevation()
                 self.setModeFarming()
                 self.state = 1

@@ -54,7 +54,6 @@ class Trantor(ITrantor):
                 return "dead"
             elif "message" in response:
                 response = response[7:].replace(" ", "").split(",")
-                print("Le message to append for " + self.id + ": " + str(response))
                 self.messages.append((int(response[0]), response[1]))
             elif "eject" in response:
                 pass

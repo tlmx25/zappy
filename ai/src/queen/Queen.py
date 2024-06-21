@@ -61,30 +61,28 @@ class Queen(Trantor):
 
     def assemble_workers(self):
         self.broadcast("Assemble")
-        print("LA LEN DE MESSAGES " + str(len(self.messages)))
         if len(self.messages) > 0:
-            print("J'AI DES MESSAGES A READ !")
             for message in self.messages:
-                #print("JE TRAITE CE MESSAGE : " + str(message[0]) + " " + message[1])
                 if message[0] != 0:
-                    pass
-                content = message[1].split(",")
-                if len(content) != 2 or not "Worker" in content[0] or "READY" != content[1]:
-                    pass
+                    continue
+                content = message[1].split("+")
+                if len(content) != 2 or not "Worker" in content[0] or "Assembled" != content[1]:
+                    continue
                 try:
-                    id = int(content[0][:6])
+                    only_id = content[0][6:]
+                    id = int(only_id)
                     if not id in self.id_message:
                         self.id_message.append(id)
                         self.assembled_worker += 1
-                except Exception:
-                    pass
+                except Exception as e:
+                    print("WORKER FAILED : " + str(e))
             self.messages.clear()
         if self.assembled_worker == 5:
             self.broadcast("FARM")
             self.cycle = 3
             self.assembled_worker = 0
+            self.id_message.clear()
         pass
 
     def temp(self):
-        print("Je suis passé au cycle 3")
         pass
