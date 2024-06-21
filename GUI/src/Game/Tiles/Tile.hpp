@@ -124,6 +124,28 @@ class Tile
          * @param window The window to draw the tile on
          */
         void draw(sf::RenderWindow &window);
+
+        /**
+         * @brief Get the number of eggs
+         * 
+         * 
+         */
+        std::map<std::string, int>& getEgg();
+
+        /**
+         * @brief Remove the egg
+         * 
+         * @param id Id of egg
+         */
+        void removeEgg(std::string id);
+
+        /**
+         * @brief Add a egg
+         * 
+         * @param id Id of egg
+         * @param quantity Quantity of egg
+         */
+        void addEgg(std::string id, int quantity);
         
     private:
         sf::Vector2i pos;
@@ -138,7 +160,7 @@ class Tile
         int q4;
         int q5;
         int q6;
-        int q7; // the egg
+        std::map<std::string, int> eggs;
         std::map<std::string, std::shared_ptr<sf::Texture>> textures;
         std::map<std::string, std::shared_ptr<sf::Sprite>> items;
 };

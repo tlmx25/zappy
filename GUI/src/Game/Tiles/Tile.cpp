@@ -79,9 +79,6 @@ void Tile::addItem(int item)
         case 6:
             this->q6++;
             break;
-        case 7:
-            this->q7++;
-            break;
     }
 }
 
@@ -109,9 +106,6 @@ void Tile::removeItem(int item)
         case 6:
             this->q6--;
             break;
-        case 7:
-            this->q7--;
-            break;
     }
 }
 
@@ -132,8 +126,6 @@ int Tile::getItemsQuantity(int item)
             return (this->q5);
         case 6:
             return (this->q6);
-        case 7:
-            return (this->q7);
     }
     return (0);
 }
@@ -178,9 +170,6 @@ void Tile::setItemQuantity(int item, int quantity)
             break;
         case 6:
             this->q6 = quantity;
-            break;
-        case 7:
-            this->q7 = quantity;
             break;
     }
 }
@@ -233,8 +222,23 @@ void Tile::draw(sf::RenderWindow &window)
         items["q6"]->setPosition(pos.x + size.x - items["q6"]->getGlobalBounds().width - padding, pos.y + size.y / 2 - items["q6"]->getGlobalBounds().height / 2);
         window.draw(*items["q6"]);  
     }
-    if (q7 > 0) {
+    if (eggs.empty() == 0) {
         items["q7"]->setPosition(pos.x + size.x / 2 - items["q7"]->getGlobalBounds().width / 2, pos.y + padding);
         window.draw(*items["q7"]);
     }
+}
+
+std::map<std::string, int>& Tile::getEgg()
+{
+    return eggs;
+}
+
+void Tile::removeEgg(std::string id)
+{
+    eggs.erase(id);
+}
+
+void Tile::addEgg(std::string id, int quantity)
+{
+    eggs[id] = quantity;
 }

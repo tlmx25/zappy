@@ -7,6 +7,8 @@ from ai.src.FlagParser import FlagParser
 class Worker(Trantor):
     def __init__(self, argv, server: Server):
         self._worker = None
+        self.id = argv[1]
+        self.object_taken = []
         self.team_name = argv[2]
         super().__init__(server)
         self.id = argv[1]
@@ -35,14 +37,22 @@ class Worker(Trantor):
                 if "message" and "Assemble" in mes[1]:
                     print("second response " + mes[1] + "\n")
                     self.direction = mes[0]
-                    # self.emptyMessage()
+                    self.emptyMessage()
                     return
-                #else:
-                #    self.messages.pop(mes)
+            self.emptyMessage()
 
     def starting_mode(self):
         self.goToQueen()
-        self.setFarmingPosition(int(self.id))
+        self.broadcast("Worker" + self.id + ",Assembled\n")
+        print("WAITING FARM SIGNAL !\n")
+        while True:
+            self.emptyMessage()
+            self.take_object("food")
+            for mes in self.messages:
+                if "FARM" in mes[1]:
+                    self.emptyMessage()
+                    self.setFarmingPosition(int(self.id))
+                    return
 
     def setModeFarming(self):
         self.setFarmingPosition(self.orientation)
@@ -72,13 +82,14 @@ class Worker(Trantor):
             if self.state == 0:
                 print("IN ASSEMBLE MODE")
                 self.goToQueen()
+                self.broadcast("Worker" + self.id + ",Assembled\n")
                 self.dropResource(self.getInventory())
+                self.broadcast("Worker" + self.id + ",DROP\n")
                 self.waitDuringElevation()
                 self.setModeFarming()
                 self.state = 1
-            lookRespond = self.look()
-            if lookRespond is None:
-                continue
+            lookRespond = self.lookAt()
+            print(lookRespond)
             self.takeObjectPlayerTile(lookRespond)
             count += 1
             if count == 3:
@@ -86,23 +97,22 @@ class Worker(Trantor):
                 count = 0
             self.move_forward()
             for mes in self.messages:
-                if "Assemble" in mes:
+                if "Assemble" in mes[1]:
                     self.state = 0
                     self.emptyMessage()
                     print("Orientation = " + str(mes[0]))
                     self.orientation = int(mes[0])
 
     def takeObjectPlayerTile(self, lookResponse):
-        print("lookResponse: " + lookResponse)
-        lookResponse = lookResponse.replace("[ ", "")
-        lookResponse = lookResponse.replace(" ]", "")
-        print("lookResponse: " + lookResponse)
-        objects = lookResponse.split(",")[0].split(" ")
-        print("objects: " + str(objects))
-        for obj in objects:
-            if "player" not in obj:
-                print("take: " + obj)
-                self.take_object(obj)
+
+        for object_type, quantity in lookResponse[0].items():
+            if quantity > 0:
+                if "player" in object_type:
+                    print("player detected\n")
+                else:
+                    print("take: " + object_type + "\n")
+                    self.object_taken.append(object_type)
+                    self.take_object(object_type)
 
     def getInventory(self):
         print("getInventory\n")
@@ -133,18 +143,19 @@ class Worker(Trantor):
 
     def sendInventoryToQueen(self):
         print("sendInventoryToQueen\n")
-        self.send("Inventory\n")
-        response = self.waitTillGoodResp()
-        response = response.replace("[ ", "[")
-        response = response.replace(" ]", "]")
-        response = response.replace(", ", ",")
+        # print(self.object_taken)
+        response = " ".join(self.object_taken)
+        print("reponse dans sendinventory = " + response + "\n")
         response = response.replace(" ", "+")
+        response += "+]"
+        response = "[" + response
         print("SendInventoryResponse: " + response)
         self.send("Broadcast Worker,FOUND" + response + "\n")
+        self.object_taken = []
         return
 
-    def look(self):
-        response = self.send("Look\n")
+    def lookAt(self):
+        response = self.look()
         print("Send Look !")
         return response
 
@@ -152,15 +163,10 @@ class Worker(Trantor):
         for i in range(dist):
             self.move_forward()
         self.move_left()
-        print("WAITING FARM SIGNAL !\n")
-        while True:
-            for mes in self.messages:
-                if "FARM" in mes[1]:
-                    self.emptyMessage()
-                    return
 
     def waitDuringElevation(self):
         while True:
+            self.take_object("food")
             for mes in self.messages:
                 if "Finished" in mes[1]:
                     self.emptyMessage()
