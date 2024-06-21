@@ -138,6 +138,7 @@ class Tile
         int q4;
         int q5;
         int q6;
+        int q7; // the egg
         std::map<std::string, std::shared_ptr<sf::Texture>> textures;
         std::map<std::string, std::shared_ptr<sf::Sprite>> items;
 };
