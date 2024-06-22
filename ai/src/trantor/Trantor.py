@@ -30,6 +30,7 @@ class Trantor(ITrantor):
         self.messages = []
         self.incantation = False
         self.alive = True
+        self.incatator = False
         self.level = 1
         self.trantor_inventory = { 'food' : 0,
                         'linemate' : 0,
@@ -42,30 +43,33 @@ class Trantor(ITrantor):
     # Gestion de messages
 
     def receive(self) -> str:
+        cmd_response = None
         serv_response = self.server.recv()
         while serv_response[-1] != "\n":
             serv_response += self.server.recv()
+        #print(self.id + " received : " + serv_response)
         serv_response = list(filter(None, serv_response.split("\n")))
         for response in serv_response:
-            if not response:
-                pass
+            if not response or "eject" in response:
+                continue
             if response == "dead":
                 self.alive = False
                 return "dead"
             elif "message" in response:
                 response = response[7:].replace(" ", "").split(",")
                 self.messages.append((int(response[0]), response[1]))
-            elif "eject" in response:
-                pass
+                #print(self.id + ": Added message to messages.")
             elif "Elevation" in response:
                 self.incantation = True
             elif "Current level" in response:
                 self.incantation = False
                 self.level = int(response[15:])
-                return "ok"
+                if self.incantator:
+                    cmd_response = response
+                    self.incatator = False
             else:
-                return response
-        return None
+                cmd_response = response
+        return cmd_response
     
     def send(self, command : str) -> str:
         if not self.alive:
@@ -156,6 +160,7 @@ class Trantor(ITrantor):
         return self.send("Set " + object + "\n")
     
     def incantation(self) -> str:
+        self.incatator = True
         return self.send("Incantation\n")
     
     def fork(self) -> str:
