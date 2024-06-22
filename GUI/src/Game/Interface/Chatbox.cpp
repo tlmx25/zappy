@@ -46,14 +46,28 @@ void Chatbox::addMessage(std::string &team, std::string &id, std::string &messag
     messageRect.setOutlineThickness(1);
     messageRect.setPosition(10, 40 + messageTexts.size() * 60);
 
-    sf::Text playerName;
-    playerName.setFont(font);
-    playerName.setString("Player " + id + "(" + team + "): \n" + message);
-    playerName.setCharacterSize(15);
-    playerName.setFillColor(sf::Color::Black);
-    playerName.setPosition(15, 45 + messageTexts.size() * 60);
+    sf::Text text;
+    text.setFont(font);
+    // text.setString("Player " + id + "(" + team + "): \n" + message);
+    text.setCharacterSize(15);
+    text.setFillColor(sf::Color::Black);
 
-    messageTexts.push_back(playerName);
+    std::string fullMessage = "Player " + id + "(" + team + "): \n" + message;
+    text.setString(fullMessage);
+    float textWidth = text.getGlobalBounds().width;
+    float maxTextWidth = width - 40;
+
+    if (textWidth > maxTextWidth) {
+        std::string cutMessage = fullMessage;
+        while (text.getLocalBounds().width > maxTextWidth && cutMessage.length() > 3) {
+            cutMessage = cutMessage.substr(0, cutMessage.length() - 4) + "...";
+            text.setString(cutMessage);
+        }
+    }
+
+    text.setPosition(15, 45 + messageTexts.size() * 60);
+
+    messageTexts.push_back(text);
     messages.push_back(messageRect);
 }
 
