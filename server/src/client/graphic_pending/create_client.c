@@ -20,6 +20,7 @@ client_t *create_client(int fd)
     client->buffer_out = my_strdup("WELCOME\n");
     client->next = NULL;
     client->prev = NULL;
+    client->team_name = NULL;
     client->to_disconnect = 0;
     return client;
 }
@@ -38,6 +39,8 @@ client_list_t *create_client_list(void)
 
 void add_client_to_list(client_list_t *list, client_t *client)
 {
+    if (list == NULL || client == NULL)
+        return;
     if (list->head == NULL) {
         list->head = client;
         list->tail = client;

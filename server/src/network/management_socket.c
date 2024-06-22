@@ -17,9 +17,9 @@ select_t *init_select(void)
         return NULL;
     FD_ZERO(&select->readfds);
     FD_ZERO(&select->writefds);
-    select->timeout.tv_sec = 0;
+    select->timeout.tv_sec = 140;
     select->timeout.tv_usec = 0;
-    select->use_timeout = 0;
+    select->use_timeout = 1;
     select->max_fd = 0;
     return select;
 }
@@ -40,12 +40,9 @@ int exec_select(select_t *select_config)
 {
     int ret;
 
-    if (select_config->use_timeout)
-        ret = select(select_config->max_fd + 1, &select_config->readfds,
-            &select_config->writefds, NULL, &select_config->timeout);
-    else
-        ret = select(select_config->max_fd + 1, &select_config->readfds,
-            &select_config->writefds, NULL, NULL);
+    ret = select(select_config->max_fd + 1, &select_config->readfds,
+    &select_config->writefds, &select_config->exceptfds,
+    &select_config->timeout);
     if (ret == -1) {
         perror("select");
         return ERROR;
