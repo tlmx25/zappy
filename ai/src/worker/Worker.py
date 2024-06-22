@@ -57,16 +57,18 @@ class Worker(Trantor):
     def setModeFarming(self):
         self.setFarmingPosition(self.orientation)
 
-    def set_welcome_data(self):
-        response = ""
-        try:
+    def set_welcome_data(self, parser: FlagParser = None):
+        response = self.server.recv()
+        if response == "WELCOME\n":
             print(self.team_name + "\n")
-            response = self.send(self.team_name + "\n")
+            self.server.send(self.team_name + "\n")
+            response = self.server.recv()
             if response == "ko\n":
-                return
-        except Exception as e:
-            print(e, file=sys.stderr)
-            raise Exception("Core: Error while sending welcome data.")
+                raise Exception("Worker : Error in team name.")
+            splited_r = response.replace('\n', ' ').split(" ")
+            self.free_slots_team = int(splited_r[0])
+            for i in range (1, 2):
+                self.world_dimension.append(splited_r[i])
 
     def set_starting_data(self, parser: FlagParser):
         self.set_welcome_data()
