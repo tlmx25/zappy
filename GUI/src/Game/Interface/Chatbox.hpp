@@ -16,7 +16,7 @@
 class Chatbox
 {
     public:
-        Chatbox(float width = 240, float height = 480);
+        Chatbox(float width = 240, float height = 480, sf::Vector2f windowSize = sf::Vector2f(960, 960));
         ~Chatbox() = default;
 
         void addMessage(std::string& team, std::string& id, std::string& message);
@@ -26,12 +26,17 @@ class Chatbox
         void updateToggleButton();
         void setPosition(sf::Vector2f pos);
         void updatePositions();
-
+        void scrollUp();
+        void scrollDown();
+        size_t getMaxVisibleMessages();
     private:
         float width;
         float height;
         bool isOpen;
+        int maxMessages;
+        size_t scrollOffset;
         sf::Vector2f position;
+        sf::Vector2f windowSize;
         sf::RectangleShape header;
         sf::RectangleShape background;
         sf::RectangleShape toggleButton;

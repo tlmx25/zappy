@@ -30,6 +30,16 @@ Game::Game(int x, int y) : map(x, y, 1200)
     std::string id = "0";
     chatbox.addMessage(team, id, msg);
     chatbox.addMessage(team, id, msg);
+    // chatbox.addMessage(team, id, msg);
+    // chatbox.addMessage(team, id, msg);
+    // chatbox.addMessage(team, id, msg);
+    // chatbox.addMessage(team, id, msg);
+    // chatbox.addMessage(team, id, msg);
+    // chatbox.addMessage(team, id, msg);
+    // chatbox.addMessage(team, id, msg);
+    // chatbox.addMessage(team, id, msg);
+    // chatbox.addMessage(team, id, msg);
+
     // trantorians["test"] = std::make_shared<Trantorian>(0, "test", sf::Vector2i(2, 2), 0, 1, getTeamNumber("test"));
 }
 

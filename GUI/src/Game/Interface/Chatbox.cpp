@@ -7,7 +7,7 @@
 
 #include "Chatbox.hpp"
 
-Chatbox::Chatbox(float width, float height) : width(width), height(height), isOpen(false)
+Chatbox::Chatbox(float width, float height, sf::Vector2f windowSize) : width(width), height(height), isOpen(false), windowSize(windowSize)
 {
     font.loadFromFile("GUI/src/Assets/arial.ttf");
 
@@ -34,12 +34,19 @@ Chatbox::Chatbox(float width, float height) : width(width), height(height), isOp
     background.setFillColor(sf::Color::White);
     background.setPosition(0, 30);
 
+    maxMessages = (height - 30) / 60;
+
     updateToggleButton();
-    setPosition(sf::Vector2f(0, 0));
+    setPosition(sf::Vector2f(windowSize.x - width, 0));
 }
 
 void Chatbox::addMessage(std::string &team, std::string &id, std::string &message)
 {
+    if (messageTexts.size() >= maxMessages) {
+        messageTexts.erase(messageTexts.begin());
+        messages.erase(messages.begin());
+    }
+
     sf::RectangleShape messageRect(sf::Vector2f(width - 20, 50));
     messageRect.setFillColor(sf::Color::White);
     messageRect.setOutlineColor(sf::Color::Black);
@@ -48,7 +55,6 @@ void Chatbox::addMessage(std::string &team, std::string &id, std::string &messag
 
     sf::Text text;
     text.setFont(font);
-    // text.setString("Player " + id + "(" + team + "): \n" + message);
     text.setCharacterSize(15);
     text.setFillColor(sf::Color::Black);
 
@@ -69,6 +75,8 @@ void Chatbox::addMessage(std::string &team, std::string &id, std::string &messag
 
     messageTexts.push_back(text);
     messages.push_back(messageRect);
+
+    updatePositions();
 }
 
 void Chatbox::render(sf::RenderWindow &window)
@@ -120,18 +128,18 @@ void Chatbox::updateToggleButton()
 void Chatbox::setPosition(sf::Vector2f pos)
 {
     position = pos;
-    // updatePositions();
 }
 
 void Chatbox::updatePositions()
 {
     header.setPosition(position);
-    headerText.setPosition(position.x, position.y);
+    headerText.setPosition(position.x + 10, position.y + 2);
     toggleButton.setPosition(position.x + width - 50, position.y);
     toggleButtonText.setPosition(position.x + width - 45, position.y + 5);
     background.setPosition(position.x, position.y + 30);
-    for (size_t i = 0; i < messages.size(); ++i) {
-        messages[i].setPosition(10, 40 + i * 60 + position.y);
-        messageTexts[i].setPosition(15, 45 + i * 60 + position.y);
+
+    for (size_t i = 0; i < messageTexts.size(); i++) {
+        messages[i].setPosition(position.x + 10, position.y + 40 + i * 60);
+        messageTexts[i].setPosition(position.x + 15, position.y + 45 + i * 60);
     }
 }
