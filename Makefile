@@ -27,9 +27,9 @@ ai:
 	@make -C ai
 
 $(NAME): server GUI ai
-	@cp server/zappy_server .
-	@cp ai/zappy_ai .
-	@cp GUI/zappy_gui .
+	@mv server/zappy_server .
+	@mv ai/zappy_ai .
+	@mv GUI/zappy_gui .
 
 clean:
 	@make clean -C server

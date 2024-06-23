@@ -1,0 +1,7 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" title=" " alt="" coords="5,111,120,138"/>
+<area shape="rect" id="node2" href="$classZappy__GUI_1_1Server_1_1BadParameter.html" title=" " alt="" coords="168,5,320,47"/>
+<area shape="rect" id="node3" href="$classZappy__GUI_1_1Server_1_1ConnectFailed.html" title=" " alt="" coords="168,71,320,112"/>
+<area shape="rect" id="node4" href="$classZappy__GUI_1_1Server_1_1ReceiveFailed.html" title=" " alt="" coords="168,136,320,177"/>
+<area shape="rect" id="node5" href="$classZappy__GUI_1_1Server_1_1SendFailed.html" title=" " alt="" coords="168,201,320,243"/>
+</map>

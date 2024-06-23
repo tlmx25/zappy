@@ -1,0 +1,290 @@
+\hypertarget{classZappy__GUI_1_1Server}{}\doxysection{Zappy\+\_\+\+GUI\+::Server Class Reference}
+\label{classZappy__GUI_1_1Server}\index{Zappy\_GUI::Server@{Zappy\_GUI::Server}}
+
+
+{\ttfamily \#include $<$server.\+hpp$>$}
+
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classZappy__GUI_1_1Server_1_1BadParameter}{Bad\+Parameter}}
+\item 
+class \mbox{\hyperlink{classZappy__GUI_1_1Server_1_1ConnectFailed}{Connect\+Failed}}
+\item 
+class \mbox{\hyperlink{classZappy__GUI_1_1Server_1_1ReceiveFailed}{Receive\+Failed}}
+\item 
+class \mbox{\hyperlink{classZappy__GUI_1_1Server_1_1SendFailed}{Send\+Failed}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classZappy__GUI_1_1Server_ad01251a404fa04a956304c7ffaa95c2a}{Server}} (char $\ast$Port, char $\ast$adresse\+\_\+ip)
+\begin{DoxyCompactList}\small\item\em Build the \mbox{\hyperlink{classZappy__GUI_1_1Server}{Server}} object with the parameter Port and adresse\+\_\+ip. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classZappy__GUI_1_1Server_a4d4c51ac6a317a98a09ec753d0e271fa}{$\sim$\+Server}} ()
+\begin{DoxyCompactList}\small\item\em Destroy the \mbox{\hyperlink{classZappy__GUI_1_1Server}{Server}} object. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classZappy__GUI_1_1Server_af14ad651957bef8bff2defd20bb96146}{Open\+Socket}} ()
+\begin{DoxyCompactList}\small\item\em Open the socket for connection. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classZappy__GUI_1_1Server_a2231b2162e7c9994569a53767518466f}{Connect\+Socket}} ()
+\begin{DoxyCompactList}\small\item\em Connect the socket and the server. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classZappy__GUI_1_1Server_abb54bf4615b6b2ff488a5c194dc3e695}{Close\+Socket}} ()
+\begin{DoxyCompactList}\small\item\em Close the socket. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classZappy__GUI_1_1Server_ad8ca17d112e451806d56043e3a885214}{Run}} ()
+\begin{DoxyCompactList}\small\item\em Run the server og GUI. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classZappy__GUI_1_1Server_aa2f1c3f1358aaf66636900d68ffc2112}{GUIStart}} ()
+\begin{DoxyCompactList}\small\item\em Send the first command to \mbox{\hyperlink{classZappy__GUI_1_1Server}{Server}} and send GRAPHIC. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classZappy__GUI_1_1Server_a387585e1405e5d23e8955d20abd61a80}{GUISize}} ()
+\begin{DoxyCompactList}\small\item\em Receive the size of \mbox{\hyperlink{classMap}{Map}}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classZappy__GUI_1_1Server_a63ba5a31394e197b1a4586a01524e3f4}{Send\+Data}} (std\+::string message)
+\begin{DoxyCompactList}\small\item\em Send Data for the server. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classZappy__GUI_1_1Server_a90de72495c2835afcf58219a94899925}{Read\+Client}} ()
+\begin{DoxyCompactList}\small\item\em Read the message receive. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classZappy__GUI_1_1Server_a1a30ab2c300e3af959502253e1f8ef1c}{Lambda\+Execute}} (std\+::string key, std\+::string command, \mbox{\hyperlink{classGame}{Game}} \&game)
+\begin{DoxyCompactList}\small\item\em Lambda for differents fonctions. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classZappy__GUI_1_1Server_a2626d4378c51d1c186a22c432dd30880}{First\+Word}} (std\+::string buffer)
+\begin{DoxyCompactList}\small\item\em Take the first word of the buffer. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classZappy__GUI_1_1Server_aa6c9f3925d72cdeb4d03fbf112b085a4}{msz\+Fonction}} (const std\+::string \&command)
+\begin{DoxyCompactList}\small\item\em Take the size of the map in. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::string \mbox{\hyperlink{classZappy__GUI_1_1Server_a249520eda89c19c13a6a57ca1fc93121}{\+\_\+port}}
+\item 
+std\+::string \mbox{\hyperlink{classZappy__GUI_1_1Server_a7d01421e27a80db59d3d7cd1e5200598}{\+\_\+ip}}
+\item 
+int \mbox{\hyperlink{classZappy__GUI_1_1Server_a330395121a060fb1da5d87bbadd7e23f}{\+\_\+socket}}
+\item 
+struct sockaddr\+\_\+in \mbox{\hyperlink{classZappy__GUI_1_1Server_a82997f96662b3b56f646504a5d2ceb26}{\+\_\+server}}
+\item 
+std\+::map$<$ std\+::string, std\+::function$<$ void(const std\+::string \&, \mbox{\hyperlink{classGame}{Game}} \&)$>$ $>$ \mbox{\hyperlink{classZappy__GUI_1_1Server_a963aca11197e07da59e8cfbbd9f88c7d}{\+\_\+map}}
+\item 
+fd\+\_\+set \mbox{\hyperlink{classZappy__GUI_1_1Server_a9b2f86337818fca6eaa12eae5a563b5c}{\+\_\+readfds}}
+\item 
+fd\+\_\+set \mbox{\hyperlink{classZappy__GUI_1_1Server_a23213c6ad026cb6ec773af4ca55b1f02}{\+\_\+writefds}}
+\item 
+int \mbox{\hyperlink{classZappy__GUI_1_1Server_aa29186a9fa195ffbb593af74b28471b1}{\+\_\+x\+Map}}
+\item 
+int \mbox{\hyperlink{classZappy__GUI_1_1Server_ad33fe7ff591808d701106769113804e7}{\+\_\+y\+Map}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classZappy__GUI_1_1Server_ad01251a404fa04a956304c7ffaa95c2a}\label{classZappy__GUI_1_1Server_ad01251a404fa04a956304c7ffaa95c2a}} 
+\index{Zappy\_GUI::Server@{Zappy\_GUI::Server}!Server@{Server}}
+\index{Server@{Server}!Zappy\_GUI::Server@{Zappy\_GUI::Server}}
+\doxysubsubsection{\texorpdfstring{Server()}{Server()}}
+{\footnotesize\ttfamily Zappy\+\_\+\+GUI\+::\+Server\+::\+Server (\begin{DoxyParamCaption}\item[{char $\ast$}]{Port,  }\item[{char $\ast$}]{adresse\+\_\+ip }\end{DoxyParamCaption})}
+
+
+
+Build the \mbox{\hyperlink{classZappy__GUI_1_1Server}{Server}} object with the parameter Port and adresse\+\_\+ip. 
+
+\mbox{\Hypertarget{classZappy__GUI_1_1Server_a4d4c51ac6a317a98a09ec753d0e271fa}\label{classZappy__GUI_1_1Server_a4d4c51ac6a317a98a09ec753d0e271fa}} 
+\index{Zappy\_GUI::Server@{Zappy\_GUI::Server}!````~Server@{$\sim$Server}}
+\index{````~Server@{$\sim$Server}!Zappy\_GUI::Server@{Zappy\_GUI::Server}}
+\doxysubsubsection{\texorpdfstring{$\sim$Server()}{~Server()}}
+{\footnotesize\ttfamily Zappy\+\_\+\+GUI\+::\+Server\+::$\sim$\+Server (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Destroy the \mbox{\hyperlink{classZappy__GUI_1_1Server}{Server}} object. 
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classZappy__GUI_1_1Server_abb54bf4615b6b2ff488a5c194dc3e695}\label{classZappy__GUI_1_1Server_abb54bf4615b6b2ff488a5c194dc3e695}} 
+\index{Zappy\_GUI::Server@{Zappy\_GUI::Server}!CloseSocket@{CloseSocket}}
+\index{CloseSocket@{CloseSocket}!Zappy\_GUI::Server@{Zappy\_GUI::Server}}
+\doxysubsubsection{\texorpdfstring{CloseSocket()}{CloseSocket()}}
+{\footnotesize\ttfamily void Zappy\+\_\+\+GUI\+::\+Server\+::\+Close\+Socket (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Close the socket. 
+
+\mbox{\Hypertarget{classZappy__GUI_1_1Server_a2231b2162e7c9994569a53767518466f}\label{classZappy__GUI_1_1Server_a2231b2162e7c9994569a53767518466f}} 
+\index{Zappy\_GUI::Server@{Zappy\_GUI::Server}!ConnectSocket@{ConnectSocket}}
+\index{ConnectSocket@{ConnectSocket}!Zappy\_GUI::Server@{Zappy\_GUI::Server}}
+\doxysubsubsection{\texorpdfstring{ConnectSocket()}{ConnectSocket()}}
+{\footnotesize\ttfamily void Zappy\+\_\+\+GUI\+::\+Server\+::\+Connect\+Socket (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Connect the socket and the server. 
+
+\mbox{\Hypertarget{classZappy__GUI_1_1Server_a2626d4378c51d1c186a22c432dd30880}\label{classZappy__GUI_1_1Server_a2626d4378c51d1c186a22c432dd30880}} 
+\index{Zappy\_GUI::Server@{Zappy\_GUI::Server}!FirstWord@{FirstWord}}
+\index{FirstWord@{FirstWord}!Zappy\_GUI::Server@{Zappy\_GUI::Server}}
+\doxysubsubsection{\texorpdfstring{FirstWord()}{FirstWord()}}
+{\footnotesize\ttfamily std\+::string Zappy\+\_\+\+GUI\+::\+Server\+::\+First\+Word (\begin{DoxyParamCaption}\item[{std\+::string}]{buffer }\end{DoxyParamCaption})}
+
+
+
+Take the first word of the buffer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em buffer} & The complete command \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classZappy__GUI_1_1Server_a387585e1405e5d23e8955d20abd61a80}\label{classZappy__GUI_1_1Server_a387585e1405e5d23e8955d20abd61a80}} 
+\index{Zappy\_GUI::Server@{Zappy\_GUI::Server}!GUISize@{GUISize}}
+\index{GUISize@{GUISize}!Zappy\_GUI::Server@{Zappy\_GUI::Server}}
+\doxysubsubsection{\texorpdfstring{GUISize()}{GUISize()}}
+{\footnotesize\ttfamily void Zappy\+\_\+\+GUI\+::\+Server\+::\+GUISize (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Receive the size of \mbox{\hyperlink{classMap}{Map}}. 
+
+\mbox{\Hypertarget{classZappy__GUI_1_1Server_aa2f1c3f1358aaf66636900d68ffc2112}\label{classZappy__GUI_1_1Server_aa2f1c3f1358aaf66636900d68ffc2112}} 
+\index{Zappy\_GUI::Server@{Zappy\_GUI::Server}!GUIStart@{GUIStart}}
+\index{GUIStart@{GUIStart}!Zappy\_GUI::Server@{Zappy\_GUI::Server}}
+\doxysubsubsection{\texorpdfstring{GUIStart()}{GUIStart()}}
+{\footnotesize\ttfamily void Zappy\+\_\+\+GUI\+::\+Server\+::\+GUIStart (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Send the first command to \mbox{\hyperlink{classZappy__GUI_1_1Server}{Server}} and send GRAPHIC. 
+
+\mbox{\Hypertarget{classZappy__GUI_1_1Server_a1a30ab2c300e3af959502253e1f8ef1c}\label{classZappy__GUI_1_1Server_a1a30ab2c300e3af959502253e1f8ef1c}} 
+\index{Zappy\_GUI::Server@{Zappy\_GUI::Server}!LambdaExecute@{LambdaExecute}}
+\index{LambdaExecute@{LambdaExecute}!Zappy\_GUI::Server@{Zappy\_GUI::Server}}
+\doxysubsubsection{\texorpdfstring{LambdaExecute()}{LambdaExecute()}}
+{\footnotesize\ttfamily void Zappy\+\_\+\+GUI\+::\+Server\+::\+Lambda\+Execute (\begin{DoxyParamCaption}\item[{std\+::string}]{key,  }\item[{std\+::string}]{command,  }\item[{\mbox{\hyperlink{classGame}{Game}} \&}]{game }\end{DoxyParamCaption})}
+
+
+
+Lambda for differents fonctions. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & First word of the buffer \\
+\hline
+{\em command} & The complete command \\
+\hline
+{\em game} & The object game \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classZappy__GUI_1_1Server_aa6c9f3925d72cdeb4d03fbf112b085a4}\label{classZappy__GUI_1_1Server_aa6c9f3925d72cdeb4d03fbf112b085a4}} 
+\index{Zappy\_GUI::Server@{Zappy\_GUI::Server}!mszFonction@{mszFonction}}
+\index{mszFonction@{mszFonction}!Zappy\_GUI::Server@{Zappy\_GUI::Server}}
+\doxysubsubsection{\texorpdfstring{mszFonction()}{mszFonction()}}
+{\footnotesize\ttfamily void Zappy\+\_\+\+GUI\+::\+Server\+::msz\+Fonction (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{command }\end{DoxyParamCaption})}
+
+
+
+Take the size of the map in. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em buffer} & The complete command \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classZappy__GUI_1_1Server_af14ad651957bef8bff2defd20bb96146}\label{classZappy__GUI_1_1Server_af14ad651957bef8bff2defd20bb96146}} 
+\index{Zappy\_GUI::Server@{Zappy\_GUI::Server}!OpenSocket@{OpenSocket}}
+\index{OpenSocket@{OpenSocket}!Zappy\_GUI::Server@{Zappy\_GUI::Server}}
+\doxysubsubsection{\texorpdfstring{OpenSocket()}{OpenSocket()}}
+{\footnotesize\ttfamily void Zappy\+\_\+\+GUI\+::\+Server\+::\+Open\+Socket (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Open the socket for connection. 
+
+\mbox{\Hypertarget{classZappy__GUI_1_1Server_a90de72495c2835afcf58219a94899925}\label{classZappy__GUI_1_1Server_a90de72495c2835afcf58219a94899925}} 
+\index{Zappy\_GUI::Server@{Zappy\_GUI::Server}!ReadClient@{ReadClient}}
+\index{ReadClient@{ReadClient}!Zappy\_GUI::Server@{Zappy\_GUI::Server}}
+\doxysubsubsection{\texorpdfstring{ReadClient()}{ReadClient()}}
+{\footnotesize\ttfamily std\+::string Zappy\+\_\+\+GUI\+::\+Server\+::\+Read\+Client (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Read the message receive. 
+
+\mbox{\Hypertarget{classZappy__GUI_1_1Server_ad8ca17d112e451806d56043e3a885214}\label{classZappy__GUI_1_1Server_ad8ca17d112e451806d56043e3a885214}} 
+\index{Zappy\_GUI::Server@{Zappy\_GUI::Server}!Run@{Run}}
+\index{Run@{Run}!Zappy\_GUI::Server@{Zappy\_GUI::Server}}
+\doxysubsubsection{\texorpdfstring{Run()}{Run()}}
+{\footnotesize\ttfamily void Zappy\+\_\+\+GUI\+::\+Server\+::\+Run (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Run the server og GUI. 
+
+\mbox{\Hypertarget{classZappy__GUI_1_1Server_a63ba5a31394e197b1a4586a01524e3f4}\label{classZappy__GUI_1_1Server_a63ba5a31394e197b1a4586a01524e3f4}} 
+\index{Zappy\_GUI::Server@{Zappy\_GUI::Server}!SendData@{SendData}}
+\index{SendData@{SendData}!Zappy\_GUI::Server@{Zappy\_GUI::Server}}
+\doxysubsubsection{\texorpdfstring{SendData()}{SendData()}}
+{\footnotesize\ttfamily void Zappy\+\_\+\+GUI\+::\+Server\+::\+Send\+Data (\begin{DoxyParamCaption}\item[{std\+::string}]{message }\end{DoxyParamCaption})}
+
+
+
+Send Data for the server. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & The message to send \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classZappy__GUI_1_1Server_a7d01421e27a80db59d3d7cd1e5200598}\label{classZappy__GUI_1_1Server_a7d01421e27a80db59d3d7cd1e5200598}} 
+\index{Zappy\_GUI::Server@{Zappy\_GUI::Server}!\_ip@{\_ip}}
+\index{\_ip@{\_ip}!Zappy\_GUI::Server@{Zappy\_GUI::Server}}
+\doxysubsubsection{\texorpdfstring{\_ip}{\_ip}}
+{\footnotesize\ttfamily std\+::string Zappy\+\_\+\+GUI\+::\+Server\+::\+\_\+ip\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classZappy__GUI_1_1Server_a963aca11197e07da59e8cfbbd9f88c7d}\label{classZappy__GUI_1_1Server_a963aca11197e07da59e8cfbbd9f88c7d}} 
+\index{Zappy\_GUI::Server@{Zappy\_GUI::Server}!\_map@{\_map}}
+\index{\_map@{\_map}!Zappy\_GUI::Server@{Zappy\_GUI::Server}}
+\doxysubsubsection{\texorpdfstring{\_map}{\_map}}
+{\footnotesize\ttfamily std\+::map$<$std\+::string, std\+::function$<$void(const std\+::string\&, \mbox{\hyperlink{classGame}{Game}}\&)$>$ $>$ Zappy\+\_\+\+GUI\+::\+Server\+::\+\_\+map\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classZappy__GUI_1_1Server_a249520eda89c19c13a6a57ca1fc93121}\label{classZappy__GUI_1_1Server_a249520eda89c19c13a6a57ca1fc93121}} 
+\index{Zappy\_GUI::Server@{Zappy\_GUI::Server}!\_port@{\_port}}
+\index{\_port@{\_port}!Zappy\_GUI::Server@{Zappy\_GUI::Server}}
+\doxysubsubsection{\texorpdfstring{\_port}{\_port}}
+{\footnotesize\ttfamily std\+::string Zappy\+\_\+\+GUI\+::\+Server\+::\+\_\+port\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classZappy__GUI_1_1Server_a9b2f86337818fca6eaa12eae5a563b5c}\label{classZappy__GUI_1_1Server_a9b2f86337818fca6eaa12eae5a563b5c}} 
+\index{Zappy\_GUI::Server@{Zappy\_GUI::Server}!\_readfds@{\_readfds}}
+\index{\_readfds@{\_readfds}!Zappy\_GUI::Server@{Zappy\_GUI::Server}}
+\doxysubsubsection{\texorpdfstring{\_readfds}{\_readfds}}
+{\footnotesize\ttfamily fd\+\_\+set Zappy\+\_\+\+GUI\+::\+Server\+::\+\_\+readfds\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classZappy__GUI_1_1Server_a82997f96662b3b56f646504a5d2ceb26}\label{classZappy__GUI_1_1Server_a82997f96662b3b56f646504a5d2ceb26}} 
+\index{Zappy\_GUI::Server@{Zappy\_GUI::Server}!\_server@{\_server}}
+\index{\_server@{\_server}!Zappy\_GUI::Server@{Zappy\_GUI::Server}}
+\doxysubsubsection{\texorpdfstring{\_server}{\_server}}
+{\footnotesize\ttfamily struct sockaddr\+\_\+in Zappy\+\_\+\+GUI\+::\+Server\+::\+\_\+server\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classZappy__GUI_1_1Server_a330395121a060fb1da5d87bbadd7e23f}\label{classZappy__GUI_1_1Server_a330395121a060fb1da5d87bbadd7e23f}} 
+\index{Zappy\_GUI::Server@{Zappy\_GUI::Server}!\_socket@{\_socket}}
+\index{\_socket@{\_socket}!Zappy\_GUI::Server@{Zappy\_GUI::Server}}
+\doxysubsubsection{\texorpdfstring{\_socket}{\_socket}}
+{\footnotesize\ttfamily int Zappy\+\_\+\+GUI\+::\+Server\+::\+\_\+socket\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classZappy__GUI_1_1Server_a23213c6ad026cb6ec773af4ca55b1f02}\label{classZappy__GUI_1_1Server_a23213c6ad026cb6ec773af4ca55b1f02}} 
+\index{Zappy\_GUI::Server@{Zappy\_GUI::Server}!\_writefds@{\_writefds}}
+\index{\_writefds@{\_writefds}!Zappy\_GUI::Server@{Zappy\_GUI::Server}}
+\doxysubsubsection{\texorpdfstring{\_writefds}{\_writefds}}
+{\footnotesize\ttfamily fd\+\_\+set Zappy\+\_\+\+GUI\+::\+Server\+::\+\_\+writefds\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classZappy__GUI_1_1Server_aa29186a9fa195ffbb593af74b28471b1}\label{classZappy__GUI_1_1Server_aa29186a9fa195ffbb593af74b28471b1}} 
+\index{Zappy\_GUI::Server@{Zappy\_GUI::Server}!\_xMap@{\_xMap}}
+\index{\_xMap@{\_xMap}!Zappy\_GUI::Server@{Zappy\_GUI::Server}}
+\doxysubsubsection{\texorpdfstring{\_xMap}{\_xMap}}
+{\footnotesize\ttfamily int Zappy\+\_\+\+GUI\+::\+Server\+::\+\_\+x\+Map\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classZappy__GUI_1_1Server_ad33fe7ff591808d701106769113804e7}\label{classZappy__GUI_1_1Server_ad33fe7ff591808d701106769113804e7}} 
+\index{Zappy\_GUI::Server@{Zappy\_GUI::Server}!\_yMap@{\_yMap}}
+\index{\_yMap@{\_yMap}!Zappy\_GUI::Server@{Zappy\_GUI::Server}}
+\doxysubsubsection{\texorpdfstring{\_yMap}{\_yMap}}
+{\footnotesize\ttfamily int Zappy\+\_\+\+GUI\+::\+Server\+::\+\_\+y\+Map\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/server/\mbox{\hyperlink{server_8hpp}{server.\+hpp}}\item 
+src/server/\mbox{\hyperlink{server_8cpp}{server.\+cpp}}\end{DoxyCompactItemize}

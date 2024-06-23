@@ -1,0 +1,211 @@
+\hypertarget{classChatbox}{}\doxysection{Chatbox Class Reference}
+\label{classChatbox}\index{Chatbox@{Chatbox}}
+
+
+{\ttfamily \#include $<$Chatbox.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classChatbox_ab0a7de289884b447671943f6d50d76c6}{Chatbox}} (float \mbox{\hyperlink{classChatbox_a02eb5c89ea3830cd2f8e649f93acb932}{width}}=240, float \mbox{\hyperlink{classChatbox_a49b3a5951b2e76f8b142f07270c93667}{height}}=480, sf\+::\+Vector2f \mbox{\hyperlink{classChatbox_a33c9dc21096b0950da3dfe8d98edce45}{window\+Size}}=sf\+::\+Vector2f(960, 960))
+\item 
+\mbox{\hyperlink{classChatbox_a384261add560a3b969360e11191ea6ba}{$\sim$\+Chatbox}} ()=default
+\item 
+void \mbox{\hyperlink{classChatbox_adbc5ad746a4d23550dc5837a3406fb02}{add\+Message}} (std\+::string team, std\+::string \&id, std\+::string \&message)
+\item 
+void \mbox{\hyperlink{classChatbox_a58630f4f3389c04259f016372e0c2669}{render}} (sf\+::\+Render\+Window \&window)
+\item 
+void \mbox{\hyperlink{classChatbox_a02071c006c656e64f96daeb5ff874fd4}{handle\+Events}} (sf\+::\+Event \&event)
+\item 
+void \mbox{\hyperlink{classChatbox_a5261f0a0657339b5d6659b5147eecacc}{toggle\+Chatbox}} ()
+\item 
+void \mbox{\hyperlink{classChatbox_a7a4404681e4203cb7dcca4fc46170e06}{update\+Toggle\+Button}} ()
+\item 
+void \mbox{\hyperlink{classChatbox_aa97b4b1ce7f4baa61a665c9528d65af0}{set\+Position}} (sf\+::\+Vector2f pos)
+\item 
+void \mbox{\hyperlink{classChatbox_a93e88fd1a87ae5eccba83dd66c0f6814}{update\+Positions}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+float \mbox{\hyperlink{classChatbox_a02eb5c89ea3830cd2f8e649f93acb932}{width}}
+\item 
+float \mbox{\hyperlink{classChatbox_a49b3a5951b2e76f8b142f07270c93667}{height}}
+\item 
+bool \mbox{\hyperlink{classChatbox_a26cc625669c80ee3e2dc72d81ab78c72}{is\+Open}}
+\item 
+long unsigned int \mbox{\hyperlink{classChatbox_adc9e98063826b897d469075856a219fb}{max\+Messages}}
+\item 
+sf\+::\+Vector2f \mbox{\hyperlink{classChatbox_a1f78fcf3846bbc165075892ee8556258}{position}}
+\item 
+sf\+::\+Vector2f \mbox{\hyperlink{classChatbox_a33c9dc21096b0950da3dfe8d98edce45}{window\+Size}}
+\item 
+sf\+::\+Rectangle\+Shape \mbox{\hyperlink{classChatbox_a611e9fa0ae442b5045a142a4485a476e}{header}}
+\item 
+sf\+::\+Rectangle\+Shape \mbox{\hyperlink{classChatbox_af4a1921433690630076b8172b4eec5c8}{background}}
+\item 
+sf\+::\+Rectangle\+Shape \mbox{\hyperlink{classChatbox_a6ac10cda236bf99ff41167f4e762c907}{toggle\+Button}}
+\item 
+sf\+::\+Font \mbox{\hyperlink{classChatbox_a18842c656083a010fcf254dd619bd916}{font}}
+\item 
+sf\+::\+Text \mbox{\hyperlink{classChatbox_aa0c4c492fe5183f7a423b50244f7ecda}{header\+Text}}
+\item 
+sf\+::\+Text \mbox{\hyperlink{classChatbox_ae9b65e2c6be739fdc9fb6a6ab11f3402}{toggle\+Button\+Text}}
+\item 
+std\+::vector$<$ sf\+::\+Text $>$ \mbox{\hyperlink{classChatbox_a7a74c37b452ad4756ae595deef14f000}{message\+Texts}}
+\item 
+std\+::vector$<$ sf\+::\+Rectangle\+Shape $>$ \mbox{\hyperlink{classChatbox_a2afd47988e368c6bbb66e72bafa08417}{messages}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classChatbox_ab0a7de289884b447671943f6d50d76c6}\label{classChatbox_ab0a7de289884b447671943f6d50d76c6}} 
+\index{Chatbox@{Chatbox}!Chatbox@{Chatbox}}
+\index{Chatbox@{Chatbox}!Chatbox@{Chatbox}}
+\doxysubsubsection{\texorpdfstring{Chatbox()}{Chatbox()}}
+{\footnotesize\ttfamily Chatbox\+::\+Chatbox (\begin{DoxyParamCaption}\item[{float}]{width = {\ttfamily 240},  }\item[{float}]{height = {\ttfamily 480},  }\item[{sf\+::\+Vector2f}]{window\+Size = {\ttfamily sf\+:\+:Vector2f(960,~960)} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classChatbox_a384261add560a3b969360e11191ea6ba}\label{classChatbox_a384261add560a3b969360e11191ea6ba}} 
+\index{Chatbox@{Chatbox}!````~Chatbox@{$\sim$Chatbox}}
+\index{````~Chatbox@{$\sim$Chatbox}!Chatbox@{Chatbox}}
+\doxysubsubsection{\texorpdfstring{$\sim$Chatbox()}{~Chatbox()}}
+{\footnotesize\ttfamily Chatbox\+::$\sim$\+Chatbox (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classChatbox_adbc5ad746a4d23550dc5837a3406fb02}\label{classChatbox_adbc5ad746a4d23550dc5837a3406fb02}} 
+\index{Chatbox@{Chatbox}!addMessage@{addMessage}}
+\index{addMessage@{addMessage}!Chatbox@{Chatbox}}
+\doxysubsubsection{\texorpdfstring{addMessage()}{addMessage()}}
+{\footnotesize\ttfamily void Chatbox\+::add\+Message (\begin{DoxyParamCaption}\item[{std\+::string}]{team,  }\item[{std\+::string \&}]{id,  }\item[{std\+::string \&}]{message }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classChatbox_a02071c006c656e64f96daeb5ff874fd4}\label{classChatbox_a02071c006c656e64f96daeb5ff874fd4}} 
+\index{Chatbox@{Chatbox}!handleEvents@{handleEvents}}
+\index{handleEvents@{handleEvents}!Chatbox@{Chatbox}}
+\doxysubsubsection{\texorpdfstring{handleEvents()}{handleEvents()}}
+{\footnotesize\ttfamily void Chatbox\+::handle\+Events (\begin{DoxyParamCaption}\item[{sf\+::\+Event \&}]{event }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classChatbox_a58630f4f3389c04259f016372e0c2669}\label{classChatbox_a58630f4f3389c04259f016372e0c2669}} 
+\index{Chatbox@{Chatbox}!render@{render}}
+\index{render@{render}!Chatbox@{Chatbox}}
+\doxysubsubsection{\texorpdfstring{render()}{render()}}
+{\footnotesize\ttfamily void Chatbox\+::render (\begin{DoxyParamCaption}\item[{sf\+::\+Render\+Window \&}]{window }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classChatbox_aa97b4b1ce7f4baa61a665c9528d65af0}\label{classChatbox_aa97b4b1ce7f4baa61a665c9528d65af0}} 
+\index{Chatbox@{Chatbox}!setPosition@{setPosition}}
+\index{setPosition@{setPosition}!Chatbox@{Chatbox}}
+\doxysubsubsection{\texorpdfstring{setPosition()}{setPosition()}}
+{\footnotesize\ttfamily void Chatbox\+::set\+Position (\begin{DoxyParamCaption}\item[{sf\+::\+Vector2f}]{pos }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classChatbox_a5261f0a0657339b5d6659b5147eecacc}\label{classChatbox_a5261f0a0657339b5d6659b5147eecacc}} 
+\index{Chatbox@{Chatbox}!toggleChatbox@{toggleChatbox}}
+\index{toggleChatbox@{toggleChatbox}!Chatbox@{Chatbox}}
+\doxysubsubsection{\texorpdfstring{toggleChatbox()}{toggleChatbox()}}
+{\footnotesize\ttfamily void Chatbox\+::toggle\+Chatbox (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classChatbox_a93e88fd1a87ae5eccba83dd66c0f6814}\label{classChatbox_a93e88fd1a87ae5eccba83dd66c0f6814}} 
+\index{Chatbox@{Chatbox}!updatePositions@{updatePositions}}
+\index{updatePositions@{updatePositions}!Chatbox@{Chatbox}}
+\doxysubsubsection{\texorpdfstring{updatePositions()}{updatePositions()}}
+{\footnotesize\ttfamily void Chatbox\+::update\+Positions (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classChatbox_a7a4404681e4203cb7dcca4fc46170e06}\label{classChatbox_a7a4404681e4203cb7dcca4fc46170e06}} 
+\index{Chatbox@{Chatbox}!updateToggleButton@{updateToggleButton}}
+\index{updateToggleButton@{updateToggleButton}!Chatbox@{Chatbox}}
+\doxysubsubsection{\texorpdfstring{updateToggleButton()}{updateToggleButton()}}
+{\footnotesize\ttfamily void Chatbox\+::update\+Toggle\+Button (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classChatbox_af4a1921433690630076b8172b4eec5c8}\label{classChatbox_af4a1921433690630076b8172b4eec5c8}} 
+\index{Chatbox@{Chatbox}!background@{background}}
+\index{background@{background}!Chatbox@{Chatbox}}
+\doxysubsubsection{\texorpdfstring{background}{background}}
+{\footnotesize\ttfamily sf\+::\+Rectangle\+Shape Chatbox\+::background\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classChatbox_a18842c656083a010fcf254dd619bd916}\label{classChatbox_a18842c656083a010fcf254dd619bd916}} 
+\index{Chatbox@{Chatbox}!font@{font}}
+\index{font@{font}!Chatbox@{Chatbox}}
+\doxysubsubsection{\texorpdfstring{font}{font}}
+{\footnotesize\ttfamily sf\+::\+Font Chatbox\+::font\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classChatbox_a611e9fa0ae442b5045a142a4485a476e}\label{classChatbox_a611e9fa0ae442b5045a142a4485a476e}} 
+\index{Chatbox@{Chatbox}!header@{header}}
+\index{header@{header}!Chatbox@{Chatbox}}
+\doxysubsubsection{\texorpdfstring{header}{header}}
+{\footnotesize\ttfamily sf\+::\+Rectangle\+Shape Chatbox\+::header\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classChatbox_aa0c4c492fe5183f7a423b50244f7ecda}\label{classChatbox_aa0c4c492fe5183f7a423b50244f7ecda}} 
+\index{Chatbox@{Chatbox}!headerText@{headerText}}
+\index{headerText@{headerText}!Chatbox@{Chatbox}}
+\doxysubsubsection{\texorpdfstring{headerText}{headerText}}
+{\footnotesize\ttfamily sf\+::\+Text Chatbox\+::header\+Text\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classChatbox_a49b3a5951b2e76f8b142f07270c93667}\label{classChatbox_a49b3a5951b2e76f8b142f07270c93667}} 
+\index{Chatbox@{Chatbox}!height@{height}}
+\index{height@{height}!Chatbox@{Chatbox}}
+\doxysubsubsection{\texorpdfstring{height}{height}}
+{\footnotesize\ttfamily float Chatbox\+::height\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classChatbox_a26cc625669c80ee3e2dc72d81ab78c72}\label{classChatbox_a26cc625669c80ee3e2dc72d81ab78c72}} 
+\index{Chatbox@{Chatbox}!isOpen@{isOpen}}
+\index{isOpen@{isOpen}!Chatbox@{Chatbox}}
+\doxysubsubsection{\texorpdfstring{isOpen}{isOpen}}
+{\footnotesize\ttfamily bool Chatbox\+::is\+Open\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classChatbox_adc9e98063826b897d469075856a219fb}\label{classChatbox_adc9e98063826b897d469075856a219fb}} 
+\index{Chatbox@{Chatbox}!maxMessages@{maxMessages}}
+\index{maxMessages@{maxMessages}!Chatbox@{Chatbox}}
+\doxysubsubsection{\texorpdfstring{maxMessages}{maxMessages}}
+{\footnotesize\ttfamily long unsigned int Chatbox\+::max\+Messages\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classChatbox_a2afd47988e368c6bbb66e72bafa08417}\label{classChatbox_a2afd47988e368c6bbb66e72bafa08417}} 
+\index{Chatbox@{Chatbox}!messages@{messages}}
+\index{messages@{messages}!Chatbox@{Chatbox}}
+\doxysubsubsection{\texorpdfstring{messages}{messages}}
+{\footnotesize\ttfamily std\+::vector$<$sf\+::\+Rectangle\+Shape$>$ Chatbox\+::messages\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classChatbox_a7a74c37b452ad4756ae595deef14f000}\label{classChatbox_a7a74c37b452ad4756ae595deef14f000}} 
+\index{Chatbox@{Chatbox}!messageTexts@{messageTexts}}
+\index{messageTexts@{messageTexts}!Chatbox@{Chatbox}}
+\doxysubsubsection{\texorpdfstring{messageTexts}{messageTexts}}
+{\footnotesize\ttfamily std\+::vector$<$sf\+::\+Text$>$ Chatbox\+::message\+Texts\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classChatbox_a1f78fcf3846bbc165075892ee8556258}\label{classChatbox_a1f78fcf3846bbc165075892ee8556258}} 
+\index{Chatbox@{Chatbox}!position@{position}}
+\index{position@{position}!Chatbox@{Chatbox}}
+\doxysubsubsection{\texorpdfstring{position}{position}}
+{\footnotesize\ttfamily sf\+::\+Vector2f Chatbox\+::position\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classChatbox_a6ac10cda236bf99ff41167f4e762c907}\label{classChatbox_a6ac10cda236bf99ff41167f4e762c907}} 
+\index{Chatbox@{Chatbox}!toggleButton@{toggleButton}}
+\index{toggleButton@{toggleButton}!Chatbox@{Chatbox}}
+\doxysubsubsection{\texorpdfstring{toggleButton}{toggleButton}}
+{\footnotesize\ttfamily sf\+::\+Rectangle\+Shape Chatbox\+::toggle\+Button\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classChatbox_ae9b65e2c6be739fdc9fb6a6ab11f3402}\label{classChatbox_ae9b65e2c6be739fdc9fb6a6ab11f3402}} 
+\index{Chatbox@{Chatbox}!toggleButtonText@{toggleButtonText}}
+\index{toggleButtonText@{toggleButtonText}!Chatbox@{Chatbox}}
+\doxysubsubsection{\texorpdfstring{toggleButtonText}{toggleButtonText}}
+{\footnotesize\ttfamily sf\+::\+Text Chatbox\+::toggle\+Button\+Text\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classChatbox_a02eb5c89ea3830cd2f8e649f93acb932}\label{classChatbox_a02eb5c89ea3830cd2f8e649f93acb932}} 
+\index{Chatbox@{Chatbox}!width@{width}}
+\index{width@{width}!Chatbox@{Chatbox}}
+\doxysubsubsection{\texorpdfstring{width}{width}}
+{\footnotesize\ttfamily float Chatbox\+::width\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classChatbox_a33c9dc21096b0950da3dfe8d98edce45}\label{classChatbox_a33c9dc21096b0950da3dfe8d98edce45}} 
+\index{Chatbox@{Chatbox}!windowSize@{windowSize}}
+\index{windowSize@{windowSize}!Chatbox@{Chatbox}}
+\doxysubsubsection{\texorpdfstring{windowSize}{windowSize}}
+{\footnotesize\ttfamily sf\+::\+Vector2f Chatbox\+::window\+Size\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/\+Game/\+Interface/\mbox{\hyperlink{Chatbox_8hpp}{Chatbox.\+hpp}}\item 
+src/\+Game/\+Interface/\mbox{\hyperlink{Chatbox_8cpp}{Chatbox.\+cpp}}\end{DoxyCompactItemize}

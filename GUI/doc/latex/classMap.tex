@@ -1,0 +1,294 @@
+\hypertarget{classMap}{}\doxysection{Map Class Reference}
+\label{classMap}\index{Map@{Map}}
+
+
+\mbox{\hyperlink{classMap}{Map}} class.  
+
+
+
+
+{\ttfamily \#include $<$Map.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classMap_a7263de2a933b85da363bb3a269cfdf25}{Map}} (int \mbox{\hyperlink{classMap_a9ecfe932ad2d2bc22492416033bdacfd}{width}}, int \mbox{\hyperlink{classMap_a0546fef98caebe38385bb2e0c7a15da1}{height}}, int \mbox{\hyperlink{classMap_acf10f2ccdf7ca95147025f8a570fc78b}{window\+Size}})
+\begin{DoxyCompactList}\small\item\em Construct a new \mbox{\hyperlink{classMap}{Map}} object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classMap_ac994171254714ad2e8161f995b70e499}{$\sim$\+Map}} ()=default
+\begin{DoxyCompactList}\small\item\em Destroy the \mbox{\hyperlink{classMap}{Map}} object. \end{DoxyCompactList}\item 
+sf\+::\+Color \mbox{\hyperlink{classMap_a08a9c9fa2db62031a3c34b3210a1d757}{generate\+Random\+Color}} ()
+\begin{DoxyCompactList}\small\item\em Generate a random color. \end{DoxyCompactList}\item 
+sf\+::\+Color \mbox{\hyperlink{classMap_aebf5112b423c81e3919527058a6ecf66}{interpolate\+Color}} (sf\+::\+Color start, sf\+::\+Color end, float t)
+\begin{DoxyCompactList}\small\item\em Interpolate between two colors. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classMap_a9cb712f0d9f865d7a38ca2fcc5080d31}{update\+Colors}} (float time)
+\begin{DoxyCompactList}\small\item\em Update the colors of the tiles. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classMap_add29645c54c99110dbd8496f302842b9}{render\+Tiles}} (sf\+::\+Render\+Window \&window)
+\begin{DoxyCompactList}\small\item\em Render the tiles. \end{DoxyCompactList}\item 
+std\+::vector$<$ \mbox{\hyperlink{classTile}{Tile}} $>$ \& \mbox{\hyperlink{classMap_a6224feac905cfb21d4dd30d34774b07c}{get\+Tiles}} ()
+\begin{DoxyCompactList}\small\item\em Get the tiles. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classTile}{Tile}} \& \mbox{\hyperlink{classMap_ac2ed28918a64f9e5a651b73f204d8c4b}{get\+Tile}} (int x, int y)
+\begin{DoxyCompactList}\small\item\em Get the tile. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+sf\+::\+View \mbox{\hyperlink{classMap_a282c7420bfcd11205d04a3904bb81093}{view}}
+\item 
+int \mbox{\hyperlink{classMap_ab3d4b46d07c33a3120d46d0205b6ec68}{map\+Width\+In\+Pixels}}
+\item 
+int \mbox{\hyperlink{classMap_af833b9c8db907d222dcf0f0eae440c71}{map\+Height\+In\+Pixels}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{classMap_a9ecfe932ad2d2bc22492416033bdacfd}{width}}
+\item 
+int \mbox{\hyperlink{classMap_a0546fef98caebe38385bb2e0c7a15da1}{height}}
+\item 
+int \mbox{\hyperlink{classMap_ae686445a21a02aaf586633c5a69e8ff3}{tile\+Size}} = 90
+\item 
+int \mbox{\hyperlink{classMap_acf10f2ccdf7ca95147025f8a570fc78b}{window\+Size}} = 1200
+\item 
+float \mbox{\hyperlink{classMap_afe0a2fecbfbbe3d22e95e727e15c419d}{color\+Change\+Speed}} = 1.\+0f
+\item 
+float \mbox{\hyperlink{classMap_a82f8167286e3b8c636566f8e61c2c856}{last\+Color\+Change}} = 0.\+0f
+\item 
+sf\+::\+Color \mbox{\hyperlink{classMap_a509a6a7ddb87b87b24e01dde2ead56ce}{light\+Color}} = sf\+::\+Color(36, 76, 156)
+\item 
+sf\+::\+Color \mbox{\hyperlink{classMap_aaa73888ed0c9e8cd44014c573c4538c5}{dark\+Color}} = sf\+::\+Color(1, 39, 117)
+\item 
+std\+::vector$<$ \mbox{\hyperlink{classTile}{Tile}} $>$ \mbox{\hyperlink{classMap_ac0d564a48bcd62590621306751bae55d}{tiles}} = std\+::vector$<$\mbox{\hyperlink{classTile}{Tile}}$>$(\mbox{\hyperlink{classMap_a9ecfe932ad2d2bc22492416033bdacfd}{width}} $\ast$ \mbox{\hyperlink{classMap_a0546fef98caebe38385bb2e0c7a15da1}{height}})
+\item 
+std\+::vector$<$ sf\+::\+Color $>$ \mbox{\hyperlink{classMap_a8c93396b56902de22facf11e2f7f6d60}{current\+Colors}} = std\+::vector$<$sf\+::\+Color$>$(\mbox{\hyperlink{classMap_a9ecfe932ad2d2bc22492416033bdacfd}{width}} $\ast$ \mbox{\hyperlink{classMap_a0546fef98caebe38385bb2e0c7a15da1}{height}})
+\item 
+std\+::vector$<$ sf\+::\+Color $>$ \mbox{\hyperlink{classMap_a9c55b7b91908d8c85668a9e6d5ff99cb}{target\+Colors}} = std\+::vector$<$sf\+::\+Color$>$(\mbox{\hyperlink{classMap_a9ecfe932ad2d2bc22492416033bdacfd}{width}} $\ast$ \mbox{\hyperlink{classMap_a0546fef98caebe38385bb2e0c7a15da1}{height}})
+\item 
+std\+::vector$<$ float $>$ \mbox{\hyperlink{classMap_a43519f6332b9fb1b53832a60cbcd3cad}{phases}} = std\+::vector$<$float$>$(\mbox{\hyperlink{classMap_a9ecfe932ad2d2bc22492416033bdacfd}{width}} $\ast$ \mbox{\hyperlink{classMap_a0546fef98caebe38385bb2e0c7a15da1}{height}})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\mbox{\hyperlink{classMap}{Map}} class. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classMap_a7263de2a933b85da363bb3a269cfdf25}\label{classMap_a7263de2a933b85da363bb3a269cfdf25}} 
+\index{Map@{Map}!Map@{Map}}
+\index{Map@{Map}!Map@{Map}}
+\doxysubsubsection{\texorpdfstring{Map()}{Map()}}
+{\footnotesize\ttfamily Map\+::\+Map (\begin{DoxyParamCaption}\item[{int}]{width,  }\item[{int}]{height,  }\item[{int}]{window\+Size }\end{DoxyParamCaption})}
+
+
+
+Construct a new \mbox{\hyperlink{classMap}{Map}} object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em width} & The width of the map \\
+\hline
+{\em height} & The height of the map \\
+\hline
+{\em window\+Size} & The size of the window \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classMap_ac994171254714ad2e8161f995b70e499}\label{classMap_ac994171254714ad2e8161f995b70e499}} 
+\index{Map@{Map}!````~Map@{$\sim$Map}}
+\index{````~Map@{$\sim$Map}!Map@{Map}}
+\doxysubsubsection{\texorpdfstring{$\sim$Map()}{~Map()}}
+{\footnotesize\ttfamily Map\+::$\sim$\+Map (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+Destroy the \mbox{\hyperlink{classMap}{Map}} object. 
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classMap_a08a9c9fa2db62031a3c34b3210a1d757}\label{classMap_a08a9c9fa2db62031a3c34b3210a1d757}} 
+\index{Map@{Map}!generateRandomColor@{generateRandomColor}}
+\index{generateRandomColor@{generateRandomColor}!Map@{Map}}
+\doxysubsubsection{\texorpdfstring{generateRandomColor()}{generateRandomColor()}}
+{\footnotesize\ttfamily sf\+::\+Color Map\+::generate\+Random\+Color (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Generate a random color. 
+
+\begin{DoxyReturn}{Returns}
+sf\+::\+Color The generated color 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classMap_ac2ed28918a64f9e5a651b73f204d8c4b}\label{classMap_ac2ed28918a64f9e5a651b73f204d8c4b}} 
+\index{Map@{Map}!getTile@{getTile}}
+\index{getTile@{getTile}!Map@{Map}}
+\doxysubsubsection{\texorpdfstring{getTile()}{getTile()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classTile}{Tile}} \& Map\+::get\+Tile (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{y }\end{DoxyParamCaption})}
+
+
+
+Get the tile. 
+
+\begin{DoxyReturn}{Returns}
+std\+::vector$<$\+Tile$>$\& The tiles 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classMap_a6224feac905cfb21d4dd30d34774b07c}\label{classMap_a6224feac905cfb21d4dd30d34774b07c}} 
+\index{Map@{Map}!getTiles@{getTiles}}
+\index{getTiles@{getTiles}!Map@{Map}}
+\doxysubsubsection{\texorpdfstring{getTiles()}{getTiles()}}
+{\footnotesize\ttfamily std\+::vector$<$ \mbox{\hyperlink{classTile}{Tile}} $>$ \& Map\+::get\+Tiles (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get the tiles. 
+
+\begin{DoxyReturn}{Returns}
+std\+::vector$<$\+Tile$>$\& The tiles 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classMap_aebf5112b423c81e3919527058a6ecf66}\label{classMap_aebf5112b423c81e3919527058a6ecf66}} 
+\index{Map@{Map}!interpolateColor@{interpolateColor}}
+\index{interpolateColor@{interpolateColor}!Map@{Map}}
+\doxysubsubsection{\texorpdfstring{interpolateColor()}{interpolateColor()}}
+{\footnotesize\ttfamily sf\+::\+Color Map\+::interpolate\+Color (\begin{DoxyParamCaption}\item[{sf\+::\+Color}]{start,  }\item[{sf\+::\+Color}]{end,  }\item[{float}]{t }\end{DoxyParamCaption})}
+
+
+
+Interpolate between two colors. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em start} & The start color \\
+\hline
+{\em end} & The end color \\
+\hline
+{\em t} & The time \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+sf\+::\+Color The interpolated color 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classMap_add29645c54c99110dbd8496f302842b9}\label{classMap_add29645c54c99110dbd8496f302842b9}} 
+\index{Map@{Map}!renderTiles@{renderTiles}}
+\index{renderTiles@{renderTiles}!Map@{Map}}
+\doxysubsubsection{\texorpdfstring{renderTiles()}{renderTiles()}}
+{\footnotesize\ttfamily void Map\+::render\+Tiles (\begin{DoxyParamCaption}\item[{sf\+::\+Render\+Window \&}]{window }\end{DoxyParamCaption})}
+
+
+
+Render the tiles. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em window} & The window to render the tiles on \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classMap_a9cb712f0d9f865d7a38ca2fcc5080d31}\label{classMap_a9cb712f0d9f865d7a38ca2fcc5080d31}} 
+\index{Map@{Map}!updateColors@{updateColors}}
+\index{updateColors@{updateColors}!Map@{Map}}
+\doxysubsubsection{\texorpdfstring{updateColors()}{updateColors()}}
+{\footnotesize\ttfamily void Map\+::update\+Colors (\begin{DoxyParamCaption}\item[{float}]{time }\end{DoxyParamCaption})}
+
+
+
+Update the colors of the tiles. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em time} & The time \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classMap_afe0a2fecbfbbe3d22e95e727e15c419d}\label{classMap_afe0a2fecbfbbe3d22e95e727e15c419d}} 
+\index{Map@{Map}!colorChangeSpeed@{colorChangeSpeed}}
+\index{colorChangeSpeed@{colorChangeSpeed}!Map@{Map}}
+\doxysubsubsection{\texorpdfstring{colorChangeSpeed}{colorChangeSpeed}}
+{\footnotesize\ttfamily float Map\+::color\+Change\+Speed = 1.\+0f\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classMap_a8c93396b56902de22facf11e2f7f6d60}\label{classMap_a8c93396b56902de22facf11e2f7f6d60}} 
+\index{Map@{Map}!currentColors@{currentColors}}
+\index{currentColors@{currentColors}!Map@{Map}}
+\doxysubsubsection{\texorpdfstring{currentColors}{currentColors}}
+{\footnotesize\ttfamily std\+::vector$<$sf\+::\+Color$>$ Map\+::current\+Colors = std\+::vector$<$sf\+::\+Color$>$(\mbox{\hyperlink{classMap_a9ecfe932ad2d2bc22492416033bdacfd}{width}} $\ast$ \mbox{\hyperlink{classMap_a0546fef98caebe38385bb2e0c7a15da1}{height}})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classMap_aaa73888ed0c9e8cd44014c573c4538c5}\label{classMap_aaa73888ed0c9e8cd44014c573c4538c5}} 
+\index{Map@{Map}!darkColor@{darkColor}}
+\index{darkColor@{darkColor}!Map@{Map}}
+\doxysubsubsection{\texorpdfstring{darkColor}{darkColor}}
+{\footnotesize\ttfamily sf\+::\+Color Map\+::dark\+Color = sf\+::\+Color(1, 39, 117)\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classMap_a0546fef98caebe38385bb2e0c7a15da1}\label{classMap_a0546fef98caebe38385bb2e0c7a15da1}} 
+\index{Map@{Map}!height@{height}}
+\index{height@{height}!Map@{Map}}
+\doxysubsubsection{\texorpdfstring{height}{height}}
+{\footnotesize\ttfamily int Map\+::height\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classMap_a82f8167286e3b8c636566f8e61c2c856}\label{classMap_a82f8167286e3b8c636566f8e61c2c856}} 
+\index{Map@{Map}!lastColorChange@{lastColorChange}}
+\index{lastColorChange@{lastColorChange}!Map@{Map}}
+\doxysubsubsection{\texorpdfstring{lastColorChange}{lastColorChange}}
+{\footnotesize\ttfamily float Map\+::last\+Color\+Change = 0.\+0f\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classMap_a509a6a7ddb87b87b24e01dde2ead56ce}\label{classMap_a509a6a7ddb87b87b24e01dde2ead56ce}} 
+\index{Map@{Map}!lightColor@{lightColor}}
+\index{lightColor@{lightColor}!Map@{Map}}
+\doxysubsubsection{\texorpdfstring{lightColor}{lightColor}}
+{\footnotesize\ttfamily sf\+::\+Color Map\+::light\+Color = sf\+::\+Color(36, 76, 156)\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classMap_af833b9c8db907d222dcf0f0eae440c71}\label{classMap_af833b9c8db907d222dcf0f0eae440c71}} 
+\index{Map@{Map}!mapHeightInPixels@{mapHeightInPixels}}
+\index{mapHeightInPixels@{mapHeightInPixels}!Map@{Map}}
+\doxysubsubsection{\texorpdfstring{mapHeightInPixels}{mapHeightInPixels}}
+{\footnotesize\ttfamily int Map\+::map\+Height\+In\+Pixels}
+
+\mbox{\Hypertarget{classMap_ab3d4b46d07c33a3120d46d0205b6ec68}\label{classMap_ab3d4b46d07c33a3120d46d0205b6ec68}} 
+\index{Map@{Map}!mapWidthInPixels@{mapWidthInPixels}}
+\index{mapWidthInPixels@{mapWidthInPixels}!Map@{Map}}
+\doxysubsubsection{\texorpdfstring{mapWidthInPixels}{mapWidthInPixels}}
+{\footnotesize\ttfamily int Map\+::map\+Width\+In\+Pixels}
+
+\mbox{\Hypertarget{classMap_a43519f6332b9fb1b53832a60cbcd3cad}\label{classMap_a43519f6332b9fb1b53832a60cbcd3cad}} 
+\index{Map@{Map}!phases@{phases}}
+\index{phases@{phases}!Map@{Map}}
+\doxysubsubsection{\texorpdfstring{phases}{phases}}
+{\footnotesize\ttfamily std\+::vector$<$float$>$ Map\+::phases = std\+::vector$<$float$>$(\mbox{\hyperlink{classMap_a9ecfe932ad2d2bc22492416033bdacfd}{width}} $\ast$ \mbox{\hyperlink{classMap_a0546fef98caebe38385bb2e0c7a15da1}{height}})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classMap_a9c55b7b91908d8c85668a9e6d5ff99cb}\label{classMap_a9c55b7b91908d8c85668a9e6d5ff99cb}} 
+\index{Map@{Map}!targetColors@{targetColors}}
+\index{targetColors@{targetColors}!Map@{Map}}
+\doxysubsubsection{\texorpdfstring{targetColors}{targetColors}}
+{\footnotesize\ttfamily std\+::vector$<$sf\+::\+Color$>$ Map\+::target\+Colors = std\+::vector$<$sf\+::\+Color$>$(\mbox{\hyperlink{classMap_a9ecfe932ad2d2bc22492416033bdacfd}{width}} $\ast$ \mbox{\hyperlink{classMap_a0546fef98caebe38385bb2e0c7a15da1}{height}})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classMap_ac0d564a48bcd62590621306751bae55d}\label{classMap_ac0d564a48bcd62590621306751bae55d}} 
+\index{Map@{Map}!tiles@{tiles}}
+\index{tiles@{tiles}!Map@{Map}}
+\doxysubsubsection{\texorpdfstring{tiles}{tiles}}
+{\footnotesize\ttfamily std\+::vector$<$\mbox{\hyperlink{classTile}{Tile}}$>$ Map\+::tiles = std\+::vector$<$\mbox{\hyperlink{classTile}{Tile}}$>$(\mbox{\hyperlink{classMap_a9ecfe932ad2d2bc22492416033bdacfd}{width}} $\ast$ \mbox{\hyperlink{classMap_a0546fef98caebe38385bb2e0c7a15da1}{height}})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classMap_ae686445a21a02aaf586633c5a69e8ff3}\label{classMap_ae686445a21a02aaf586633c5a69e8ff3}} 
+\index{Map@{Map}!tileSize@{tileSize}}
+\index{tileSize@{tileSize}!Map@{Map}}
+\doxysubsubsection{\texorpdfstring{tileSize}{tileSize}}
+{\footnotesize\ttfamily int Map\+::tile\+Size = 90\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classMap_a282c7420bfcd11205d04a3904bb81093}\label{classMap_a282c7420bfcd11205d04a3904bb81093}} 
+\index{Map@{Map}!view@{view}}
+\index{view@{view}!Map@{Map}}
+\doxysubsubsection{\texorpdfstring{view}{view}}
+{\footnotesize\ttfamily sf\+::\+View Map\+::view}
+
+\mbox{\Hypertarget{classMap_a9ecfe932ad2d2bc22492416033bdacfd}\label{classMap_a9ecfe932ad2d2bc22492416033bdacfd}} 
+\index{Map@{Map}!width@{width}}
+\index{width@{width}!Map@{Map}}
+\doxysubsubsection{\texorpdfstring{width}{width}}
+{\footnotesize\ttfamily int Map\+::width\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classMap_acf10f2ccdf7ca95147025f8a570fc78b}\label{classMap_acf10f2ccdf7ca95147025f8a570fc78b}} 
+\index{Map@{Map}!windowSize@{windowSize}}
+\index{windowSize@{windowSize}!Map@{Map}}
+\doxysubsubsection{\texorpdfstring{windowSize}{windowSize}}
+{\footnotesize\ttfamily int Map\+::window\+Size = 1200\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/\+Game/\+Map/\mbox{\hyperlink{Map_8hpp}{Map.\+hpp}}\item 
+src/\+Game/\+Map/\mbox{\hyperlink{Map_8cpp}{Map.\+cpp}}\end{DoxyCompactItemize}

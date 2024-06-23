@@ -1,0 +1,443 @@
+\hypertarget{classTile}{}\doxysection{Tile Class Reference}
+\label{classTile}\index{Tile@{Tile}}
+
+
+\mbox{\hyperlink{classTile}{Tile}} class.  
+
+
+
+
+{\ttfamily \#include $<$Tile.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classTile_a0874b3d768557b6717d16c5afaaabbbf}{Tile}} (sf\+::\+Vector2i \mbox{\hyperlink{classTile_a47c996eb9ce1b4e01e27971f078b30e3}{size}}=sf\+::\+Vector2i(90, 90), sf\+::\+Vector2i \mbox{\hyperlink{classTile_acf7dda9a45f387cff4fe0ae26ad87340}{pos}}=sf\+::\+Vector2i(0, 0), int \mbox{\hyperlink{classTile_ab1272df525c2cfbb605cc9a69d07bce4}{q0}}=0, int \mbox{\hyperlink{classTile_a771755d5e30ad10de97f235a8c00b0f6}{q1}}=0, int \mbox{\hyperlink{classTile_a94064fe26285a3768ecb63cba2467440}{q2}}=0, int \mbox{\hyperlink{classTile_af970296fc36014b13e3cfe7005f1ce61}{q3}}=0, int \mbox{\hyperlink{classTile_a98f87ad2dbd576c58763f83af49c35f5}{q4}}=0, int \mbox{\hyperlink{classTile_ac970c13e3a253da129b946c7b41df954}{q5}}=0, int \mbox{\hyperlink{classTile_aae592182ed324a044c7f10a821497bbf}{q6}}=0)
+\begin{DoxyCompactList}\small\item\em Construct a new \mbox{\hyperlink{classTile}{Tile}} object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classTile_a227102d4a689745589e198209bffa04e}{$\sim$\+Tile}} ()=default
+\begin{DoxyCompactList}\small\item\em Destroy the \mbox{\hyperlink{classTile}{Tile}} object. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classTile_aa27b0586f4e5ff4c8c5afae0e2982f6a}{add\+Item}} (int item)
+\begin{DoxyCompactList}\small\item\em Add an item to the tile. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classTile_add700de3256e0a25f06b0996b8a3fb13}{remove\+Item}} (int item)
+\begin{DoxyCompactList}\small\item\em Remove an item from the tile. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classTile_aed015b5a2d935fbbd5f52241d8f1b317}{get\+Items\+Quantity}} (int item)
+\begin{DoxyCompactList}\small\item\em Get the quantity of an item. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classTile_a7e6d4746f0669b8e037ba9ebbea76be7}{set\+All\+Items\+Quantity}} (int \mbox{\hyperlink{classTile_ab1272df525c2cfbb605cc9a69d07bce4}{q0}}, int \mbox{\hyperlink{classTile_a771755d5e30ad10de97f235a8c00b0f6}{q1}}, int \mbox{\hyperlink{classTile_a94064fe26285a3768ecb63cba2467440}{q2}}, int \mbox{\hyperlink{classTile_af970296fc36014b13e3cfe7005f1ce61}{q3}}, int \mbox{\hyperlink{classTile_a98f87ad2dbd576c58763f83af49c35f5}{q4}}, int \mbox{\hyperlink{classTile_ac970c13e3a253da129b946c7b41df954}{q5}}, int \mbox{\hyperlink{classTile_aae592182ed324a044c7f10a821497bbf}{q6}})
+\begin{DoxyCompactList}\small\item\em Set the quantity of all items. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classTile_a6302191e8694d9d61f8db38122e5a7f9}{set\+Item\+Quantity}} (int item, int quantity)
+\begin{DoxyCompactList}\small\item\em Set the quantity of an item. \end{DoxyCompactList}\item 
+sf\+::\+Vector2i \mbox{\hyperlink{classTile_a1ffdb0014d631578b18b7fdcbdb96fa7}{get\+Pos}} ()
+\begin{DoxyCompactList}\small\item\em Get the position of the tile. \end{DoxyCompactList}\item 
+sf\+::\+Rectangle\+Shape \mbox{\hyperlink{classTile_ab1f75a528ea0db5e133cd913288c0405}{get\+Shape}} ()
+\begin{DoxyCompactList}\small\item\em Get the shape of the tile. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classTile_a02e1fb4e3b7789f5fb343a1916a942bc}{set\+Fill\+Color}} (sf\+::\+Color color)
+\begin{DoxyCompactList}\small\item\em Set the fill color of the tile. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classTile_ab30937b8e69c8a64b356724a46d411e5}{set\+Pos}} (sf\+::\+Vector2i \mbox{\hyperlink{classTile_acf7dda9a45f387cff4fe0ae26ad87340}{pos}})
+\begin{DoxyCompactList}\small\item\em Set the position of the tile. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classTile_a96803c743e6ee6ae18ed976e41b89fea}{load\+\_\+sprites}} ()
+\begin{DoxyCompactList}\small\item\em Load the sprites. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classTile_aeb11f91dbeed903d1aa4e03d93908595}{draw}} (sf\+::\+Render\+Window \&window)
+\begin{DoxyCompactList}\small\item\em Draw the tile. \end{DoxyCompactList}\item 
+std\+::map$<$ std\+::string, int $>$ \& \mbox{\hyperlink{classTile_aeff7e739ab83b6cd75f278b824b1586f}{get\+Egg}} ()
+\begin{DoxyCompactList}\small\item\em Get the number of eggs. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classTile_af45d6ec3da1d4f0fbdd6db676d04090d}{remove\+Egg}} (std\+::string id)
+\begin{DoxyCompactList}\small\item\em Remove the egg. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classTile_afe9d6aa343fda2c192f23b3823e963bd}{add\+Egg}} (std\+::string id, int quantity)
+\begin{DoxyCompactList}\small\item\em Add a egg. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+sf\+::\+Vector2i \mbox{\hyperlink{classTile_acf7dda9a45f387cff4fe0ae26ad87340}{pos}}
+\item 
+sf\+::\+Vector2i \mbox{\hyperlink{classTile_a47c996eb9ce1b4e01e27971f078b30e3}{size}}
+\item 
+sf\+::\+Rectangle\+Shape \mbox{\hyperlink{classTile_ad56264e210aec7246598a3d9b2f03762}{shape}}
+\item 
+int \mbox{\hyperlink{classTile_ae185d6b7741c8d54e3bd8360bbb6ddda}{tile\+Size}} = 90
+\item 
+int \mbox{\hyperlink{classTile_a06b8d12c526ef9366e96dcfb5dffee9e}{q\+All}}
+\item 
+int \mbox{\hyperlink{classTile_ab1272df525c2cfbb605cc9a69d07bce4}{q0}}
+\item 
+int \mbox{\hyperlink{classTile_a771755d5e30ad10de97f235a8c00b0f6}{q1}}
+\item 
+int \mbox{\hyperlink{classTile_a94064fe26285a3768ecb63cba2467440}{q2}}
+\item 
+int \mbox{\hyperlink{classTile_af970296fc36014b13e3cfe7005f1ce61}{q3}}
+\item 
+int \mbox{\hyperlink{classTile_a98f87ad2dbd576c58763f83af49c35f5}{q4}}
+\item 
+int \mbox{\hyperlink{classTile_ac970c13e3a253da129b946c7b41df954}{q5}}
+\item 
+int \mbox{\hyperlink{classTile_aae592182ed324a044c7f10a821497bbf}{q6}}
+\item 
+std\+::map$<$ std\+::string, int $>$ \mbox{\hyperlink{classTile_affe7f7ea89a9e717f61bb3a449cf5404}{eggs}}
+\item 
+std\+::map$<$ std\+::string, std\+::shared\+\_\+ptr$<$ sf\+::\+Texture $>$ $>$ \mbox{\hyperlink{classTile_aacccff8391e4142056358cbd61ff0699}{textures}}
+\item 
+std\+::map$<$ std\+::string, std\+::shared\+\_\+ptr$<$ sf\+::\+Sprite $>$ $>$ \mbox{\hyperlink{classTile_afcbc6760e62597a42c184cc42685ff67}{items}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\mbox{\hyperlink{classTile}{Tile}} class. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classTile_a0874b3d768557b6717d16c5afaaabbbf}\label{classTile_a0874b3d768557b6717d16c5afaaabbbf}} 
+\index{Tile@{Tile}!Tile@{Tile}}
+\index{Tile@{Tile}!Tile@{Tile}}
+\doxysubsubsection{\texorpdfstring{Tile()}{Tile()}}
+{\footnotesize\ttfamily Tile\+::\+Tile (\begin{DoxyParamCaption}\item[{sf\+::\+Vector2i}]{size = {\ttfamily sf\+:\+:Vector2i(90,90)},  }\item[{sf\+::\+Vector2i}]{pos = {\ttfamily sf\+:\+:Vector2i(0,0)},  }\item[{int}]{q0 = {\ttfamily 0},  }\item[{int}]{q1 = {\ttfamily 0},  }\item[{int}]{q2 = {\ttfamily 0},  }\item[{int}]{q3 = {\ttfamily 0},  }\item[{int}]{q4 = {\ttfamily 0},  }\item[{int}]{q5 = {\ttfamily 0},  }\item[{int}]{q6 = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+
+Construct a new \mbox{\hyperlink{classTile}{Tile}} object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em size} & The size of the tile \\
+\hline
+{\em pos} & The position of the tile \\
+\hline
+{\em q0} & The quantity of food \\
+\hline
+{\em q1} & The quantity of linemate \\
+\hline
+{\em q2} & The quantity of deraumere \\
+\hline
+{\em q3} & The quantity of sibur \\
+\hline
+{\em q4} & The quantity of mendiane \\
+\hline
+{\em q5} & The quantity of phiras \\
+\hline
+{\em q6} & The quantity of thystame \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classTile_a227102d4a689745589e198209bffa04e}\label{classTile_a227102d4a689745589e198209bffa04e}} 
+\index{Tile@{Tile}!````~Tile@{$\sim$Tile}}
+\index{````~Tile@{$\sim$Tile}!Tile@{Tile}}
+\doxysubsubsection{\texorpdfstring{$\sim$Tile()}{~Tile()}}
+{\footnotesize\ttfamily Tile\+::$\sim$\+Tile (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+Destroy the \mbox{\hyperlink{classTile}{Tile}} object. 
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classTile_afe9d6aa343fda2c192f23b3823e963bd}\label{classTile_afe9d6aa343fda2c192f23b3823e963bd}} 
+\index{Tile@{Tile}!addEgg@{addEgg}}
+\index{addEgg@{addEgg}!Tile@{Tile}}
+\doxysubsubsection{\texorpdfstring{addEgg()}{addEgg()}}
+{\footnotesize\ttfamily void Tile\+::add\+Egg (\begin{DoxyParamCaption}\item[{std\+::string}]{id,  }\item[{int}]{quantity }\end{DoxyParamCaption})}
+
+
+
+Add a egg. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & Id of egg \\
+\hline
+{\em quantity} & Quantity of egg \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classTile_aa27b0586f4e5ff4c8c5afae0e2982f6a}\label{classTile_aa27b0586f4e5ff4c8c5afae0e2982f6a}} 
+\index{Tile@{Tile}!addItem@{addItem}}
+\index{addItem@{addItem}!Tile@{Tile}}
+\doxysubsubsection{\texorpdfstring{addItem()}{addItem()}}
+{\footnotesize\ttfamily void Tile\+::add\+Item (\begin{DoxyParamCaption}\item[{int}]{item }\end{DoxyParamCaption})}
+
+
+
+Add an item to the tile. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & The item being the index or nb of the item (ex\+: 0 for food, 1 for linemate, etc..) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classTile_aeb11f91dbeed903d1aa4e03d93908595}\label{classTile_aeb11f91dbeed903d1aa4e03d93908595}} 
+\index{Tile@{Tile}!draw@{draw}}
+\index{draw@{draw}!Tile@{Tile}}
+\doxysubsubsection{\texorpdfstring{draw()}{draw()}}
+{\footnotesize\ttfamily void Tile\+::draw (\begin{DoxyParamCaption}\item[{sf\+::\+Render\+Window \&}]{window }\end{DoxyParamCaption})}
+
+
+
+Draw the tile. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em window} & The window to draw the tile on \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classTile_aeff7e739ab83b6cd75f278b824b1586f}\label{classTile_aeff7e739ab83b6cd75f278b824b1586f}} 
+\index{Tile@{Tile}!getEgg@{getEgg}}
+\index{getEgg@{getEgg}!Tile@{Tile}}
+\doxysubsubsection{\texorpdfstring{getEgg()}{getEgg()}}
+{\footnotesize\ttfamily std\+::map$<$ std\+::string, int $>$ \& Tile\+::get\+Egg (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get the number of eggs. 
+
+\mbox{\Hypertarget{classTile_aed015b5a2d935fbbd5f52241d8f1b317}\label{classTile_aed015b5a2d935fbbd5f52241d8f1b317}} 
+\index{Tile@{Tile}!getItemsQuantity@{getItemsQuantity}}
+\index{getItemsQuantity@{getItemsQuantity}!Tile@{Tile}}
+\doxysubsubsection{\texorpdfstring{getItemsQuantity()}{getItemsQuantity()}}
+{\footnotesize\ttfamily int Tile\+::get\+Items\+Quantity (\begin{DoxyParamCaption}\item[{int}]{item }\end{DoxyParamCaption})}
+
+
+
+Get the quantity of an item. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & The item being the index or nb of the item (ex\+: 0 for food, 1 for linemate, etc..) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int The quantity of the item 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classTile_a1ffdb0014d631578b18b7fdcbdb96fa7}\label{classTile_a1ffdb0014d631578b18b7fdcbdb96fa7}} 
+\index{Tile@{Tile}!getPos@{getPos}}
+\index{getPos@{getPos}!Tile@{Tile}}
+\doxysubsubsection{\texorpdfstring{getPos()}{getPos()}}
+{\footnotesize\ttfamily sf\+::\+Vector2i Tile\+::get\+Pos (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get the position of the tile. 
+
+\begin{DoxyReturn}{Returns}
+sf\+::\+Vector2i The position of the tile 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classTile_ab1f75a528ea0db5e133cd913288c0405}\label{classTile_ab1f75a528ea0db5e133cd913288c0405}} 
+\index{Tile@{Tile}!getShape@{getShape}}
+\index{getShape@{getShape}!Tile@{Tile}}
+\doxysubsubsection{\texorpdfstring{getShape()}{getShape()}}
+{\footnotesize\ttfamily sf\+::\+Rectangle\+Shape Tile\+::get\+Shape (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get the shape of the tile. 
+
+\begin{DoxyReturn}{Returns}
+sf\+::\+Rectangle\+Shape The shape of the tile 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classTile_a96803c743e6ee6ae18ed976e41b89fea}\label{classTile_a96803c743e6ee6ae18ed976e41b89fea}} 
+\index{Tile@{Tile}!load\_sprites@{load\_sprites}}
+\index{load\_sprites@{load\_sprites}!Tile@{Tile}}
+\doxysubsubsection{\texorpdfstring{load\_sprites()}{load\_sprites()}}
+{\footnotesize\ttfamily void Tile\+::load\+\_\+sprites (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Load the sprites. 
+
+\mbox{\Hypertarget{classTile_af45d6ec3da1d4f0fbdd6db676d04090d}\label{classTile_af45d6ec3da1d4f0fbdd6db676d04090d}} 
+\index{Tile@{Tile}!removeEgg@{removeEgg}}
+\index{removeEgg@{removeEgg}!Tile@{Tile}}
+\doxysubsubsection{\texorpdfstring{removeEgg()}{removeEgg()}}
+{\footnotesize\ttfamily void Tile\+::remove\+Egg (\begin{DoxyParamCaption}\item[{std\+::string}]{id }\end{DoxyParamCaption})}
+
+
+
+Remove the egg. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & Id of egg \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classTile_add700de3256e0a25f06b0996b8a3fb13}\label{classTile_add700de3256e0a25f06b0996b8a3fb13}} 
+\index{Tile@{Tile}!removeItem@{removeItem}}
+\index{removeItem@{removeItem}!Tile@{Tile}}
+\doxysubsubsection{\texorpdfstring{removeItem()}{removeItem()}}
+{\footnotesize\ttfamily void Tile\+::remove\+Item (\begin{DoxyParamCaption}\item[{int}]{item }\end{DoxyParamCaption})}
+
+
+
+Remove an item from the tile. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & The item being the index or nb of the item (ex\+: 0 for food, 1 for linemate, etc..) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classTile_a7e6d4746f0669b8e037ba9ebbea76be7}\label{classTile_a7e6d4746f0669b8e037ba9ebbea76be7}} 
+\index{Tile@{Tile}!setAllItemsQuantity@{setAllItemsQuantity}}
+\index{setAllItemsQuantity@{setAllItemsQuantity}!Tile@{Tile}}
+\doxysubsubsection{\texorpdfstring{setAllItemsQuantity()}{setAllItemsQuantity()}}
+{\footnotesize\ttfamily void Tile\+::set\+All\+Items\+Quantity (\begin{DoxyParamCaption}\item[{int}]{q0,  }\item[{int}]{q1,  }\item[{int}]{q2,  }\item[{int}]{q3,  }\item[{int}]{q4,  }\item[{int}]{q5,  }\item[{int}]{q6 }\end{DoxyParamCaption})}
+
+
+
+Set the quantity of all items. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em q0} & The quantity of food \\
+\hline
+{\em q1} & The quantity of linemate \\
+\hline
+{\em q2} & The quantity of deraumere \\
+\hline
+{\em q3} & The quantity of sibur \\
+\hline
+{\em q4} & The quantity of mendiane \\
+\hline
+{\em q5} & The quantity of phiras \\
+\hline
+{\em q6} & The quantity of thystame \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classTile_a02e1fb4e3b7789f5fb343a1916a942bc}\label{classTile_a02e1fb4e3b7789f5fb343a1916a942bc}} 
+\index{Tile@{Tile}!setFillColor@{setFillColor}}
+\index{setFillColor@{setFillColor}!Tile@{Tile}}
+\doxysubsubsection{\texorpdfstring{setFillColor()}{setFillColor()}}
+{\footnotesize\ttfamily void Tile\+::set\+Fill\+Color (\begin{DoxyParamCaption}\item[{sf\+::\+Color}]{color }\end{DoxyParamCaption})}
+
+
+
+Set the fill color of the tile. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em color} & The color to set \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classTile_a6302191e8694d9d61f8db38122e5a7f9}\label{classTile_a6302191e8694d9d61f8db38122e5a7f9}} 
+\index{Tile@{Tile}!setItemQuantity@{setItemQuantity}}
+\index{setItemQuantity@{setItemQuantity}!Tile@{Tile}}
+\doxysubsubsection{\texorpdfstring{setItemQuantity()}{setItemQuantity()}}
+{\footnotesize\ttfamily void Tile\+::set\+Item\+Quantity (\begin{DoxyParamCaption}\item[{int}]{item,  }\item[{int}]{quantity }\end{DoxyParamCaption})}
+
+
+
+Set the quantity of an item. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & The item being the index or nb of the item (ex\+: 0 for food, 1 for linemate, etc..) \\
+\hline
+{\em quantity} & The quantity of the item \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classTile_ab30937b8e69c8a64b356724a46d411e5}\label{classTile_ab30937b8e69c8a64b356724a46d411e5}} 
+\index{Tile@{Tile}!setPos@{setPos}}
+\index{setPos@{setPos}!Tile@{Tile}}
+\doxysubsubsection{\texorpdfstring{setPos()}{setPos()}}
+{\footnotesize\ttfamily void Tile\+::set\+Pos (\begin{DoxyParamCaption}\item[{sf\+::\+Vector2i}]{pos }\end{DoxyParamCaption})}
+
+
+
+Set the position of the tile. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pos} & The position to set \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classTile_affe7f7ea89a9e717f61bb3a449cf5404}\label{classTile_affe7f7ea89a9e717f61bb3a449cf5404}} 
+\index{Tile@{Tile}!eggs@{eggs}}
+\index{eggs@{eggs}!Tile@{Tile}}
+\doxysubsubsection{\texorpdfstring{eggs}{eggs}}
+{\footnotesize\ttfamily std\+::map$<$std\+::string, int$>$ Tile\+::eggs\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTile_afcbc6760e62597a42c184cc42685ff67}\label{classTile_afcbc6760e62597a42c184cc42685ff67}} 
+\index{Tile@{Tile}!items@{items}}
+\index{items@{items}!Tile@{Tile}}
+\doxysubsubsection{\texorpdfstring{items}{items}}
+{\footnotesize\ttfamily std\+::map$<$std\+::string, std\+::shared\+\_\+ptr$<$sf\+::\+Sprite$>$ $>$ Tile\+::items\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTile_acf7dda9a45f387cff4fe0ae26ad87340}\label{classTile_acf7dda9a45f387cff4fe0ae26ad87340}} 
+\index{Tile@{Tile}!pos@{pos}}
+\index{pos@{pos}!Tile@{Tile}}
+\doxysubsubsection{\texorpdfstring{pos}{pos}}
+{\footnotesize\ttfamily sf\+::\+Vector2i Tile\+::pos\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTile_ab1272df525c2cfbb605cc9a69d07bce4}\label{classTile_ab1272df525c2cfbb605cc9a69d07bce4}} 
+\index{Tile@{Tile}!q0@{q0}}
+\index{q0@{q0}!Tile@{Tile}}
+\doxysubsubsection{\texorpdfstring{q0}{q0}}
+{\footnotesize\ttfamily int Tile\+::q0\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTile_a771755d5e30ad10de97f235a8c00b0f6}\label{classTile_a771755d5e30ad10de97f235a8c00b0f6}} 
+\index{Tile@{Tile}!q1@{q1}}
+\index{q1@{q1}!Tile@{Tile}}
+\doxysubsubsection{\texorpdfstring{q1}{q1}}
+{\footnotesize\ttfamily int Tile\+::q1\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTile_a94064fe26285a3768ecb63cba2467440}\label{classTile_a94064fe26285a3768ecb63cba2467440}} 
+\index{Tile@{Tile}!q2@{q2}}
+\index{q2@{q2}!Tile@{Tile}}
+\doxysubsubsection{\texorpdfstring{q2}{q2}}
+{\footnotesize\ttfamily int Tile\+::q2\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTile_af970296fc36014b13e3cfe7005f1ce61}\label{classTile_af970296fc36014b13e3cfe7005f1ce61}} 
+\index{Tile@{Tile}!q3@{q3}}
+\index{q3@{q3}!Tile@{Tile}}
+\doxysubsubsection{\texorpdfstring{q3}{q3}}
+{\footnotesize\ttfamily int Tile\+::q3\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTile_a98f87ad2dbd576c58763f83af49c35f5}\label{classTile_a98f87ad2dbd576c58763f83af49c35f5}} 
+\index{Tile@{Tile}!q4@{q4}}
+\index{q4@{q4}!Tile@{Tile}}
+\doxysubsubsection{\texorpdfstring{q4}{q4}}
+{\footnotesize\ttfamily int Tile\+::q4\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTile_ac970c13e3a253da129b946c7b41df954}\label{classTile_ac970c13e3a253da129b946c7b41df954}} 
+\index{Tile@{Tile}!q5@{q5}}
+\index{q5@{q5}!Tile@{Tile}}
+\doxysubsubsection{\texorpdfstring{q5}{q5}}
+{\footnotesize\ttfamily int Tile\+::q5\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTile_aae592182ed324a044c7f10a821497bbf}\label{classTile_aae592182ed324a044c7f10a821497bbf}} 
+\index{Tile@{Tile}!q6@{q6}}
+\index{q6@{q6}!Tile@{Tile}}
+\doxysubsubsection{\texorpdfstring{q6}{q6}}
+{\footnotesize\ttfamily int Tile\+::q6\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTile_a06b8d12c526ef9366e96dcfb5dffee9e}\label{classTile_a06b8d12c526ef9366e96dcfb5dffee9e}} 
+\index{Tile@{Tile}!qAll@{qAll}}
+\index{qAll@{qAll}!Tile@{Tile}}
+\doxysubsubsection{\texorpdfstring{qAll}{qAll}}
+{\footnotesize\ttfamily int Tile\+::q\+All\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTile_ad56264e210aec7246598a3d9b2f03762}\label{classTile_ad56264e210aec7246598a3d9b2f03762}} 
+\index{Tile@{Tile}!shape@{shape}}
+\index{shape@{shape}!Tile@{Tile}}
+\doxysubsubsection{\texorpdfstring{shape}{shape}}
+{\footnotesize\ttfamily sf\+::\+Rectangle\+Shape Tile\+::shape\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTile_a47c996eb9ce1b4e01e27971f078b30e3}\label{classTile_a47c996eb9ce1b4e01e27971f078b30e3}} 
+\index{Tile@{Tile}!size@{size}}
+\index{size@{size}!Tile@{Tile}}
+\doxysubsubsection{\texorpdfstring{size}{size}}
+{\footnotesize\ttfamily sf\+::\+Vector2i Tile\+::size\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTile_aacccff8391e4142056358cbd61ff0699}\label{classTile_aacccff8391e4142056358cbd61ff0699}} 
+\index{Tile@{Tile}!textures@{textures}}
+\index{textures@{textures}!Tile@{Tile}}
+\doxysubsubsection{\texorpdfstring{textures}{textures}}
+{\footnotesize\ttfamily std\+::map$<$std\+::string, std\+::shared\+\_\+ptr$<$sf\+::\+Texture$>$ $>$ Tile\+::textures\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classTile_ae185d6b7741c8d54e3bd8360bbb6ddda}\label{classTile_ae185d6b7741c8d54e3bd8360bbb6ddda}} 
+\index{Tile@{Tile}!tileSize@{tileSize}}
+\index{tileSize@{tileSize}!Tile@{Tile}}
+\doxysubsubsection{\texorpdfstring{tileSize}{tileSize}}
+{\footnotesize\ttfamily int Tile\+::tile\+Size = 90\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/\+Game/\+Tiles/\mbox{\hyperlink{Tile_8hpp}{Tile.\+hpp}}\item 
+src/\+Game/\+Tiles/\mbox{\hyperlink{Tile_8cpp}{Tile.\+cpp}}\end{DoxyCompactItemize}
