@@ -28,9 +28,9 @@ class Trantor(ITrantor):
         self.free_slots_team = 0
         self.world_dimension = []
         self.messages = []
-        self.incantation = False
+        self.in_incantation = False
         self.alive = True
-        self.incatator = False
+        self.incantator = False
         self.level = 1
         self.trantor_inventory = { 'food' : 0,
                         'linemate' : 0,
@@ -39,7 +39,14 @@ class Trantor(ITrantor):
                         'mendiane' : 0,
                         'phiras' : 0,
                         'thystame' : 0}
-        
+        self.requirement = {1 : {'linemate' : 1, 'deraumere' : 0, 'sibur' : 0, 'mendiane' : 0, 'phiras' : 0, 'thystame' : 0},
+                            2 : {'linemate' : 1, 'deraumere' : 1, 'sibur' : 1, 'mendiane' : 0, 'phiras' : 0, 'thystame' : 0},
+                            3 : {'linemate' : 2, 'deraumere' : 0, 'sibur' : 1, 'mendiane' : 0, 'phiras' : 2, 'thystame' : 0},
+                            4 : {'linemate' : 1, 'deraumere' : 1, 'sibur' : 2, 'mendiane' : 0, 'phiras' : 1, 'thystame' : 0},
+                            5 : {'linemate' : 1, 'deraumere' : 2, 'sibur' : 1, 'mendiane' : 3, 'phiras' : 0, 'thystame' : 0},
+                            6 : {'linemate' : 1, 'deraumere' : 2, 'sibur' : 3, 'mendiane' : 0, 'phiras' : 1, 'thystame' : 0},
+                            7 : {'linemate' : 2, 'deraumere' : 2, 'sibur' : 2, 'mendiane' : 2, 'phiras' : 2, 'thystame' : 1}}
+
     # Gestion de messages
 
     def receive(self) -> str:
@@ -60,9 +67,9 @@ class Trantor(ITrantor):
                 self.messages.append((int(response[0]), response[1]))
                 #print(self.id + ": Added message to messages.")
             elif "Elevation" in response:
-                self.incantation = True
+                self.in_incantation = True
             elif "Current level" in response:
-                self.incantation = False
+                self.in_incantation = False
                 self.level = int(response[15:])
                 if self.incantator:
                     cmd_response = response
@@ -76,7 +83,10 @@ class Trantor(ITrantor):
             return None
         self.server.send(command)
         response = self.receive()
-        while response is None or self.incantation:
+        if not self.alive:
+            print("\033[" + self.id + " died.\033[0m")
+            exit(0)
+        while response is None or self.in_incantation:
             response = self.receive()
         return response
     
@@ -113,7 +123,8 @@ class Trantor(ITrantor):
     def look(self) -> dict:
         interpreted_look = {}
         response = self.send("Look\n")
-        print("Look response : " + response, file=sys.stderr)
+        if response == None:
+            return None
         response = response.replace("[", "").replace("]", "").split(',')
         for i in range(0, len(response)):
             interpreted_look[i] = {"player" : 0, "food" : 0, "linemate" : 0, "deraumere" : 0, "sibur" : 0, "mendiane" : 0, "phiras" : 0, "thystame" : 0}
@@ -139,9 +150,9 @@ class Trantor(ITrantor):
                         interpreted_look[i]["thystame"] += 1
                     case _:
                         pass
-        print("Look : " + str(interpreted_look), file=sys.stderr)
+        #print("Look : " + str(interpreted_look), file=sys.stderr)
         return interpreted_look
-        
+    
     def inventory(self) -> str:
         response = self.send("Inventory\n")
         if response is None:
@@ -160,7 +171,7 @@ class Trantor(ITrantor):
         return self.send("Set " + object + "\n")
     
     def incantation(self) -> str:
-        self.incatator = True
+        self.incantator = True
         return self.send("Incantation\n")
     
     def fork(self) -> str:
@@ -174,15 +185,18 @@ class Trantor(ITrantor):
         return None
         
     def run(self):
+        food_fail = 0
         self.inventory()
         while self.alive:
-            look_res = self.look()
-            for i in range(0, look_res[0]["food"]):
+            while self.take_object("food") != "ko" and self.alive:
+                food_fail = 0
                 self.take_object("food")
-                if not self.alive:
-                    break
-            self.inventory()
-            self.move_forward()
+            food_fail += 1
+            if food_fail > 3:
+                self.move_left()
+                self.turn_right()
+            else:
+                self.move_forward()
     
     def set_starting_data(self, parser: FlagParser):
         server_res = self.server.recv()
@@ -199,11 +213,25 @@ class Trantor(ITrantor):
 
     def dropResource(self, inventory):
         print("dropResource\n")
-        items = inventory[1:-1].split(", ")
-        print("items: " + str(items) + "\n")
-        for item in items:
-            object_name, quantity = item.split()
-            quantity = int(quantity)
-            for _ in range(quantity):
-                print(f"Set {object_name}\n")
-                self.send(f"Set {object_name}\n")
+        self.inventory()
+        while (self.trantor_inventory["food"] < 4):
+            response = self.look()
+            if response is not None and response[0]["food"] > 2:
+                break
+        print("\033[32mInvetory drop = " + str(self.trantor_inventory) + "\033[0m")
+        for item in self.trantor_inventory:
+            if self.trantor_inventory[item] == 0:
+                continue
+            elif item == "food" and self.trantor_inventory["food"] > 8:
+                while self.trantor_inventory["food"] > 7:
+                    print("Set food")
+                    self.set_object("food")
+                    self.inventory()
+            elif item == "food" and self.trantor_inventory["food"] < 6:
+                  while self.trantor_inventory["food"] < 7:
+                    resonse = self.take_object("food")
+                    self.inventory()
+                    if resonse == "ko":
+                        break
+            else:
+                self.set_object(item)

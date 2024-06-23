@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 import sys
-
 from ai.src.worker import Worker
 from ai.src import Server
 

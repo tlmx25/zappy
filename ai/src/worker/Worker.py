@@ -3,6 +3,7 @@ import sys
 from ai.src.Server import Server
 from ai.src.trantor.Trantor import Trantor
 from ai.src.FlagParser import FlagParser
+import random
 
 class Worker(Trantor):
     def __init__(self, argv, server: Server):
@@ -15,6 +16,7 @@ class Worker(Trantor):
         self.direction = None
         self.orientation = 1
         self.state = 1
+        self.last_id_queen = -1
         self.directionMethod = {
             1: self.goNorth,
             8: self.goNorthEast,
@@ -28,25 +30,27 @@ class Worker(Trantor):
 
     def waiting_to_start(self):
         response = self.broadcast("Worker" + self.id + ",READY\n")
-        print("first response " + response + "\n")
         while True:
             self.take_object("food")
-            #print("WAITING Assemble SIGNAL\n")
-            for mes in self.messages:
-                print("message: " + mes[1] + "\n")
-                if "message" and "Assemble" in mes[1]:
-                    print("second response " + mes[1] + "\n")
-                    self.direction = mes[0]
-                    self.emptyMessage()
-                    return
-            self.emptyMessage()
+            for message in self.messages:
+                direction = message[0]
+                message = message[1].split("+")
+                if len(message) == 3 and message[0] == "Queen" and message[1] == "Assemble":
+                    try:
+                        id_message = int(message[2])
+                        if self.last_id_queen == id_message:
+                            continue
+                        self.direction = direction
+                        return
+                    except:
+                        continue
+            self.messages.clear()
 
     def starting_mode(self):
         self.goToQueen()
         self.broadcast("Worker" + self.id + "+Assembled\n")
         print("WAITING FARM SIGNAL !\n")
         while True:
-            # self.emptyMessage()
             self.take_object("food")
             for mes in self.messages:
                 if "FARM" in mes[1]:
@@ -74,6 +78,29 @@ class Worker(Trantor):
         self.set_welcome_data()
         self.waiting_to_start()
         self.starting_mode()
+        
+    def check_queen_order(self, order: str):
+        self.receive()
+        if not self.alive:
+            print("\033[31mWorker" + self.id + " died.\033[0m")
+            exit(0)
+        for message in self.messages:
+            if message[0] != 0:
+                continue
+            message = message[1].split("+")
+            if len(message) != 3 or message[0] != "Queen" or message[1] != order:
+                continue
+            try:
+                id_message = int(message[2])
+                if id_message == self.last_id_queen:
+                    continue
+                self.last_id_queen = id_message
+                self.messages.clear()
+                return True
+            except Exception:
+                print("Worker : Incant not from my queen")
+        self.messages.clear()
+        return False
 
     def run(self):
         self.set_starting_data(None)
@@ -85,9 +112,18 @@ class Worker(Trantor):
                 print("IN ASSEMBLE MODE")
                 self.goToQueen()
                 self.broadcast("Worker" + self.id + "+Assembled\n")
+                while not self.check_queen_order("STARTDROP"):
+                    continue
+                    #print("\033[34m Worker" + self.id + " : waiting for drop\033[0m")
                 self.dropResource(self.getInventory())
                 self.broadcast("Worker" + self.id + "+DROP\n")
-                self.waitDuringElevation()
+                while not self.check_queen_order("INCANT"):
+                    continue
+                self.inventory()
+                print("\033[33mWorker current level : " + str(self.level) + "\033[0m")
+                while not self.check_queen_order("TAKERES"):
+                    continue
+                self.take_ressources()
                 self.setModeFarming()
                 self.state = 1
             lookRespond = self.lookAt()
@@ -105,8 +141,34 @@ class Worker(Trantor):
                     print("Orientation = " + str(mes[0]))
                     self.orientation = int(mes[0])
 
+    def take_ressources(self):
+        res = self.look()
+        if not res is None:
+            res = res[0]["food"]
+        print("\033[34m Worker" + self.id + " : take ressources\033[0m")
+        ressources = ['food', 'linemate', 'deraumere', 'sibur', 'mendiane', 'phiras', 'thystame']
+        inventory_val = ""
+        for ressource in ressources:
+            if ressource == "food" and res is not None:
+                for i in range(0, int(res / 5)):
+                    self.take_object("food")
+                continue
+            while self.take_object(ressource) == "ok":
+                continue
+        self.inventory()
+        for ressource in self.trantor_inventory:
+            print("\033[34m Worker" + self.id + " : ajoute " + ressource + "\033[0m")
+            inventory_val += str(self.trantor_inventory[ressource]) + "+"
+        self.broadcast("Worker" + self.id + "+INV+" + inventory_val[:-1])
+        while not self.check_queen_order("FARM"):
+            continue
+        
     def takeObjectPlayerTile(self, lookResponse):
-
+        if lookResponse is None:
+            response = self.take_object("food")
+            if response == "ok":
+                self.object_taken.append(object_type)
+            return
         for object_type, quantity in lookResponse[0].items():
             if quantity > 0:
                 if "player" in object_type:
@@ -119,7 +181,7 @@ class Worker(Trantor):
     def getInventory(self):
         print("getInventory\n")
         response = self.send("Inventory\n")
-        print("Inventory: " + response)
+        print("Worker Inventory: " + response)
         return response
 
     def goToQueen(self):
@@ -134,45 +196,44 @@ class Worker(Trantor):
 
     def getOrientation(self):
         print("getOrientation\n")
-        self.emptyMessage()
+        self.messages.clear()
         while True:
-            #print("WAITING ASSEMBLE SIGNAL\n")
             self.take_object("food")
-            for mes in self.messages:
-                if "Assemble" in mes[1]:
-                    self.orientation = mes[0]
+            for message in self.messages:
+                direction = message[0]
+                message = message[1].split("+")
+                if len(message) != 3 or message[0] != "Queen" and message[1] != "Assemble":
+                    continue
+                try:
+                    id_message = int(message[2])
+                    if self.last_id_queen == id_message:
+                        continue
+                    self.orientation = direction
+                    self.last_id_queen = id_message
                     return "Assemble"
+                except:
+                    continue
+            self.messages.clear()
 
     def sendInventoryToQueen(self):
         print("sendInventoryToQueen\n")
-        # print(self.object_taken)
         response = " ".join(self.object_taken)
-        print("reponse dans sendinventory = " + response + "\n")
         response = response.replace(" ", "+")
-        response += "+]"
-        response = "[" + response
+        response = "[" + response + "]+" + str(random.randint(0, 1000000))
         print("SendInventoryResponse: " + response)
-        self.send("Broadcast Worker,FOUND" + response + "\n")
-        self.object_taken = []
+        self.send("Broadcast Worker" + self.id + "+FOUND+" + response +"\n")
+        self.object_taken.clear()
         return
 
     def lookAt(self):
         response = self.look()
-        print("Send Look !")
+        #print("Send Look !")
         return response
 
     def setFarmingPosition(self, dist: int):
         for i in range(dist):
             self.move_forward()
         self.move_left()
-
-    def waitDuringElevation(self):
-        while True:
-            self.take_object("food")
-            for mes in self.messages:
-                if "Finished" in mes[1]:
-                    self.emptyMessage()
-                    return True
 
     def goNorth(self):
         print("goNorth\n")
@@ -197,12 +258,14 @@ class Worker(Trantor):
         self.send("Left\n")
         self.send("Forward\n")
         self.take_object("food")
+
     def goNorthEast(self):
         print("goNorthEast\n")
         self.send("Forward\n")
         self.send("Right\n")
         self.send("Forward\n")
         self.take_object("food")
+
     def goNorthWest(self):
         print("goNorthWest\n")
         self.send("Forward\n")
