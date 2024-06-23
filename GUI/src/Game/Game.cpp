@@ -9,8 +9,9 @@
 
 Game::Game(int x, int y) : map(x, y, 1200)
 {
-    window.create(sf::VideoMode(1200, 1200), "Zappy");
+    window.create(sf::VideoMode(960, 960), "Zappy");
     window.setFramerateLimit(60);
+    font.loadFromFile("GUI/src/Assets/arial.ttf");
 
     // Load and start music
     if (!music.openFromFile("GUI/src/Assets/music.ogg")) {
@@ -25,7 +26,32 @@ Game::Game(int x, int y) : map(x, y, 1200)
     //         tile.setItemQuantity(i, 1);
     //     }
     // }
-    // trantorians["test"] = std::make_shared<Trantorian>(0, "test", sf::Vector2i(2, 2), 0, 1, getTeamNumber("test"));
+    // std::string msg = "Welcome to Zappy qerhqerheqrh regheqh end!";
+    // std::string team = "test";
+    // std::string id = "0";
+    // chatbox.addMessage(team, id, msg);
+    // chatbox.addMessage(team, id, msg);
+    // chatbox.addMessage(team, id, msg);
+    // chatbox.addMessage(team, id, msg);
+    // chatbox.addMessage(team, id, msg);
+    // chatbox.addMessage(team, id, msg);
+    // chatbox.addMessage(team, id, msg);
+    // chatbox.addMessage(team, id, msg);
+    // chatbox.addMessage(team, id, msg);
+    // chatbox.addMessage(team, id, msg);
+    // chatbox.addMessage(team, id, msg);
+
+    trantorians["test"] = std::make_shared<Trantorian>(0, "test", sf::Vector2i(2, 2), 0, 1, getTeamNumber("test"));
+    trantorians["test1"] = std::make_shared<Trantorian>(1, "test1", sf::Vector2i(2, 2), 0, 1, getTeamNumber("test1"));
+    trantorians["test2"] = std::make_shared<Trantorian>(2, "test2", sf::Vector2i(2, 2), 0, 1, getTeamNumber("test2"));
+    trantorians["test3"] = std::make_shared<Trantorian>(3, "test3", sf::Vector2i(2, 2), 0, 1, getTeamNumber("test3"));
+    trantorians["test4"] = std::make_shared<Trantorian>(4, "test4", sf::Vector2i(2, 2), 0, 1, getTeamNumber("test4"));
+    trantorians["test5"] = std::make_shared<Trantorian>(5, "test5", sf::Vector2i(2, 2), 0, 1, getTeamNumber("test5"));
+    trantorians["test6"] = std::make_shared<Trantorian>(6, "test6", sf::Vector2i(2, 2), 0, 1, getTeamNumber("test6"));
+    trantorians["test7"] = std::make_shared<Trantorian>(7, "test7", sf::Vector2i(2, 2), 0, 1, getTeamNumber("test7"));
+    trantorians["test8"] = std::make_shared<Trantorian>(8, "test8", sf::Vector2i(2, 2), 0, 1, getTeamNumber("test8"));
+    trantorians["test9"] = std::make_shared<Trantorian>(9, "test9", sf::Vector2i(2, 2), 0, 1, getTeamNumber("test9"));
+
 }
 
 Game::~Game()
@@ -37,12 +63,14 @@ Game::~Game()
 
 void Game::run()
 {
-    handleEvents();
-    float time = clock.getElapsedTime().asSeconds();
-    for (auto& trantorian : trantorians) {
-        trantorian.second->animate(time);
+    while (window.isOpen()) {
+        handleEvents();
+        float time = clock.getElapsedTime().asSeconds();
+        for (auto& trantorian : trantorians) {
+            trantorian.second->animate(time);
+        }
+        render();
     }
-    render();
 }
 
 
@@ -87,6 +115,7 @@ void Game::handleEvents()
         }
         sf::sleep(sf::milliseconds(200)); // To avoid multiple key presses
     }
+    chatbox.handleEvents(event);
 }
 
 void Game::render()
@@ -102,7 +131,9 @@ void Game::render()
         trantorian.second->draw(window);
     }
     // To draw UI elements correctly?
-    // window.setView(window.getDefaultView());
+    window.setView(window.getDefaultView());
+    chatbox.render(window);
+    displayTeamBoxes();
     window.display();
 }
 
@@ -130,4 +161,69 @@ Map& Game::getMap()
 std::map<std::string, std::shared_ptr<Trantorian>>& Game::getTrantorians()
 {
     return trantorians;
+}
+
+void Game::checkTeamBoxes()
+{
+    for (const auto& trantorian : trantorians) {
+        std::string teamName = trantorian.second->getTeamName();
+        if (std::find(teamNames.begin(), teamNames.end(), teamName) == teamNames.end()) {
+            teamNames.push_back(teamName);
+        }
+    }
+}
+
+int Game::getNbElevatedPlayers(std::string teamName)
+{
+    int nb = 0;
+    for (const auto& trantorian : trantorians) {
+        if (trantorian.second->getTeamName() == teamName && trantorian.second->getLevel() == 8) {
+            nb++;
+        }
+    }
+    return nb;
+}
+
+void Game::displayTeamBoxes()
+{
+    int i = 0;
+    checkTeamBoxes();
+    for (const auto& teamName : teamNames) {
+        int nbElevatedPlayers = getNbElevatedPlayers(teamName);
+        int teamNumber = getTeamNumber(teamName);
+
+        sf::RectangleShape teamBox(sf::Vector2f(200, 50));
+
+        // Set color based on team number
+        sf::Color teamColor;
+        switch (teamNumber) {
+            case 0: teamColor = sf::Color(128, 255, 128); break;
+            case 1: teamColor = sf::Color(255, 128, 128); break;
+            case 2: teamColor = sf::Color(255, 255, 128); break;
+            case 3: teamColor = sf::Color(255, 192, 203); break;
+            case 4: teamColor = sf::Color(128, 128, 255); break;
+            case 5: teamColor = sf::Color(192, 128, 192); break;
+            case 6: teamColor = sf::Color(255, 200, 128); break;
+            case 7: teamColor = sf::Color(128, 255, 255); break;
+            case 8: teamColor = sf::Color(192, 192, 192); break;
+            case 9: teamColor = sf::Color(255, 255, 255); break;
+            default: teamColor = sf::Color::Black; break;
+        }
+
+        teamBox.setFillColor(teamColor);
+        teamBox.setOutlineColor(sf::Color::Black);
+        teamBox.setOutlineThickness(1);
+        teamBox.setPosition(10, 10 + i * 60);
+
+        sf::Text text;
+        text.setFont(font);
+        text.setCharacterSize(15);
+        text.setFillColor(sf::Color::Black);
+        text.setString(teamName + "\n" + "Level 8 players: " + std::to_string(nbElevatedPlayers) + " / 6");
+        text.setPosition(15, 15 + i * 60);
+
+        window.draw(teamBox);
+        window.draw(text);
+        i++;
+    }
 }
