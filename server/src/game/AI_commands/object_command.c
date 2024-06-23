@@ -8,22 +8,6 @@
 #include <string.h>
 #include "server.h"
 
-static tile_t *get_tile_by_pos(server_t *server, position_t position)
-{
-    int x = position.x;
-    int y = position.y;
-
-    if (x < 0)
-        x = server->option->width + x;
-    if (y < 0)
-        y = server->option->height + y;
-    if (x >= server->option->width)
-        x = x % server->option->width;
-    if (y >= server->option->height)
-        y = y % server->option->height;
-    return &server->world->tiles[y * server->option->width + x];
-}
-
 static size_t getobject(char *option)
 {
     if (option == NULL)
@@ -80,7 +64,6 @@ static bool modifie_inventory2(inventory_t *to_add, inventory_t *to_remove,
 bool modifie_inventory(inventory_t *to_add, inventory_t *to_remove, size_t obj)
 {
     if (obj == 0 && to_remove->food > 0) {
-        printf("food = %i\n", to_remove->food);
         to_add->food++;
         to_remove->food--;
         return true;
