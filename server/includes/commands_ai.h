@@ -156,7 +156,8 @@ void incantation_precommand(server_t *server, client_ai_t *client);
  * @param level level of the incantation
  * @return true if the incantation can be done, false otherwise
  */
-bool check_requirement(tile_t *tile, client_ai_list_t *clients, size_t level);
+bool check_requirement(tile_t *tile, client_ai_list_t *clients, size_t level,
+    bool final);
 
 /**
  * @brief transform an array of int to a string
@@ -165,4 +166,13 @@ bool check_requirement(tile_t *tile, client_ai_list_t *clients, size_t level);
  */
 char *int_array_to_str(int *array);
 
+/**
+ * @brief remove the object from tile afet incantation and reset player
+ * @param tile tile where the incantation is
+ * @param requirement requirement for incantion for remove quatntity of object
+ * @param client client who sent the incantation and his reset
+ * @param clients list of client for send data to graphic client
+ */
+void remove_object(tile_t *tile, incantation_requirements_t *requirement,
+    client_ai_t *client, client_list_t *clients);
 #endif //SERVER_COMMANDS_AI_H

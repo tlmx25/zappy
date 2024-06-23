@@ -44,3 +44,7 @@ zappy_gui
 
 #Python
 __pycache__/
+**/cmake-build-debug/
+
+**.gcno
+**.gcda

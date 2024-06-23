@@ -23,19 +23,19 @@ Zappy_GUI::Server::Server(char *Port, char * adresse_ip) {
             {"pbc", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
             {"pic", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
             {"pie", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
-            {"pfk", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
+            {"pfk", pfkFonction},
             {"pdr", pdrFonction},
             {"pgt", pgtFonction},
-            {"pdi", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
-            {"enw", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
-            {"ebo", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
-            {"edi", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
+            {"pdi", pdiFonction},
+            {"enw", enwFonction},
+            {"ebo", eboFonction},
+            {"edi", ediFonction},
             {"sgt", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
             {"sst", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
             {"seg", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
             {"smg", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
-            {"suc", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
-            {"sbp", [](const std::string&, Game&) { std::cout << "Lambda 3" << std::endl; }}
+            {"suc", sucFonction},
+            {"sbp", sbpFonction}
         };
 }
 
@@ -351,6 +351,8 @@ void pinFonction(const std::string& command, Game& game)
     player->setInventory(std::stoi(q0),std::stoi(q1),std::stoi(q2),std::stoi(q3),std::stoi(q4),std::stoi(q5),std::stoi(q6));
 }
 
+void pfkFonction(UNUSED const std::string& command, UNUSED Game& game) {}
+
 void pdrFonction(const std::string& command, Game& game)
 {
     std::string temp;
@@ -400,3 +402,70 @@ void pgtFonction(const std::string& command, Game& game)
     auto& tile = game.getMap().getTile(player->getPos().x, player->getPos().y);
     player->collectItem(tile, item);
 }
+
+void pdiFonction(const std::string& command, Game& game)
+{
+    std::string temp;
+    std::string nbr;
+
+    std::stringstream(command) >> temp >> nbr;
+
+    auto& trantorians = game.getTrantorians();
+    auto it = trantorians.find(nbr);
+    if (it == trantorians.end()) {
+        throw Zappy_GUI::Server::BadParameter("Mauvais arguments.");
+    }
+    trantorians.erase(it);
+}
+
+void enwFonction(const std::string& command, Game& game)
+{
+    std::string temp;
+    std::string idEgg;
+    std::string nbr;
+    std::string x;
+    std::string y;
+
+
+    std::stringstream(command) >> temp >> idEgg >> nbr >> x >> y;
+
+    game.getMap().getTile(std::stoi(x), std::stoi(y)).addEgg(idEgg, 1);
+}
+
+void eboFonction(const std::string& command, Game& game)
+{
+    std::string temp;
+    std::string idEgg;
+
+    std::stringstream(command) >> temp >> idEgg;
+
+    for (auto& tile : game.getMap().getTiles()) {
+        if (tile.getEgg().find(idEgg) != tile.getEgg().end()) {
+            tile.removeEgg(idEgg);
+            break;
+        }
+    }
+}
+
+
+void ediFonction(const std::string& command, Game& game)
+{
+    std::string temp;
+    std::string idEgg;
+
+    std::stringstream(command) >> temp >> idEgg;
+
+    for (auto& tile : game.getMap().getTiles()) {
+        if (tile.getEgg().find(idEgg) != tile.getEgg().end()) {
+            tile.removeEgg(idEgg);
+            break;
+        }
+    }
+}
+
+void sucFonction(UNUSED const std::string& command,UNUSED Game& game)
+{
+    std::cout << "unknown command" << std::endl;
+}
+
+void sbpFonction(UNUSED const std::string& command, UNUSED Game& game) {}

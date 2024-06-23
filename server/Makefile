@@ -81,6 +81,7 @@ SRC += get_client_ai.c
 SRC += preincant_command.c
 SRC += create_incantation.c
 SRC += delete_incantation.c
+SRC += remove_tile_incant.c
 
 CFLAGS = -Wall -Wextra -I includes/
 

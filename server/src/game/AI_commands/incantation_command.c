@@ -34,20 +34,6 @@ static tile_t *get_tile_by_pos(server_t *server, position_t position)
     return &server->world->tiles[y * server->option->width + x];
 }
 
-char *int_array_to_str(int *array)
-{
-    char buffer[4096] = {0};
-    int index;
-
-    if (array == NULL)
-        return NULL;
-    for (int i = 0; array[i] != -1; i++) {
-        index = my_strlen(buffer);
-        snprintf(buffer + index, 4096 - index, " %d", array[i]);
-    }
-    return my_strdup(buffer);
-}
-
 static int count_players_on_tile(client_ai_list_t *clients,
     position_t position, size_t level)
 {
@@ -61,12 +47,13 @@ static int count_players_on_tile(client_ai_list_t *clients,
     return nb_players;
 }
 
-bool check_requirement(tile_t *tile, client_ai_list_t *clients, size_t level)
+bool check_requirement(tile_t *tile, client_ai_list_t *clients, size_t level,
+    bool final)
 {
     incantation_requirements_t *requirement = &REQUIREMENT[level];
     int nb_players = count_players_on_tile(clients, tile->coordinate, level);
 
-    if (nb_players + 1 < requirement->players)
+    if ((nb_players + 1 < requirement->players) && !final)
         return false;
     if (tile->object.linemate < requirement->linemate)
         return false;
@@ -80,6 +67,28 @@ bool check_requirement(tile_t *tile, client_ai_list_t *clients, size_t level)
         return false;
     if (tile->object.thystame < requirement->thystame)
         return false;
+    return true;
+}
+
+bool check_final_requirement(tile_t *tile,
+    client_ai_list_t *clients, size_t level, int *players)
+{
+    bool can_incant = check_requirement(tile, clients, level, true);
+    int count = 0;
+    client_ai_t *tmp;
+    incantation_requirements_t *requirement = &REQUIREMENT[level];
+
+    if (!can_incant)
+        return false;
+    printf("first ok\n");
+    for (int i = 0; players && players[i] != -1; i++) {
+        tmp = get_client_ai_by_num(clients, players[i]);
+        if (tmp)
+            count++;
+    }
+    if (count + 1 < requirement->players)
+        return false;
+    printf("second ok\n");
     return true;
 }
 
@@ -166,13 +175,12 @@ void incantation_end(server_t *server, incantation_t *incantation)
     if (client == NULL)
         return failed_incantation(server, client, incantation,
         "main player not dead");
-    if (!check_requirement(get_tile_by_pos(server, client->position),
-    server->ai_clients, client->level))
+    if (!check_final_requirement(get_tile_by_pos(server, client->position),
+    server->ai_clients, client->level, incantation->players))
         return failed_incantation(server, client, incantation,
         "requirement not met");
-    client->TTEA = 0;
-    client->action = -1;
-    client->level++;
+    remove_object(get_tile_by_pos(server, client->position),
+    &REQUIREMENT[client->level], client, server->graphic_clients);
     send_to_all_graphic_arg(server->graphic_clients, "plv %i %i\n",
     client->num_player, client->level);
     notify_incant(server, incantation->players, client);
