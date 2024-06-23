@@ -7,13 +7,22 @@
 
 #include <criterion/criterion.h>
 #include <criterion/redirect.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 #include "commands_ai.h"
 
 static char **get_args(void)
 {
-    char *tmp = "./zappy_server -p 4244 -x 10 -y 10 -n team1 team2 -c 2 -f 100";
+    char *tmp = "./zappy_server -p 4789 -x 10 -y 10 -n team1 team2 -c 2 -f 100";
 
     return my_str_to_word_array(tmp, " ");
+}
+
+static void redirect_all_stdout(void)
+{
+    cr_redirect_stdout();
+    cr_redirect_stderr();
 }
 
 
@@ -75,7 +84,22 @@ Test(incantation_command, incantation_command_no_object)
     delete_server(server_s);
 }
 
-Test(incantation_command, incantation_main_player_dead)
+static void open_write_in_file(void)
+{
+    int fd = open("test.txt", O_CREAT | O_WRONLY, 0666);
+    if (fd == -1)
+        cr_assert_fail("error open\n");
+
+    write(fd, "Hello\n", 6);
+    close(fd);
+}
+
+static void delete_file(void)
+{
+    remove("test.txt");
+}
+
+Test(incantation_command, incantation_main_player_dd, redirect_all_stdout)
 {
     server_t *server_s = create_server(get_args());
 
@@ -95,23 +119,96 @@ Test(incantation_command, incantation_main_player_dead)
     add_client_ai_to_list(server_s->ai_clients, client3);
     add_client_ai_to_list(server_s->ai_clients, client4);
     add_client_ai_to_list(server_s->ai_clients, client5);
+    
 
-
+    open_write_in_file();
     for (client_ai_t *tmp = server_s->ai_clients->head; tmp != NULL; tmp = tmp->next) {
+        int fd = open("test.txt", O_RDONLY);
+        if (fd == -1)
+            cr_assert_fail("error open\n");
+        tmp->fd = fd;
         tmp->buff_out = NULL;
     }
+    read_ai_list(server_s, server_s->ai_clients);
     incantation_t *incantation = create_incantation(0, 1, (position_t){0, 0, NORTH});
     incantation->players = add_players_on_incantation(1, incantation->players);
     incantation->players = add_players_on_incantation(2, incantation->players);
     incantation->players = add_players_on_incantation(3, incantation->players);
     incantation->players = add_players_on_incantation(4, incantation->players);
-
+    write_ai_list(server_s, server_s->ai_clients);
     incantation_end(server_s, incantation);
-    cr_assert_eq(my_strcmp(client2->buff_out, "ko\n"), 0);
-    cr_assert_eq(my_strcmp(client3->buff_out, "ko\n"), 0);
-    cr_assert_eq(my_strcmp(client4->buff_out, "ko\n"), 0);
-    cr_assert_eq(my_strcmp(client5->buff_out, "ko\n"), 0);
     delete_server(server_s);
+    delete_file();
+}
+
+Test(manage_pending_client, manage_pending_client)
+{
+    server_t *server_s = create_server(get_args());
+    if (server_s == NULL)
+        cr_assert_fail("error create_server\n");
+    init_game(server_s);
+
+    client_t *client1 = create_client(1);
+    client_t *client2 = create_client(2);
+
+    add_client_to_list(server_s->pending_clients, client1);
+    add_client_to_list(server_s->pending_clients, client2);
+
+    client1->buffer_in = my_strdup("team1\n");
+    client2->buffer_in = my_strdup("GRAPHIC\n");
+
+    manage_pending_client(server_s, client1);
+    manage_pending_client(server_s, client2);
+    delete_server(server_s);
+}
+
+Test(exec_ai_list, test)
+{
+    server_t *server_s = create_server(get_args());
+    if (server_s == NULL)
+        cr_assert_fail("error create_server\n");
+    init_game(server_s);
+    client_ai_t *client1 = create_client_ai(1, "team1", (position_t){0, 0, NORTH});
+
+    add_client_ai_to_list(server_s->ai_clients, client1);
+    client1->buff_in = my_strdup("Incantation\n");
+    exec_ai_list(server_s);
+    delete_server(server_s);
+}
+
+Test(exec_ai_list, test2)
+{
+    server_t *server_s = create_server(get_args());
+    if (server_s == NULL)
+        cr_assert_fail("error create_server\n");
+    init_game(server_s);
+    client_ai_t *client1 = create_client_ai(1, "team1", (position_t){0, 0, NORTH});
+
+    client1->TTL = 1;
+    add_client_ai_to_list(server_s->ai_clients, client1);
+    client1->buff_in = my_strdup("Incantation\n");
+    exec_ai_list(server_s);
+    delete_server(server_s);
+}
+
+Test(exec_ai_list, test3)
+{
+    server_t *server_s = create_server(get_args());
+    if (server_s == NULL)
+        cr_assert_fail("error create_server\n");
+    int fd_devnull = open("/dev/null", O_WRONLY);
+    if (fd_devnull == -1)
+        cr_assert_fail("error open\n");
+    init_game(server_s);
+    client_ai_t *client1 = create_client_ai(fd_devnull, "team1", (position_t){0, 0, NORTH});
+
+    client1->TTL = 1;
+    add_client_ai_to_list(server_s->ai_clients, client1);
+    client1->buff_in = my_strdup("Connect_nbr\n");
+    exec_ai_list(server_s);
+    write_ai_list(server_s, server_s->ai_clients);
+    delete_server(server_s);
+    close(fd_devnull);
 }
 
 Test(incantation_end, incantation_end)

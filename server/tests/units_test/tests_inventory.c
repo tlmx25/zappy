@@ -11,7 +11,7 @@
 
 static char **get_args(void)
 {
-    char *tmp = "./zappy_server -p 4243 -x 10 -y 10 -n team1 team2 -c 2 -f 100";
+    char *tmp = "./zappy_server -p 4678 -x 10 -y 10 -n team1 team2 -c 2 -f 100";
 
     return my_str_to_word_array(tmp, " ");
 }
