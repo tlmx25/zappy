@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import sys
 import os
+import traceback
 
 # current_dir = os.path.dirname(os.path.abspath(__file__))
 # src_dir = os.path.abspath(os.path.join(current_dir, os.pardir, os.pardir, os.pardir))
@@ -21,4 +22,5 @@ if __name__ == '__main__':
         Worker.run()
     except Exception as e:
         print(e, file=sys.stderr)
+        traceback.print_exc()
         sys.exit(84)
