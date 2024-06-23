@@ -53,5 +53,5 @@ void cmd_bct(server_t *server, client_t *client, char const **command)
         tile->object.food,
         tile->object.linemate, tile->object.deraumere, tile->object.sibur,
         tile->object.mendiane, tile->object.phiras, tile->object.thystame);
-    add_to_buffer(&client->buffer_out, response, true);
+    add_to_buffer(&client->buffer_out, response, false);
 }
