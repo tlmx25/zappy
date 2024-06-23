@@ -11,7 +11,11 @@
 
 static char **get_args(void)
 {
-    char *tmp = "./zappy_server -p 4251 -x 10 -y 10 -n team1 team2 -c 2 -f 100";
+    srand(time(NULL));
+    char tmp[512];
+
+    int port = (rand() % 5000) + 1000;
+    snprintf(tmp, 512, "./zappy_server -p %i -x 10 -y 10 -n team1 team2 -c 2 -f 100", port);
 
     return my_str_to_word_array(tmp, " ");
 }
