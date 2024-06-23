@@ -83,6 +83,9 @@ class Trantor(ITrantor):
             return None
         self.server.send(command)
         response = self.receive()
+        if not self.alive:
+            print("\033[" + self.id + " died.\033[0m")
+            exit(0)
         while response is None or self.in_incantation:
             response = self.receive()
         return response

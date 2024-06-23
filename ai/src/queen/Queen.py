@@ -117,11 +117,11 @@ class Queen(Trantor):
             self.id_message.clear()
             
     def check_ressources(self):
-        if self.common_inventory["food"] < 37:
+        if self.common_inventory["food"] < 40:
             self.enough_ressources = False
             return
         self.inventory()
-        if self.trantor_inventory["food"] < 7:
+        if self.trantor_inventory["food"] < 6:
             self.enough_ressources = False
             return
         requirement = self.requirement[self.level]
@@ -139,7 +139,7 @@ class Queen(Trantor):
                 self.id_message.clear()
                 self.cycle = 4
                 #print("\033[33mQueen send startdrop\033[0m")
-                while self.trantor_inventory["food"] > 10:
+                while self.trantor_inventory["food"] > 7:
                     self.set_object("food")
                     self.inventory()
                 self.broadcast("Queen+STARTDROP+" + str(random.randint(0,1000000)))
