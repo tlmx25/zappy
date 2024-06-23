@@ -64,7 +64,6 @@ static bool modifie_inventory2(inventory_t *to_add, inventory_t *to_remove,
 bool modifie_inventory(inventory_t *to_add, inventory_t *to_remove, size_t obj)
 {
     if (obj == 0 && to_remove->food > 0) {
-        printf("food = %i\n", to_remove->food);
         to_add->food++;
         to_remove->food--;
         return true;
