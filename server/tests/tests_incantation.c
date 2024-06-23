@@ -11,7 +11,7 @@
 
 static char **get_args(void)
 {
-    char *tmp = "./zappy_server -p 4242 -x 10 -y 10 -n team1 team2 -c 2 -f 100";
+    char *tmp = "./zappy_server -p 4244 -x 10 -y 10 -n team1 team2 -c 2 -f 100";
 
     return my_str_to_word_array(tmp, " ");
 }
@@ -40,6 +40,8 @@ static int *add_players_on_incantation(int num, int *players)
 Test(incantation_command, incantation_command_no_object)
 {
     server_t *server_s = create_server(get_args());
+    if (server_s == NULL)
+        cr_assert_fail("error create_server\n");
     init_game(server_s);
     tile_t *tile = &server_s->world->tiles[0];
     client_ai_t *client1 = create_client_ai(1, "team1", (position_t){0, 0, NORTH});
@@ -76,6 +78,9 @@ Test(incantation_command, incantation_command_no_object)
 Test(incantation_command, incantation_main_player_dead)
 {
     server_t *server_s = create_server(get_args());
+
+    if (server_s == NULL)
+        cr_assert_fail("error create_server\n");
     init_game(server_s);
     tile_t *tile = &server_s->world->tiles[0];
     client_ai_t *client1 = create_client_ai(1, "team1", (position_t){0, 0, NORTH});

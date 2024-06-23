@@ -18,22 +18,6 @@ static incantation_requirements_t REQUIREMENT[] = {
     {6, 2, 2, 2, 2, 2, 1},
 };
 
-static tile_t *get_tile_by_pos(server_t *server, position_t position)
-{
-    int x = position.x;
-    int y = position.y;
-
-    if (x < 0)
-        x = server->option->width + x;
-    if (y < 0)
-        y = server->option->height + y;
-    if (x >= server->option->width)
-        x = x % server->option->width;
-    if (y >= server->option->height)
-        y = y % server->option->height;
-    return &server->world->tiles[y * server->option->width + x];
-}
-
 static int count_players_on_tile(client_ai_list_t *clients,
     position_t position, size_t level)
 {

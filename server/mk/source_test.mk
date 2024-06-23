@@ -11,3 +11,7 @@ SRCT += tests/tests_connect_nbr.c
 SRCT += tests/tests_eject.c
 SRCT += tests/tests_fork.c
 SRCT += tests/tests_incantation.c
+SRCT += tests/tests_inventory.c
+SRCT += tests/tests_look.c
+SRCT += tests/tests_object.c
+SRCT += tests/tests_preincant.c
