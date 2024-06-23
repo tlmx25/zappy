@@ -10,6 +10,22 @@
 #include "client_ai.h"
 #include "server.h"
 
+void construct_in(char **buffer, char **exit)
+{
+    char *tmp;
+
+    if (buffer == NULL || buffer[0] == NULL) {
+        *exit = NULL;
+        if (buffer != NULL)
+            free_tab(buffer);
+        return;
+    }
+    tmp = my_array_to_str_separator((char const **)&buffer[1], "\n");
+    if (tmp && tmp[my_strlen(tmp) - 1] != '\n')
+        tmp = my_strcat_free(tmp, "\n", 1, 0);
+    *exit = tmp;
+}
+
 static void is_graphic(server_t *server, client_t *client)
 {
     debug_print("Client %d is a graphic client\n", client->fd);
@@ -73,20 +89,21 @@ static void send_data_graphic(server_t *server, client_ai_t *client,
 }
 
 bool convert_pending_client_to_ai(server_t *server,
-    client_t *client, char *name)
+    client_t *client, char **name)
 {
-    client_ai_t *new_client = check_eggs(client->fd, name, client, server);
+    client_ai_t *new_client = check_eggs(client->fd, name[0], client, server);
     egg_t *egg;
 
     if (new_client == NULL)
         return false;
-    egg = get_egg_by_team(server->world->eggs, name);
+    egg = get_egg_by_team(server->world->eggs, name[0]);
     new_client->position = egg->pos;
     new_client->fd = client->fd;
     add_client_ai_to_list(server->ai_clients, new_client);
     debug_pending_to_ai(client, new_client, server);
     client_is_converted(server->pending_clients, client);
     send_data_graphic(server, new_client, egg);
+    construct_in(name, &new_client->buff_in);
     return true;
 }
 
@@ -101,19 +118,19 @@ static void error_pending_client(client_t *client, char *name)
 
 void manage_pending_client(server_t *server, client_t *client)
 {
-    char *name = my_clean_string(client->buffer_in, "\n", 0);
+    char **name = my_str_to_word_array(client->buffer_in, "\n");
 
-    if (client->buffer_in == NULL)
+    if (client->buffer_in == NULL || name == NULL || name[0] == NULL)
         return;
-    if (my_strcmp(name, "GRAPHIC") == 0) {
+    if (my_strcmp(name[0], "GRAPHIC") == 0) {
         is_graphic(server, client);
-        free(name);
+        free_tab(name);
         return;
     }
-    if (check_team_name(server, name)) {
+    if (check_team_name(server, name[0])) {
         convert_pending_client_to_ai(server, client, name);
-        free(name);
+        free_tab(name);
         return;
     }
-    error_pending_client(client, name);
+    error_pending_client(client, name[0]);
 }
