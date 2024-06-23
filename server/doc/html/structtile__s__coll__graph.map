@@ -1,0 +1,5 @@
+<map id="tile_s" name="tile_s">
+<area shape="rect" id="node1" title="A structure to represent a tile in the game world." alt="" coords="79,95,137,121"/>
+<area shape="rect" id="node2" href="$structposition__s.html" title="position structure" alt="" coords="5,5,93,32"/>
+<area shape="rect" id="node3" href="$structinventory__s.html" title="inventory structure" alt="" coords="117,5,216,32"/>
+</map>
