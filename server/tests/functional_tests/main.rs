@@ -70,7 +70,7 @@ pub fn run_server(
 fn parse_option() -> Settings {
     let matches = App::new("Functional Test Zappy")
         .about("This program run functional test on zappy server, you can run basic, capacity or full test")
-        .version("1.0")
+        .version("1.2")
         .arg(
             Arg::with_name("host")
                 .short('h')
