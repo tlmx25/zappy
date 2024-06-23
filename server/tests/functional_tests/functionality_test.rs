@@ -1,5 +1,5 @@
-use colored::Colorize;
 use crate::ft;
+use colored::Colorize;
 
 mod basic;
 
