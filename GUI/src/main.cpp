@@ -27,7 +27,7 @@ static void print_usage()
 
 int main(int ac, char **av)
 {
-    if (std::string(av[1]) == "-h" && ac == 2) {
+    if (ac == 2 && std::string(av[1]) == "-h") {
         print_usage();
         return 0;
     }
