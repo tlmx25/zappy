@@ -199,7 +199,7 @@ void Game::displayTeamBoxes()
         switch (teamNumber) {
             case 0: teamColor = sf::Color(128, 255, 128); break;
             case 1: teamColor = sf::Color(255, 128, 128); break;
-            case 2: teamColor = sf::Color(255, 255, 128); break
+            case 2: teamColor = sf::Color(255, 255, 128); break;
             case 3: teamColor = sf::Color(255, 192, 203); break;
             case 4: teamColor = sf::Color(128, 128, 255); break;
             case 5: teamColor = sf::Color(192, 128, 192); break;
