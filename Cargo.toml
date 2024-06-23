@@ -1,0 +1,13 @@
+[package]
+name = "test_server"
+version = "0.1.0"
+edition = "2021"
+default-run = "functional_tests_server"
+
+[[bin]]
+name = "functional_tests_server"
+path = "server/tests/functional_tests/main.rs"
+
+[dependencies]
+clap = "3.0.0-beta.5"
+colored = "2.0.0"

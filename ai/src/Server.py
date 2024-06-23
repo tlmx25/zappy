@@ -6,10 +6,21 @@
 ##
 
 import socket
-import select
 
 class Server:
+    """
+    Server class that implements methods to handle tcp datatransfer beetween AI and server
+    """
+
     def __init__(self, _host = "", _port = 0):
+        """
+        Define init values for Server class
+        @param _host: host used by the socket
+        @type _host: str
+        @param _port: port used by the socket
+        @type _port: int
+        @return: None
+        """
         self.host = _host
         self.port = _port
         self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -20,54 +31,66 @@ class Server:
             raise Exception("Server : Error in init probably during connection.")
     
     def set_host(self, _host):
+        """
+        Define host used for tcp connection.
+
+        @param _host: host to set
+        @type _host: str
+        """
         self.host = _host
     
     def set_port(self, _port):
+        """
+        Define port used for tcp connection.
+
+        @param _port: port to set
+        @type _port: int
+        """
         self.port = _port
     
     def connect_server(self):
+        """
+        Connect to a server using tcp socket, defined host and port.
+        @return : None or raise Exception in case of fail.
+        @rtype: None
+        """
         try:
             self.s.connect((self.host, self.port))
-            self.s.setblocking(False)
             print("Client connected succesfully.")
         except:
             raise Exception("Server : Error while connecting try changing port / host.")
         
     def send(self, command):
+        """
+        Send data encoded in ascii to a server using socket.
+        @param command: command to send.
+        @type command: str
+        @return: None or raise Exception in case of fail.
+        @rtype: None
+        """
         try:
-            str_length = len(command)
-            for i in range(0, str_length, 1024):
-                mess_part = command[i:i + 1024]
-                self.s.send(mess_part.encode())
+            self.s.sendall(command.encode("ascii"))
         except Exception:
             raise Exception("Server : Error while sending message.")
-        
-    def recv(self) -> str:
-        response = b""
-        try:
-            while self.check_read():
-                response_part = self.s.recv(1024)
-                if (response_part):
-                    response += response_part
-            return str(response.decode())
-        except Exception:
-            raise Exception("Server : Error during recieve. Probably dev error.")
-        
-    def check_read(self) -> bool:
-        ready_to_read, _, _ = select.select([self.s], [], [], 1)
-        if self.s in ready_to_read:
-            return True
-        else:
-            return False
 
-    def check_send(self) -> bool:
-        _, write_set, _ = select.select([], [self.s], [], 0.5)
-        if write_set:
-            return True
-        else:
-            return False
+    def recv(self) -> str:
+        """
+        Receive in a blocking way and decode data from a server using socket
+        @return : Data send by the server.
+        @rtype: str
+        """
+        try:
+            response = self.s.recv(8192).decode()
+            return response
+        except Exception:
+            raise Exception("Server : Error during recieve.")
 
     def close_socket(self):
+        """
+        Close opened tcp socket.
+        @return : None or raise Exception in case of fail.
+        @rtype: None
+        """
         try:
             self.s.close()
         except:

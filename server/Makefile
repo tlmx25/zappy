@@ -5,6 +5,7 @@
 ## Makefile
 ##
 
+include mk/source_test.mk
 MAKEFLAGS += -silent
 CC = gcc
 
@@ -22,6 +23,7 @@ VPATH += src/client/classic/
 VPATH += src/client/graphic/
 VPATH += src/game/
 VPATH += src/game/eggs
+VPATH += src/game/incantation
 VPATH += src/game/AI_commands
 VPATH += src/game/initialization
 VPATH += src/game/graphic_cmd/
@@ -74,12 +76,20 @@ SRC += fork_command.c
 SRC += look_command.c
 SRC += object_command.c
 SRC += broadcast_command.c
+SRC += eject_command.c
+SRC += incantation_command.c
+SRC += get_client_ai.c
+SRC += preincant_command.c
+SRC += create_incantation.c
+SRC += delete_incantation.c
+SRC += remove_tile_incant.c
 
 CFLAGS = -Wall -Wextra -I includes/
 
 LDFLAGS += -L ./libs/ -lmy
 
 BUILD_DIR = build/
+BUILD_DIR_TEST = build_test/
 
 NAME = zappy_server
 
@@ -96,10 +106,20 @@ $(BUILD_DIR)%.o: %.c
 
 OBJ = $(SRC:%.c=$(BUILD_DIR)%.o)
 
+OBJT = $(SRC:%.c=$(BUILD_DIR_TEST)%.o)
+
+$(BUILD_DIR_TEST)%.o: %.c
+	@mkdir -p $(@D)
+	#@echo "  CC       $<      $@"
+	#@echo "$(notdir $(CURDIR)): C '$<'"
+	@$(CC) $(CFLAGS) $(CFLAGSTEST) -c $< -o $@
+
 all:	$(NAME)
 
-$(NAME):	$(OBJ)
+LIB:
 	make -C libs/my
+
+$(NAME):	$(OBJ) LIB
 	@ echo "$(BLUE)Compilation of $(NAME)...$(NC)"
 	$(CC) -o $(NAME) $(OBJ) $(LDFLAGS)
 	@ echo "$(GREEN)$(NAME) created$(NC)"
@@ -118,20 +138,25 @@ fclean: clean tests_clean
 	make fclean -C libs/my
 	@ echo "$(RED)fclean successful !$(NC)"
 
-CFLAGSTEST += -lcriterion --coverage
-
-tests_run:
-	$(CC) -o unit_tests $(filter-out build/main.o, $(SRCT))\
- 	tests/tests.cpp -I include/ $(LDFLAGS) $(CFLAGS) $(CFLAGSTEST)
+tests_run: CFLAGS += -lcriterion --coverage
+tests_run: $(OBJT) LIB
+	$(CC) -o unit_tests $(filter-out $(BUILD_DIR_TEST)main.o, $(OBJT))\
+ 	$(SRCT) -I include/ $(LDFLAGS) $(CFLAGS) $(CFLAGSTEST)
 	-./unit_tests
 
 tests_clean:
 	@ rm -f *.gcno
 	@ rm -f *.gcda
 	@ rm -f unit_tests
-
+	@ rm -rf $(BUILD_DIR_TEST)
 
 re: 	fclean all
+
+doc:
+	doxygen Doxyfile
+
+doc_clean:
+	rm -rf doc/
 
 .PHONY: all clean fclean re .SILENT
 

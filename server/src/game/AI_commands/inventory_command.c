@@ -12,7 +12,7 @@ void inventory_command(UNUSED server_t *server, client_ai_t *client)
     char buff[2048];
 
     snprintf(buff, 2048, "[food %d, linemate %d, deraumere %d, sibur %d,"
-    "mendiane %d, phiras %d, thystame %d]\n", client->inventory.food,
+    " mendiane %d, phiras %d, thystame %d]\n", client->inventory.food,
     client->inventory.linemate, client->inventory.deraumere,
     client->inventory.sibur, client->inventory.mendiane,
     client->inventory.phiras, client->inventory.thystame);

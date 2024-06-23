@@ -27,20 +27,34 @@ ai:
 	@make -C ai
 
 $(NAME): server GUI ai
-	@cp server/zappy_server .
-	@cp ai/zappy_ai .
-	@cp GUI/zappy_gui .
+	@mv server/zappy_server .
+	@mv ai/zappy_ai .
+	@mv GUI/zappy_gui .
 
 clean:
 	@make clean -C server
 	cd GUI && ./build.sh clean
 	@make clean -C ai
+	@rm -fr target
 
 fclean: rm_binary
 	@make fclean -C server
 	cd GUI && ./build.sh fclean
 	@make fclean -C ai
+	@rm -fr target
+	@rm -f functional_tests_server
+	@make tests_clean -C server
 
 re: fclean all
+
+tests_run:
+	@cargo build --release
+	@cp target/release/functional_tests_server .
+	@make tests_run -C server
+
+docs:
+	@make doc -C server
+	@make doc -C ai
+	cd GUI && ./build.sh doc
 
 .PHONY: all clean fclean re server GUI ai

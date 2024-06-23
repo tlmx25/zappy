@@ -1,0 +1,11 @@
+# Doxyfile 1.8.15
+
+# Project related settings
+PROJECT_NAME           = "Zappy AI"
+OUTPUT_DIRECTORY       = ./doc
+INPUT                  = ./main.py ./page ./src
+RECURSIVE              = YES
+EXTRACT_ALL            = YES
+GENERATE_HTML          = YES
+GENERATE_LATEX         = NO
+OUTPUT_LANGUAGE        = English

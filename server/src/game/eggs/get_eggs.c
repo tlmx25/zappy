@@ -10,7 +10,7 @@
 egg_t *get_egg_by_team_position(egg_list_t *list, char *team_name,
     position_t pos)
 {
-    egg_t *tmp = list->head;
+    egg_t *tmp = (list) ? list->head : NULL;
 
     for (; tmp != NULL; tmp = tmp->next) {
         if (my_strcmp(tmp->team_name, team_name) == 0 &&
@@ -33,7 +33,7 @@ egg_t *get_egg_by_team(egg_list_t *list, char *team_name)
 
 egg_t *get_egg_by_position(egg_list_t *list, position_t pos)
 {
-    egg_t *tmp = list->head;
+    egg_t *tmp = (list) ? list->head : NULL;
 
     for (; tmp != NULL; tmp = tmp->next) {
         if (tmp->pos.x == pos.x && tmp->pos.y == pos.y)
@@ -44,7 +44,7 @@ egg_t *get_egg_by_position(egg_list_t *list, position_t pos)
 
 int count_eggs_by_team(egg_list_t *list, char *team_name)
 {
-    egg_t *tmp = list->head;
+    egg_t *tmp = (list) ? list->head : NULL;
     int count = 0;
 
     for (; tmp != NULL; tmp = tmp->next) {

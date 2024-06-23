@@ -7,8 +7,7 @@
 
 #include "commands_ai.h"
 
-
-static int get_dir(client_ai_t *em, client_ai_t *rc)
+int get_dir(client_ai_t *em, client_ai_t *rc)
 {
     int x = rc->position.x - em->position.x;
     int y = rc->position.y - em->position.y;

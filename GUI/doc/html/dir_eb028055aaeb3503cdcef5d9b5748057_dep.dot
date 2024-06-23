@@ -1,0 +1,11 @@
+digraph "src/Game/Trantorians" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_b43036362fece0f978c3c8156df55d19 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="Game" fontname="Helvetica", fontsize="10", URL="dir_b43036362fece0f978c3c8156df55d19.html"]
+  dir_519faf922a5b550b10e9309381052ec7 [shape=box label="Tiles" URL="dir_519faf922a5b550b10e9309381052ec7.html"];
+  dir_eb028055aaeb3503cdcef5d9b5748057 [shape=box, label="Trantorians", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_eb028055aaeb3503cdcef5d9b5748057.html"];
+  }
+  dir_eb028055aaeb3503cdcef5d9b5748057->dir_519faf922a5b550b10e9309381052ec7 [headlabel="1", labeldistance=1.5 headhref="dir_000006_000005.html"];
+}

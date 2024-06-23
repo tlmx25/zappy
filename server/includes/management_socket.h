@@ -14,12 +14,21 @@
     #include <sys/time.h>
     #include <sys/types.h>
 
+/**
+* @brief A structure to represent a select configuration.
+*
+* This structure represents a select configuration. It contains file
+ * descriptor sets for reading and writing,
+* a flag to indicate the use of timeout, the maximum file descriptor
+ * number, and a timeval structure for timeout.
+*/
 typedef struct select_s {
-    fd_set readfds;
-    fd_set writefds;
-    char use_timeout;
-    int max_fd;
-    struct timeval timeout;
+    fd_set readfds; /**< File descriptor set for reading. */
+    fd_set writefds; /**< File descriptor set for writing. */
+    fd_set exceptfds; /**< File descriptor set for exceptions. */
+    char use_timeout; /**< Flag to indicate the use of timeout. */
+    int max_fd; /**< The maximum file descriptor number. */
+    struct timeval timeout; /**< Timeval structure for timeout. */
 } select_t;
 
 /**

@@ -22,6 +22,9 @@ clean:
 fclean: clean
 	rm -f $(NAME)
 
+doc:
+	@ doxygen Doxyfile
+
 test_run:
 	@ cp tests/main.py tests/zappy_ai_test
 	@ chmod +x tests/zappy_ai_test

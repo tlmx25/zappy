@@ -73,6 +73,13 @@ class Trantorian
         void setPos(sf::Vector2i pos);
 
         /**
+         * @brief Get the position of the trantorian
+         * 
+         * @param pos The position of the trantorian
+         */
+        sf::Vector2i getPos();
+
+        /**
          * @brief Set the level of the trantorian
          * 
          * @param level The level of the trantorian
@@ -85,7 +92,7 @@ class Trantorian
          * @param tile The tile to collect the item from
          * @param nb The number of the item to collect
          */
-        void collectItem(std::shared_ptr<Tile> &tile, int nb);
+        void collectItem(Tile &tile, int nb);
 
         /**
          * @brief Drop an item on a tile
@@ -93,7 +100,7 @@ class Trantorian
          * @param tile The tile to drop the item on
          * @param nb The number of the item to drop
          */
-        void dropItem(std::shared_ptr<Tile> &tile, int nb);
+        void dropItem(Tile &tile, int nb);
 
         /**
          * @brief Animate the trantorian
@@ -116,6 +123,20 @@ class Trantorian
          * @param isElevating If the trantorian is elevating
          */
         void setElevating(bool isElevating);
+
+        /**
+         * @brief Get the team name of the trantorian
+         * 
+         * @return std::string The team name of the trantorian
+         */
+        std::string getTeamName() { return teamName; }
+
+        /**
+         * @brief Get the level of the trantorian
+         * 
+         * @return int The level of the trantorian
+         */
+        int getLevel() { return level; }
 
     // Identification
     private:

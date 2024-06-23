@@ -26,7 +26,7 @@ void delete_client_ai(client_ai_t *client)
 void delete_client_ai_from_list(client_ai_list_t *list, client_ai_t *client,
     int delete_client_bool)
 {
-    client_ai_t *tmp = list->head;
+    client_ai_t *tmp = (list) ? list->head : NULL;
 
     for (; tmp != NULL && tmp != client; tmp = tmp->next);
     if (tmp == NULL)
@@ -39,15 +39,19 @@ void delete_client_ai_from_list(client_ai_list_t *list, client_ai_t *client,
         list->head = tmp->next;
     if (tmp == list->tail)
         list->tail = tmp->prev;
+    list->size--;
     if (delete_client_bool)
         delete_client_ai(tmp);
 }
 
 void clear_client_ai_list(client_ai_list_t *list)
 {
-    client_ai_t *tmp = list->head;
+    client_ai_t *tmp;
     client_ai_t *next = NULL;
 
+    if (list == NULL)
+        return;
+    tmp = list->head;
     while (tmp != NULL) {
         next = tmp->next;
         delete_client_ai(tmp);
@@ -60,6 +64,8 @@ void clear_client_ai_list(client_ai_list_t *list)
 
 void delete_client_ai_list(client_ai_list_t *list)
 {
+    if (list == NULL)
+        return;
     clear_client_ai_list(list);
     free(list);
 }

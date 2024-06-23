@@ -6,6 +6,11 @@ if [ "$1" = "--help" ] ||  [ "$1" = "-h" ]; then
   exit 0
 fi
 
+if [ "$1" = "doc" ]; then
+  doxygen Doxyfile
+  exit 0
+fi
+
 if [ "$1" = "re"  ]; then
   rm -rf build
   rm -rf cmake-build-debug

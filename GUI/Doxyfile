@@ -1,0 +1,24 @@
+# Doxyfile 1.8.15
+
+# Project related settings
+PROJECT_NAME           = "Zappy GUI"
+OUTPUT_DIRECTORY       = ./doc
+INPUT                  = ./src ./includes ./page
+RECURSIVE              = YES
+
+# Document all entities
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = YES
+EXTRACT_STATIC         = YES
+EXTRACT_LOCAL_CLASSES  = YES
+EXTRACT_LOCAL_METHODS  = YES
+
+# Generate HTML documentation
+GENERATE_HTML          = YES
+GENERATE_LATEX         = NO
+
+# Language settings
+OUTPUT_LANGUAGE        = English
+
+# Show all members
+HIDE_SCOPE_NAMES       = NO

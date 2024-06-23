@@ -20,7 +20,7 @@ int main(int ac, char **av)
 {
     server_t *server = NULL;
 
-    if (ac == 2 && (!my_strcmp(av[1], "--help") || !my_strcmp(av[1], "-h")))
+    if (ac == 2 && (!my_strcmp(av[1], "-help") || !my_strcmp(av[1], "-h")))
         return print_help();
     server = create_server(av);
     if (server == NULL)

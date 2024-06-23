@@ -10,8 +10,11 @@
 
 client_t *get_client_by_fd(client_list_t *list, int fd)
 {
-    client_t *tmp = list->head;
+    client_t *tmp;
 
+    if (list == NULL)
+        return NULL;
+    tmp = list->head;
     for (; tmp != NULL && tmp->fd != fd; tmp = tmp->next);
     return tmp;
 }

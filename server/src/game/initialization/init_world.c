@@ -61,6 +61,70 @@ static void init_ressources(inventory_t *inventory, server_t *server)
         server->option->height * 0.05;
 }
 
+static void stabilize_ressources(inventory_t *inventory, server_t *server)
+{
+    for (int i = 0; i < server->option->width * server->option->height; i++) {
+        inventory->food -= server->world->tiles[i].object.food;
+        inventory->linemate -= server->world->tiles[i].object.linemate;
+        inventory->deraumere -= server->world->tiles[i].object.deraumere;
+        inventory->sibur -= server->world->tiles[i].object.sibur;
+        inventory->mendiane -= server->world->tiles[i].object.mendiane;
+        inventory->phiras -= server->world->tiles[i].object.phiras;
+        inventory->thystame -= server->world->tiles[i].object.thystame;
+    }
+}
+
+static bool compar_tile(tile_t *tile, inventory_t *tile_tmp)
+{
+    if (tile->object.food == tile_tmp->food &&
+        tile->object.linemate == tile_tmp->linemate &&
+        tile->object.deraumere == tile_tmp->deraumere &&
+        tile->object.sibur == tile_tmp->sibur &&
+        tile->object.mendiane == tile_tmp->mendiane &&
+        tile->object.phiras == tile_tmp->phiras &&
+        tile->object.thystame == tile_tmp->thystame)
+        return true;
+    return false;
+}
+
+void send_bct_to_all(server_t *server, int i)
+{
+    send_to_all_graphic_arg(server->graphic_clients,
+        "bct %d %d %d %d %d %d %d %d %d\n",
+        server->world->tiles[i].coordinate.x,
+        server->world->tiles[i].coordinate.y,
+        server->world->tiles[i].object.food,
+        server->world->tiles[i].object.linemate,
+        server->world->tiles[i].object.deraumere,
+        server->world->tiles[i].object.sibur,
+        server->world->tiles[i].object.mendiane,
+        server->world->tiles[i].object.phiras,
+        server->world->tiles[i].object.thystame);
+}
+
+void distribute_ressources_meteor(server_t *server)
+{
+    inventory_t inv = {0};
+    inventory_t inv_tmp = {0};
+    int i = 0;
+    tile_t *tile;
+
+    debug_print("Distribute ressources meteor shower\n");
+    init_ressources(&inv, server);
+    stabilize_ressources(&inv, server);
+    while (inv.food > 0 || inv.linemate > 0 || inv.deraumere
+        > 0 || inv.sibur > 0 || inv.mendiane > 0 ||
+        inv.phiras > 0 || inv.thystame > 0) {
+        i = rand() % (server->option->width * server->option->height);
+        tile = &server->world->tiles[i];
+        inv_tmp = tile->object;
+        repartion_ressources(server, &inv, i, rand() % 7);
+        if (compar_tile(tile, &inv_tmp) == true)
+            continue;
+        send_bct_to_all(server, i);
+    }
+}
+
 void distribute_ressources(server_t *server)
 {
     inventory_t inventory = {0};
@@ -109,6 +173,7 @@ bool delete_world(world_t *world)
     free(world->teams);
     free(world->tiles);
     delete_eggs_list(world->eggs);
+    delete_incantation_list(world->incantations);
     free(world);
     return true;
 }

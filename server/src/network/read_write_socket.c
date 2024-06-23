@@ -13,13 +13,14 @@ char *read_socket(int fd)
 {
     char tmp_buffer[1025] = {0};
     char *buffer = NULL;
-    long readed;
+    ssize_t readed = 0;
+    int nb_read = 0;
 
-    while (1) {
+    for (; 1; nb_read++) {
         readed = read(fd, tmp_buffer, 1024);
-        tmp_buffer[readed] = 0;
-        if (readed == -1)
+        if (readed == -1 || nb_read > 50)
             return NULL;
+        tmp_buffer[readed] = 0;
         if (readed == 0)
             break;
         buffer = my_strcat_free(buffer, tmp_buffer, 1, 0);
