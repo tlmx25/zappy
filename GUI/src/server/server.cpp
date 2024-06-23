@@ -171,7 +171,6 @@ void Zappy_GUI::Server::Run() {
             std::string key = FirstWord(buffer);
             if (buffer.empty() == true)
                 continue;
-            std::cout << buffer << std::endl;
             LambdaExecute(key, buffer, game);
         }
     }
