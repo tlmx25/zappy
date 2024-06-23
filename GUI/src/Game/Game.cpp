@@ -63,12 +63,14 @@ Game::~Game()
 
 void Game::run()
 {
-    handleEvents();
-    float time = clock.getElapsedTime().asSeconds();
-    for (auto& trantorian : trantorians) {
-        trantorian.second->animate(time);
+    while (window.isOpen()) {
+        handleEvents();
+        float time = clock.getElapsedTime().asSeconds();
+        for (auto& trantorian : trantorians) {
+            trantorian.second->animate(time);
+        }
+        render();
     }
-    render();
 }
 
 
