@@ -30,7 +30,7 @@ namespace Zappy_GUI {
         public :
             /**
              * @brief Build the Server object with the parameter Port and adresse_ip
-             * 
+             *
              */
             Server(char *Port, char * adresse_ip);
             /**

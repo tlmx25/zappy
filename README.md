@@ -41,12 +41,12 @@ You can use it as follows:
 - **name1 name2 ...**: The name of the teams.
 - **clientsNb**: The number of authorized clients per team.
 - **freq**: The frequency of the game. by default 100.
-- **-h**: Print the usage.
+- **-h, -help**: Print the usage.
 - **-d**: Print debug information.
 ---
 ### GUI
 
-```
+```bash
 ./zappy_gui -p port -h machine
 ```
 - **port**: The port number.
@@ -63,8 +63,13 @@ You can **stop and start the music** with the key **P** on your keyboard.
 
 ### AI
 
-Work in progress...
-
+```bash
+./zappy_ai -p port -n name -h machine
+```
+- **port**: The port number.
+- **name**: The name of the team.
+- **machine**: The host name of the machine where the server is running.
+- **-help**: Print the usage.
 ---
 ## Tests
 
@@ -84,6 +89,18 @@ For this binary, you can use the following flags:
 
 > **Note:** The units tests are written using the criterion library. For more information: https://criterion.readthedocs.io/en/master/
 
+## Docs
+
+You can generate the documentation of the project by running the following command:
+```make docs```
+
+But you will already find the documentation in the `docs` directory. You need to take the index.html file:
+- server/doc
+- GUI/doc
+- ai/doc
+
+> **Note:** The documentation is generated using the doxygen tool. For more information: https://www.doxygen.nl/index.html
+
 ## Language
 
 - **C** for the server, _something speed is important_
@@ -94,8 +111,8 @@ For this binary, you can use the following flags:
 ## Authors
 
 - [**Sebastien BERTIL-SOUCHET**] - *Server Developer / Functional Test* - [GitHub](https://github.com/Sebabacou)
-- [**Tom LEFOIX**] - *Server Developer / Unit Test* - [GitHub](https://github.com/tlmx25)
+- [**Tom LEFOIX**] - *Server Developer / Communication Part* - [GitHub](https://github.com/tlmx25)
 - [**Justine LOIZEL**] - *Graphical User Interface Developer / Graphic Designer* - [GitHub](https://github.com/justineloizel)
 - [**Arthur DORIEL**] - *Graphical User Interface Developer / Project Manager* - [GitHub](https://github.com/MrMarmotte)
-- [**Maxcence LARGEOT**] - *Artificial Intelligence Developer* - [GitHub](https://github.com.com/MaxenceLgt)
-- [**Ewen EMERAUD**] - *Artificial Intelligence Developer* - [GitHub](https:://github.com/ewen1507)
+- [**Maxcence LARGEOT**] - *Artificial Intelligence Developer / Main AI* - [GitHub](https://github.com.com/MaxenceLgt)
+- [**Ewen EMERAUD**] - *Artificial Intelligence Developer / Sub AI* - [GitHub](https:://github.com/ewen1507)

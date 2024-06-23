@@ -52,4 +52,9 @@ tests_run:
 	@cp target/release/functional_tests_server .
 	@make tests_run -C server
 
+docs:
+	@make doc -C server
+	@make doc -C ai
+	cd GUI && ./build.sh doc
+
 .PHONY: all clean fclean re server GUI ai

@@ -1,7 +1,7 @@
 # Doxyfile 1.8.15
 
 # Project related settings
-PROJECT_NAME           = "Zappy Server"
+PROJECT_NAME           = "Zappy GUI"
 OUTPUT_DIRECTORY       = ./doc
 INPUT                  = ./src ./includes ./page
 RECURSIVE              = YES
@@ -15,6 +15,7 @@ EXTRACT_LOCAL_METHODS  = YES
 
 # Generate HTML documentation
 GENERATE_HTML          = YES
+GENERATE_LATEX         = NO
 
 # Language settings
 OUTPUT_LANGUAGE        = English
