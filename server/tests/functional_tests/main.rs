@@ -8,6 +8,7 @@ use colored::*;
 use std::fs::File;
 use std::process::{exit, Child, Command, Stdio};
 use std::thread::sleep;
+use std::time::Instant;
 
 use functionality_test as ft;
 
@@ -136,14 +137,14 @@ fn launch_server(option: &Settings) -> Option<Child> {
         10,
         vec!["t1".to_string(), "t2".to_string()],
         2,
-        10,
+        100,
         option.debug,
     ) {
         Ok(c) => {
             child = Some(c);
         }
         Err(e) => {
-            println!("\r{}: {}: {}", "KO".red(),"Failed to init server".red(), e);
+            println!("\r{}: {}: {}", "KO".red(), "Failed to init server".red(), e);
             exit(1);
         }
     }
@@ -172,12 +173,19 @@ fn main() {
         launch_server(&option)
     } else {
         None
-    }; {
-    }
-
+    };
     sleep(std::time::Duration::from_millis(500));
+    let start = Instant::now();
     match ft::basic_test(&option.host, &option.port, &option.type_) {
-        Ok(_) => println!("{}: {}", "OK".green(), "Basic test".green()),
+        Ok(_) => {
+            let duration = start.elapsed();
+            println!(
+                "{}: {} ({:?})",
+                "OK".green(),
+                "Basic test".green(),
+                duration
+            );
+        }
         Err(_e) => {
             println!("{}: {}", "KO".red(), "Basic test".red());
             kill_server!(child, option.need_server);
@@ -186,13 +194,26 @@ fn main() {
     }
     if (option.type_ == "full") || (option.type_ == "capacity") {
         match capacity_test::test_capacity(&option.host, &option.port) {
-            Ok(_) => println!("{}: {}", "OK".green(), "Capacity test".green()),
-            Err(_e) => {
-                println!("{}: {}", "KO".red(), "Capacity test".red());
+            Ok(_) => {
+                let duration = start.elapsed();
+                println!(
+                    "{}: {} ({:?})",
+                    "OK".green(),
+                    "Capacity test".green(),
+                    duration
+                );
+            }
+            Err(e) => {
+                println!("{}: {}: {}", "\rKO".red(), "Capacity test".red(), e);
                 kill_server!(child, option.need_server);
                 exit(1);
             }
         }
     }
+    println!(
+        "{}: All tests passed in {:?}",
+        "OK".green(),
+        start.elapsed()
+    );
     kill_server!(child, option.need_server);
 }
