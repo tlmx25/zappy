@@ -1,10 +1,5 @@
 #!/usr/bin/env python3
 import sys
-import os
-
-# current_dir = os.path.dirname(os.path.abspath(__file__))
-# src_dir = os.path.abspath(os.path.join(current_dir, os.pardir, os.pardir, os.pardir))
-# sys.path.append(src_dir)
 
 from ai.src.worker import Worker
 from ai.src import Server
