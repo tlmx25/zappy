@@ -41,7 +41,7 @@ Chatbox::Chatbox(float width, float height, sf::Vector2f windowSize) : width(wid
     updatePositions();
 }
 
-void Chatbox::addMessage(std::string &team, std::string &id, std::string &message)
+void Chatbox::addMessage(std::string team, std::string &id, std::string &message)
 {
     if (messageTexts.size() >= maxMessages) {
         messageTexts.erase(messageTexts.begin());

@@ -19,7 +19,7 @@ class Chatbox
         Chatbox(float width = 240, float height = 480, sf::Vector2f windowSize = sf::Vector2f(960, 960));
         ~Chatbox() = default;
 
-        void addMessage(std::string& team, std::string& id, std::string& message);
+        void addMessage(std::string team, std::string& id, std::string& message);
         void render(sf::RenderWindow& window);
         void handleEvents(sf::Event& event);
         void toggleChatbox();
@@ -30,7 +30,7 @@ class Chatbox
         float width;
         float height;
         bool isOpen;
-        int maxMessages;
+        long unsigned int maxMessages;
         sf::Vector2f position;
         sf::Vector2f windowSize;
         sf::RectangleShape header;

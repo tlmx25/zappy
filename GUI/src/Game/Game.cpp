@@ -20,38 +20,6 @@ Game::Game(int x, int y) : map(x, y, 1200)
         music.setLoop(true);
         music.play();
     }
-
-    // for (auto& tile : map.getTiles()) {
-    //     for (int i = 0; i <= 6; i++) {
-    //         tile.setItemQuantity(i, 1);
-    //     }
-    // }
-    // std::string msg = "Welcome to Zappy qerhqerheqrh regheqh end!";
-    // std::string team = "test";
-    // std::string id = "0";
-    // chatbox.addMessage(team, id, msg);
-    // chatbox.addMessage(team, id, msg);
-    // chatbox.addMessage(team, id, msg);
-    // chatbox.addMessage(team, id, msg);
-    // chatbox.addMessage(team, id, msg);
-    // chatbox.addMessage(team, id, msg);
-    // chatbox.addMessage(team, id, msg);
-    // chatbox.addMessage(team, id, msg);
-    // chatbox.addMessage(team, id, msg);
-    // chatbox.addMessage(team, id, msg);
-    // chatbox.addMessage(team, id, msg);
-
-    trantorians["test"] = std::make_shared<Trantorian>(0, "test", sf::Vector2i(2, 2), 0, 1, getTeamNumber("test"));
-    trantorians["test1"] = std::make_shared<Trantorian>(1, "test1", sf::Vector2i(2, 2), 0, 1, getTeamNumber("test1"));
-    trantorians["test2"] = std::make_shared<Trantorian>(2, "test2", sf::Vector2i(2, 2), 0, 1, getTeamNumber("test2"));
-    trantorians["test3"] = std::make_shared<Trantorian>(3, "test3", sf::Vector2i(2, 2), 0, 1, getTeamNumber("test3"));
-    trantorians["test4"] = std::make_shared<Trantorian>(4, "test4", sf::Vector2i(2, 2), 0, 1, getTeamNumber("test4"));
-    trantorians["test5"] = std::make_shared<Trantorian>(5, "test5", sf::Vector2i(2, 2), 0, 1, getTeamNumber("test5"));
-    trantorians["test6"] = std::make_shared<Trantorian>(6, "test6", sf::Vector2i(2, 2), 0, 1, getTeamNumber("test6"));
-    trantorians["test7"] = std::make_shared<Trantorian>(7, "test7", sf::Vector2i(2, 2), 0, 1, getTeamNumber("test7"));
-    trantorians["test8"] = std::make_shared<Trantorian>(8, "test8", sf::Vector2i(2, 2), 0, 1, getTeamNumber("test8"));
-    trantorians["test9"] = std::make_shared<Trantorian>(9, "test9", sf::Vector2i(2, 2), 0, 1, getTeamNumber("test9"));
-
 }
 
 Game::~Game()
@@ -63,14 +31,12 @@ Game::~Game()
 
 void Game::run()
 {
-    while (window.isOpen()) {
-        handleEvents();
-        float time = clock.getElapsedTime().asSeconds();
-        for (auto& trantorian : trantorians) {
-            trantorian.second->animate(time);
-        }
-        render();
+    handleEvents();
+    float time = clock.getElapsedTime().asSeconds();
+    for (auto& trantorian : trantorians) {
+        trantorian.second->animate(time);
     }
+    render();
 }
 
 
@@ -226,4 +192,9 @@ void Game::displayTeamBoxes()
         window.draw(text);
         i++;
     }
+}
+
+Chatbox& Game::getChatbox()
+{
+    return chatbox;
 }

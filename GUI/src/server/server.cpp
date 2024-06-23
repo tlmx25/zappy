@@ -19,10 +19,10 @@ Zappy_GUI::Server::Server(char *Port, char * adresse_ip) {
             {"ppo", ppoFonction},
             {"plv", plvFonction},
             {"pin", pinFonction},
-            {"pex", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
-            {"pbc", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
-            {"pic", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
-            {"pie", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
+            {"pex", [](const std::string&, Game&) {}},
+            {"pbc", pbcFonction},
+            {"pic", picFonction},
+            {"pie", pieFonction},
             {"pfk", pfkFonction},
             {"pdr", pdrFonction},
             {"pgt", pgtFonction},
@@ -30,10 +30,10 @@ Zappy_GUI::Server::Server(char *Port, char * adresse_ip) {
             {"enw", enwFonction},
             {"ebo", eboFonction},
             {"edi", ediFonction},
-            {"sgt", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
-            {"sst", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
-            {"seg", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
-            {"smg", [](const std::string&, Game&) { std::cout << "Lambda 2" << std::endl; }},
+            {"sgt", [](const std::string&, Game&) {}},
+            {"sst", [](const std::string&, Game&) {}},
+            {"seg", [](const std::string&, Game&) {}},
+            {"smg", [](const std::string&, Game&) {}},
             {"suc", sucFonction},
             {"sbp", sbpFonction}
         };
@@ -152,7 +152,7 @@ void Zappy_GUI::Server::Run() {
         FD_SET(_socket, &_writefds);
 
         struct timeval timeout;
-        timeout.tv_sec = 0.5;
+        timeout.tv_sec = 0.001;
         timeout.tv_usec = 0;
 
         int activity = select(_socket + 1, &_readfds, NULL, NULL, &timeout);
@@ -349,6 +349,74 @@ void pinFonction(const std::string& command, Game& game)
     }
     auto player = it->second;
     player->setInventory(std::stoi(q0),std::stoi(q1),std::stoi(q2),std::stoi(q3),std::stoi(q4),std::stoi(q5),std::stoi(q6));
+}
+
+void pbcFonction(const std::string& command, Game& game)
+{
+    std::string temp;
+    std::string nbr;
+    std::string message;
+
+    std::stringstream(command) >> temp >> nbr >> message;
+
+    auto& trantorians = game.getTrantorians();
+    auto it = trantorians.find(nbr);
+    if (it == trantorians.end()) {
+        throw Zappy_GUI::Server::BadParameter("Mauvais arguments.");
+    }
+    auto player = it->second;
+    game.getChatbox().addMessage(player->getTeamName(), nbr, message);
+}
+
+void pbcFonction(const std::string& command, Game& game)
+{
+    std::string temp;
+    std::string X;
+    std::string Y;
+    std::string L;
+    std::vector<std::string> additionalParams;
+    std::stringstream ss(command);
+    
+    ss >> temp;
+    ss >> X;
+    ss >> Y;
+    ss >> L;
+
+    std::string param;
+    while (ss >> param) {
+        additionalParams.push_back(param);
+    }
+
+    for (const auto& p : additionalParams) {
+        auto& trantorians = game.getTrantorians();
+        auto it = trantorians.find(p);
+        if (it == trantorians.end()) {
+            throw Zappy_GUI::Server::BadParameter("Mauvais arguments.");
+        }
+        auto player = it->second;
+        player->setElevating(true);
+    }
+}
+
+void pbcFonction(const std::string& command, Game& game)
+{
+    std::string temp;
+    std::string X;
+    std::string Y;
+    std::string R;
+
+    std::stringstream(command) >> temp >> X >> Y >> R;
+
+
+    std::map<std::string, std::shared_ptr<Trantorian>> trantorians = game.getTrantorians();
+    for (const auto& pair : trantorians) {
+        if (pair.second->isElevating() == true && R == "1") {
+            pair.second->setLevel(pair.second->getLevel() + 1);
+            pair.second->setElevating(false);
+            continue;
+        }
+        pair.second->setElevating(false);
+    }
 }
 
 void pfkFonction(UNUSED const std::string& command, UNUSED Game& game) {}

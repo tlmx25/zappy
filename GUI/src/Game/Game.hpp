@@ -105,6 +105,12 @@ class Game
          */
         int getNbElevatedPlayers(std::string teamName);
 
+        /**
+         * @brief Get the number of elevated players
+         * 
+         */
+        Chatbox& getChatbox();
+
     private:
         sf::RenderWindow window;
         sf::Event event;
