@@ -10,7 +10,8 @@ A network game where several teams confront each other on a tile map containing 
   - [GUI](#gui)
   - [AI](#ai)
 - [Tests](#tests)
-- [License](#license)
+- [Language](#language)
+- [Authors](#authors)
 
 ## Installation
 
@@ -22,8 +23,8 @@ A network game where several teams confront each other on a tile map containing 
 
 ## Usage
 
-
 ---
+
 In the root directory, you will find the following executables: `zappy_server`, `zappy_gui` and `zappy_ai`.
 which are respectively the server, the graphical user interface and the artificial intelligence. 
 You can use it as follows:
