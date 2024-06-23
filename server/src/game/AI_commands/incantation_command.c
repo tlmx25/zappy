@@ -80,7 +80,6 @@ bool check_final_requirement(tile_t *tile,
 
     if (!can_incant)
         return false;
-    printf("first ok\n");
     for (int i = 0; players && players[i] != -1; i++) {
         tmp = get_client_ai_by_num(clients, players[i]);
         if (tmp)
@@ -88,7 +87,6 @@ bool check_final_requirement(tile_t *tile,
     }
     if (count + 1 < requirement->players)
         return false;
-    printf("second ok\n");
     return true;
 }
 
@@ -174,7 +172,7 @@ void incantation_end(server_t *server, incantation_t *incantation)
 
     if (client == NULL)
         return failed_incantation(server, client, incantation,
-        "main player not dead");
+        "main player dead");
     if (!check_final_requirement(get_tile_by_pos(server, client->position),
     server->ai_clients, client->level, incantation->players))
         return failed_incantation(server, client, incantation,
