@@ -1,0 +1,11 @@
+<map id="world_s" name="world_s">
+<area shape="rect" id="node1" title="A structure to represent the world in the game." alt="" coords="175,291,247,317"/>
+<area shape="rect" id="node2" href="$structteam__s.html" title="A structure to represent a team in the game." alt="" coords="5,201,76,228"/>
+<area shape="rect" id="node3" href="$structtile__s.html" title="A structure to represent a tile in the game world." alt="" coords="416,96,473,123"/>
+<area shape="rect" id="node4" href="$structposition__s.html" title="position structure" alt="" coords="222,5,310,32"/>
+<area shape="rect" id="node7" href="$structegg__s.html" title="A structure to represent an egg in the game." alt="" coords="83,96,143,123"/>
+<area shape="rect" id="node9" href="$structincantation__s.html" title="incantation structure" alt="" coords="225,96,334,123"/>
+<area shape="rect" id="node5" href="$structinventory__s.html" title="inventory structure" alt="" coords="409,5,507,32"/>
+<area shape="rect" id="node6" href="$structegg__list__s.html" title="A structure to represent a list of eggs." alt="" coords="100,201,187,228"/>
+<area shape="rect" id="node8" href="$structincantation__list__s.html" title="incantation list structure" alt="" coords="211,201,347,228"/>
+</map>

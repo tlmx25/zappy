@@ -48,3 +48,5 @@ __pycache__/
 
 **.gcno
 **.gcda
+
+**unit_tests

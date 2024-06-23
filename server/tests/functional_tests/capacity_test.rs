@@ -35,7 +35,7 @@ fn max_client(nbr_client: i32, host: &str, port: &str) -> Result<()> {
         match handle.join() {
             Ok(_) => {}
             Err(_e) => {
-                println!("{}: Capacity failed", "KO".red());
+                println!("\r{}: Capacity failed", "KO".red());
             }
         }
     }
@@ -55,6 +55,22 @@ pub fn test_capacity(host: &str, port: &str) -> Result<()> {
                 return Err(std::io::Error::new(
                     std::io::ErrorKind::Other,
                     "Max client failed",
+                ));
+            }
+        }
+    }
+    for i in 0..5 {
+        let mut cli = client::Client::new(host, port).unwrap();
+        print!("{}: Send msg x {}", "Running".yellow(), i + 1);
+        std::io::stdout().flush().unwrap();
+        match cli.send_big_message() {
+            Ok(_) => {
+                println!("\r{}: Send big message x {}", "OK".green(), i + 1);
+            }
+            Err(_e) => {
+                return Err(std::io::Error::new(
+                    std::io::ErrorKind::Other,
+                    format!("Send big message x {} failed", i + 1),
                 ));
             }
         }

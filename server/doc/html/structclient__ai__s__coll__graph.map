@@ -1,0 +1,5 @@
+<map id="client_ai_s" name="client_ai_s">
+<area shape="rect" id="node1" title="client_ai structure" alt="" coords="63,96,153,123"/>
+<area shape="rect" id="node2" href="$structposition__s.html" title="position structure" alt="" coords="5,5,93,32"/>
+<area shape="rect" id="node3" href="$structinventory__s.html" title="inventory structure" alt="" coords="117,5,216,32"/>
+</map>
