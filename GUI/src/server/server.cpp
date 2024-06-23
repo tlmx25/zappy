@@ -368,7 +368,7 @@ void pbcFonction(const std::string& command, Game& game)
     game.getChatbox().addMessage(player->getTeamName(), nbr, message);
 }
 
-void pbcFonction(const std::string& command, Game& game)
+void picFonction(const std::string& command, Game& game)
 {
     std::string temp;
     std::string X;
@@ -398,7 +398,7 @@ void pbcFonction(const std::string& command, Game& game)
     }
 }
 
-void pbcFonction(const std::string& command, Game& game)
+void pieFonction(const std::string& command, Game& game)
 {
     std::string temp;
     std::string X;
