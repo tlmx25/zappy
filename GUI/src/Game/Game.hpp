@@ -85,6 +85,26 @@ class Game
          */
         std::map<std::string, std::shared_ptr<Trantorian>>& getTrantorians();
 
+        /**
+         * @brief Add if new team box
+         * 
+         */
+        void checkTeamBoxes();
+
+        /**
+         * @brief Display the team boxes
+         * 
+         */
+        void displayTeamBoxes();
+
+        /**
+         * @brief Get the number of elevated players
+         * 
+         * @param teamName The name of the team
+         * @return int The number of elevated players
+         */
+        int getNbElevatedPlayers(std::string teamName);
+
     private:
         sf::RenderWindow window;
         sf::Event event;
@@ -96,6 +116,13 @@ class Game
         sf::Music music;
         std::map<std::string, int> teamToNumber;
         int nextTeamNumber = 0;
+        std::vector<std::string> teamNames;
+
+        // Team display info
+        sf::Font font;
+        sf::Vector2f teamBoxesPos;
+        std::vector<sf::RectangleShape> teamBoxes;
+        std::vector<sf::Text> teamTexts;
 };
 
 #endif

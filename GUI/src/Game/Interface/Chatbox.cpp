@@ -38,6 +38,7 @@ Chatbox::Chatbox(float width, float height, sf::Vector2f windowSize) : width(wid
 
     updateToggleButton();
     setPosition(sf::Vector2f(windowSize.x - width, 0));
+    updatePositions();
 }
 
 void Chatbox::addMessage(std::string &team, std::string &id, std::string &message)

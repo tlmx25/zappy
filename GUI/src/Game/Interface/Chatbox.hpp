@@ -26,15 +26,11 @@ class Chatbox
         void updateToggleButton();
         void setPosition(sf::Vector2f pos);
         void updatePositions();
-        void scrollUp();
-        void scrollDown();
-        size_t getMaxVisibleMessages();
     private:
         float width;
         float height;
         bool isOpen;
         int maxMessages;
-        size_t scrollOffset;
         sf::Vector2f position;
         sf::Vector2f windowSize;
         sf::RectangleShape header;

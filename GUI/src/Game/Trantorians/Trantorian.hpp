@@ -124,6 +124,20 @@ class Trantorian
          */
         void setElevating(bool isElevating);
 
+        /**
+         * @brief Get the team name of the trantorian
+         * 
+         * @return std::string The team name of the trantorian
+         */
+        std::string getTeamName() { return teamName; }
+
+        /**
+         * @brief Get the level of the trantorian
+         * 
+         * @return int The level of the trantorian
+         */
+        int getLevel() { return level; }
+
     // Identification
     private:
         int id;
