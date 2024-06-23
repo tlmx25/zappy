@@ -35,12 +35,21 @@ clean:
 	@make clean -C server
 	cd GUI && ./build.sh clean
 	@make clean -C ai
+	@rm -fr target
 
 fclean: rm_binary
 	@make fclean -C server
 	cd GUI && ./build.sh fclean
 	@make fclean -C ai
+	@rm -fr target
+	@rm -f functional_tests_server
+	@make tests_clean -C server
 
 re: fclean all
+
+tests_run:
+	@cargo build --release
+	@cp target/release/functional_tests_server .
+	@make tests_run -C server
 
 .PHONY: all clean fclean re server GUI ai

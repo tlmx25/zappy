@@ -43,7 +43,7 @@ static char *get_tile_content(tile_t *tile, client_ai_list_t *player_list)
     return buffer;
 }
 
-static tile_t *get_tile_by_pos(server_t *server, position_t position)
+tile_t *get_tile_by_pos(server_t *server, position_t position)
 {
     int x = position.x;
     int y = position.y;

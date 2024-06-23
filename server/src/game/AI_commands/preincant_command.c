@@ -27,22 +27,6 @@ static int *add_players_on_incantation(int num, int *players)
     return players;
 }
 
-static tile_t *get_tile_by_pos(server_t *server, position_t position)
-{
-    int x = position.x;
-    int y = position.y;
-
-    if (x < 0)
-        x = server->option->width + x;
-    if (y < 0)
-        y = server->option->height + y;
-    if (x >= server->option->width)
-        x = x % server->option->width;
-    if (y >= server->option->height)
-        y = y % server->option->height;
-    return &server->world->tiles[y * server->option->width + x];
-}
-
 static void notify_preincant(server_t *server, int *players,
     client_ai_t *client)
 {

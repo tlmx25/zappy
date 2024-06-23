@@ -31,6 +31,7 @@ void delete_egg_from_list(egg_list_t *list, egg_t *egg, int delete_egg_bool)
         list->head = tmp->next;
     if (tmp == list->tail)
         list->tail = tmp->prev;
+    list->size--;
     if (delete_egg_bool)
         delete_egg(tmp);
 }

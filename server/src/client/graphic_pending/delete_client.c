@@ -25,7 +25,7 @@ void delete_client(client_t *client)
 
 void clear_client_list(client_list_t *list)
 {
-    client_t *tmp = list->head;
+    client_t *tmp = (list) ? list->head : NULL;
     client_t *next = NULL;
 
     while (tmp != NULL) {
@@ -40,6 +40,8 @@ void clear_client_list(client_list_t *list)
 
 void delete_client_list(client_list_t *list)
 {
+    if (list == NULL)
+        return;
     clear_client_list(list);
     free(list);
 }
@@ -47,7 +49,7 @@ void delete_client_list(client_list_t *list)
 void delete_client_from_list(client_list_t *list, client_t *client,
     int delete_client_bool)
 {
-    client_t *tmp = list->head;
+    client_t *tmp = (list) ? list->head : NULL;
 
     for (; tmp != NULL && tmp != client; tmp = tmp->next);
     if (tmp == NULL)
@@ -67,7 +69,7 @@ void delete_client_from_list(client_list_t *list, client_t *client,
 
 void delete_client_by_fd(client_list_t *list, int fd, int delete_client)
 {
-    client_t *tmp = list->head;
+    client_t *tmp = (list) ? list->head : NULL;
     client_t *next = NULL;
 
     while (tmp != NULL) {

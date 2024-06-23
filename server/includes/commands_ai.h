@@ -175,4 +175,12 @@ char *int_array_to_str(int *array);
  */
 void remove_object(tile_t *tile, incantation_requirements_t *requirement,
     client_ai_t *client, client_list_t *clients);
+
+/**
+ * @brief get the direction of the client rc from the client em
+ * @param em client who sent the command
+ * @param rc  receiver client
+ * @return return the direction of the client rc from the client em (0-8)
+ */
+int get_dir(client_ai_t *em, client_ai_t *rc);
 #endif //SERVER_COMMANDS_AI_H

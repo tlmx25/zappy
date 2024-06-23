@@ -42,6 +42,8 @@ void cmd_bct(server_t *server, client_t *client, char const **command)
     char response[2048] = {0};
     tile_t *tile = NULL;
 
+    if (!command || my_arrsize(command) != 3)
+        return add_to_buffer(&client->buffer_out, "sbp\n", false);
     if (my_str_isnum(command[1]) == 0 || my_str_isnum(command[2]) == 0) {
         add_to_buffer(&client->buffer_out, "sbp\n", false);
         return;
@@ -53,5 +55,5 @@ void cmd_bct(server_t *server, client_t *client, char const **command)
         tile->object.food,
         tile->object.linemate, tile->object.deraumere, tile->object.sibur,
         tile->object.mendiane, tile->object.phiras, tile->object.thystame);
-    add_to_buffer(&client->buffer_out, response, true);
+    add_to_buffer(&client->buffer_out, response, false);
 }

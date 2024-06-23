@@ -53,6 +53,8 @@ static bool incantation_init(server_t *server)
 bool team_init(server_t *server)
 {
     debug_print("Init teams\n");
+    if (server->option->names == NULL)
+        return false;
     for (server->world->nbr_teams = 0;
         server->option->names[server->world->nbr_teams] != NULL;
         server->world->nbr_teams++);

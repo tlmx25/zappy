@@ -10,7 +10,7 @@
     #define ERROR 84
     #define UNUSED __attribute__((unused))
     #define FREQ(x) (x / server->option->freq)
-    #define PLNUM(x) (x[0] == '#') ? &x[1] : x
+    #define PLNUM(x) (x && x[0] == '#') ? &x[1] : x
     #include <unistd.h>
     #include <stdlib.h>
     #include <stdio.h>
@@ -230,4 +230,12 @@ direction_t turn_left(direction_t direction);
  */
 void send_to_all_graphic_func(server_t *server, char const **cmd,
     void (*fct)(server_t *server, client_t *client, char const **command));
+
+/**
+ * @brief get the tile by is position
+ * @param server server for info about the game
+ * @param position position of the tile
+ * @return return the tile or NULL if not found
+ */
+tile_t *get_tile_by_pos(server_t *server, position_t position);
 #endif //SERVER_SERVER_H
