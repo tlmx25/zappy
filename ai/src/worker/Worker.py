@@ -3,6 +3,7 @@ import sys
 from ai.src.Server import Server
 from ai.src.trantor.Trantor import Trantor
 from ai.src.FlagParser import FlagParser
+import random
 
 class Worker(Trantor):
     def __init__(self, argv, server: Server):
@@ -119,7 +120,7 @@ class Worker(Trantor):
     def getInventory(self):
         print("getInventory\n")
         response = self.send("Inventory\n")
-        print("Inventory: " + response)
+        print("Worker Inventory: " + response)
         return response
 
     def goToQueen(self):
@@ -145,20 +146,17 @@ class Worker(Trantor):
 
     def sendInventoryToQueen(self):
         print("sendInventoryToQueen\n")
-        # print(self.object_taken)
         response = " ".join(self.object_taken)
-        print("reponse dans sendinventory = " + response + "\n")
         response = response.replace(" ", "+")
-        response += "+]"
-        response = "[" + response
+        response = "[" + response + "]+" + str(random.randint(0, 1000000))
         print("SendInventoryResponse: " + response)
-        self.send("Broadcast Worker,FOUND" + response + "\n")
-        self.object_taken = []
+        self.send("Broadcast Worker" + self.id + "+FOUND+" + response +"\n")
+        self.object_taken.clear()
         return
 
     def lookAt(self):
         response = self.look()
-        print("Send Look !")
+        #print("Send Look !")
         return response
 
     def setFarmingPosition(self, dist: int):

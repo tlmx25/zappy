@@ -39,7 +39,14 @@ class Trantor(ITrantor):
                         'mendiane' : 0,
                         'phiras' : 0,
                         'thystame' : 0}
-        
+        self.requirement = {1 : {'linemate' : 1, 'deraumere' : 0, 'sibur' : 0, 'mendiane' : 0, 'phiras' : 0, 'thystame' : 0},
+                            2 : {'linemate' : 1, 'deraumere' : 1, 'sibur' : 1, 'mendiane' : 0, 'phiras' : 0, 'thystame' : 0},
+                            3 : {'linemate' : 2, 'deraumere' : 0, 'sibur' : 1, 'mendiane' : 0, 'phiras' : 2, 'thystame' : 0},
+                            4 : {'linemate' : 1, 'deraumere' : 1, 'sibur' : 2, 'mendiane' : 0, 'phiras' : 1, 'thystame' : 0},
+                            5 : {'linemate' : 1, 'deraumere' : 2, 'sibur' : 1, 'mendiane' : 3, 'phiras' : 0, 'thystame' : 0},
+                            6 : {'linemate' : 1, 'deraumere' : 2, 'sibur' : 3, 'mendiane' : 0, 'phiras' : 1, 'thystame' : 0},
+                            7 : {'linemate' : 2, 'deraumere' : 2, 'sibur' : 2, 'mendiane' : 2, 'phiras' : 2, 'thystame' : 1}}
+
     # Gestion de messages
 
     def receive(self) -> str:
@@ -113,7 +120,6 @@ class Trantor(ITrantor):
     def look(self) -> dict:
         interpreted_look = {}
         response = self.send("Look\n")
-        print("Look response : " + response, file=sys.stderr)
         response = response.replace("[", "").replace("]", "").split(',')
         for i in range(0, len(response)):
             interpreted_look[i] = {"player" : 0, "food" : 0, "linemate" : 0, "deraumere" : 0, "sibur" : 0, "mendiane" : 0, "phiras" : 0, "thystame" : 0}
@@ -139,9 +145,9 @@ class Trantor(ITrantor):
                         interpreted_look[i]["thystame"] += 1
                     case _:
                         pass
-        print("Look : " + str(interpreted_look), file=sys.stderr)
+        #print("Look : " + str(interpreted_look), file=sys.stderr)
         return interpreted_look
-        
+    
     def inventory(self) -> str:
         response = self.send("Inventory\n")
         if response is None:
@@ -174,15 +180,18 @@ class Trantor(ITrantor):
         return None
         
     def run(self):
+        food_fail = 0
         self.inventory()
         while self.alive:
-            look_res = self.look()
-            for i in range(0, look_res[0]["food"]):
+            while self.take_object("food") != "ko" and self.alive:
+                food_fail = 0
                 self.take_object("food")
-                if not self.alive:
-                    break
-            self.inventory()
-            self.move_forward()
+            food_fail += 1
+            if food_fail > 3:
+                self.move_left()
+                self.turn_right()
+            else:
+                self.move_forward()
     
     def set_starting_data(self, parser: FlagParser):
         server_res = self.server.recv()

@@ -15,13 +15,26 @@ class Queen(Trantor):
         super().__init__(server)
         self.id = "Queen"
         self.cycle = 0
-        self.cycle_action = {0 : self.get_food,
+        self.ko_food = 0
+        self.cycle_action = {0 : self.get_vital_ressources,
                              1 : self.init_worker,
-                             2 : self.assemble_workers,
-                             3 : self.temp}
+                             2 : self.start_farming,
+                             3 : self.check_elevate,
+                             4 : self.temp
+                             }
         self.connected_worker = 0
         self.assembled_worker = 0
         self.id_message = []
+        self.id_farm = {}
+        self.in_farming = False
+        self.enough_ressources = False
+        self.common_inventory = { 'food' : 0,
+                        'linemate' : 0,
+                        'deraumere' : 0,
+                        'sibur' : 0,
+                        'mendiane' : 0,
+                        'phiras' : 0,
+                        'thystame' : 0}
 
     def run(self):
         while self.alive:
@@ -30,22 +43,32 @@ class Queen(Trantor):
             self.cycle_action[self.cycle]()
             self.inventory()
     
-    def get_food(self):
+    def look_for_food(self):
+        response = self.take_object("food")
+        if response == "ko":
+            self.ko_food += 1
+        else:
+            self.ko_food = 0
+        if self.ko_food >= 3:
+            self.move_right()
+            self.turn_left()
+            self.ko_food = 0
+        else:
+            self.move_forward()
+    
+    def get_vital_ressources(self):
         ko_food = 0
         while self.trantor_inventory["food"] < 15:
-            response = self.take_object("food")
-            if response == "ko" and ko_food < 2:
-                response = self.move_forward()
-                ko_food += 1
-            elif ko_food >= 2:
-                self.move_right()
-                self.turn_left()
-                ko_food = 0
+            self.look_for_food()
             self.inventory()
         if self.connected_worker < 5:
             self.cycle = 1
-        else:
+        elif not self.in_farming:
             self.cycle = 2
+        elif not self.enough_ressources:
+            self.cycle = 3
+        else:
+            self.cycle = 4
     
     def init_worker(self):
         worker_id = str(self.connected_worker + 1)
@@ -77,12 +100,48 @@ class Queen(Trantor):
                 except Exception as e:
                     print("WORKER FAILED : " + str(e))
             self.messages.clear()
+
+    def start_farming(self):
+        self.assemble_workers()
         if self.assembled_worker == 5:
             self.broadcast("FARM")
             self.cycle = 3
             self.assembled_worker = 0
             self.id_message.clear()
-        pass
+            
+    def check_ressources(self):
+        if self.common_inventory["food"] < 20:
+            return
+        requirement = self.requirement[self.level]
+        for mineral in requirement:
+            if requirement[mineral] > self.common_inventory[mineral]:
+                return
+        self.enough_ressources = True
+    
+    def check_elevate(self):
+        if self.enough_ressources:
+            self.assemble_workers()
+            if self.assembled_worker == 5:
+                self.cycle = 4
+        else:
+            self.look_for_food()
+            for message in self.messages:
+                message = message[1].replace("[", "").replace("]", "").split("+")
+                if not "Worker" in message[0] or message[1] != "FOUND" or message[2] == '':
+                    continue
+                try:
+                    found_id = int(message[-1])
+                except Exception:
+                    continue
+                if message[0] in self.id_farm and self.id_farm[message[0]] == found_id:
+                    continue
+                self.id_farm[message[0]] = found_id
+                for i in range(2, len(message) - 1):
+                    self.common_inventory[message[i]] += 1
+                print("Queen updated common inventory : " + str(self.common_inventory))
+            self.check_ressources()
+            self.messages.clear()
 
     def temp(self):
+        print("QUEEN NEED START ELEVATION")
         pass
